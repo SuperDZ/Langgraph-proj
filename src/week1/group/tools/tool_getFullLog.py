@@ -1,0 +1,22 @@
+
+service_log = [
+    {
+        "service_name": "WebPageTranslateService",
+        "log": """
+        Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException:
+        No qualifying bean of type 'WebPageTranslateService' available
+        """
+    },
+    {
+        "service_name": "UserService",
+        "log": """
+        Caused by: org.springframework.beans.factory.BeanCreationException:
+        Error creating bean with name 'userController':
+        Unsatisfied dependency expressed through constructor parameter 0
+        """
+    }
+]
+
+
+def get_full_log(service_name: str):
+    return next((entry["log"] for entry in service_log if entry["service_name"] == service_name), "未找到对应服务的日志。")

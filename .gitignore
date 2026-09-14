@@ -1,0 +1,28 @@
+# Environment and secrets
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+env/
+
+# Python cache and tooling
+__pycache__/
+*.py[cod]
+*$py.class
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Build and distribution artifacts
+build/
+dist/
+*.egg-info/
+
+# Local editor and operating system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
