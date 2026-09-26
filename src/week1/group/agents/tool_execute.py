@@ -1,5 +1,6 @@
 from tools.tool_getTeamMembers import get_team_members
 from tools.tool_getFullLog import get_full_log
+from tools.tool_searchCode import search_code
 
 
 """
@@ -47,14 +48,39 @@ tool_definitions = {
             "required": ["team_group"],
             "additionalProperties": False
         }
+    },
+
+    "search_code": {
+    "type": "function",
+    "name": "search_code",
+    "description": "在指定代码仓库中搜索类名、方法名或其他源码关键字，用于进一步确认代码层面的故障原因。",
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "src_base": {
+                "type": "string",
+                "description": "源码根目录，例如 test/test_codebase"
+            },
+            "keyword": {
+                "type": "string",
+                "description": "需要搜索的类名、方法名或源码关键字，例如 WebPageTranslateService"
+            }
+        },
+        "required": [
+            "src_base",
+            "keyword"
+        ],
+        "additionalProperties": False
     }
+}
 }
 
 
 # 2. 真正的 Python 函数注册表
 tool_functions = {
     "get_full_log": get_full_log,
-    "get_team_members": get_team_members
+    "get_team_members": get_team_members,
+    "search_code": search_code
 }
 
 

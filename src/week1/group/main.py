@@ -1,12 +1,22 @@
-from agents.log_reviewer import review_log
+from agents.dev_group.log_reviewer import review_log
 from agents.team_leader import task_management
+from pathlib import Path
+
 
 log_recive = """somewhere errors in WebPageTranslateService"""
+
+src_base = str(
+    Path(__file__).resolve().parent.parent
+    / "test"
+    / "test_codebase"
+)
+
+
 
 
 def main():
     #agent 1
-    analysis_result = review_log(log_recive)
+    analysis_result = review_log(log_recive, src_base)
     print("日志分析结果：")
     print(analysis_result)
     
