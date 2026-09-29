@@ -99,26 +99,35 @@ def run_agent_with_tools(
         # 逐个执行工具
         for item in tool_calls:
 
+            # 参数解析失败 / 工具执行失败都不中断流程，
+            # 而是把错误信息作为工具结果回喂给模型，
+            # 让模型自行修正参数或更换工具重试。
             try:
                 args = json.loads(item.arguments)
-            except json.JSONDecodeError as e:
-                raise RuntimeError(
-                    f"工具参数不是合法 JSON：{item.arguments}"
-                ) from e
+            except json.JSONDecodeError:
+                args = None
 
-            print(f"[Tool Call] {item.name}")
-            print(f"[Arguments] {args}")
+            if args is None:
+                print(f"[Tool Call] {item.name} 参数解析失败")
+                tool_result = {
+                    "success": False,
+                    "error": f"工具参数不是合法 JSON：{item.arguments}"
+                }
+            else:
+                print(f"[Tool Call] {item.name}")
+                print(f"[Arguments] {args}")
 
-            # Python 真正执行工具
-            try:
-                tool_result = execute_tool(
-                    item.name,
-                    args
-                )
-            except Exception as e:
-                raise RuntimeError(
-                    f"工具执行失败：{item.name}，参数：{args}"
-                ) from e
+                # Python 真正执行工具
+                try:
+                    tool_result = execute_tool(
+                        item.name,
+                        args
+                    )
+                except Exception as e:
+                    tool_result = {
+                        "success": False,
+                        "error": f"工具执行失败：{type(e).__name__}: {e}"
+                    }
 
             print(f"[Tool Result] {tool_result}")
 

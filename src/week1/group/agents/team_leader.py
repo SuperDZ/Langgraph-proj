@@ -11,26 +11,6 @@ import json
     3. 拿到成员信息后，根据成员技能和经验选择最合适的人负责该任务。
 """
 
-team_tools = [
-    {
-        "type": "function",
-        "name": "get_team_members",
-        "description": "获取指定团队的成员信息。",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "team_group": {
-                    "type": "string",
-                    "description": "团队名称，例如后端开发组、前端开发组、测试组"
-                }
-            },
-            "required": ["team_group"],
-            "additionalProperties": False
-        }
-    }
-]
-
-
 assignment_schema = {
     "format": {
         "type": "json_schema",

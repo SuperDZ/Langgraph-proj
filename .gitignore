@@ -25,4 +25,5 @@ dist/
 .vscode/
 .idea/
 .DS_Store
+.workbuddy/
 Thumbs.db
