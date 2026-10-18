@@ -1,67 +1,32 @@
-import os
+"""支持项目根目录运行和直接运行本文件。"""
+
+import argparse
 import json
-from dotenv import load_dotenv
-from langchain_deepseek import ChatDeepSeek
-from langchain_core.messages import HumanMessage, ToolMessage
-from tools.tool_searchCode import search_code
+import sys
+from pathlib import Path
+
+if __package__ in (None, ""):
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+    from week2.group.workflow import run_workflow
+else:
+    from .workflow import run_workflow
+
+
+DEFAULT_SOURCE = Path(__file__).resolve().parents[1] / "test" / "test_codebase"
 
 
 def main():
-    load_dotenv()  # Load environment variables from .env file
+    parser = argparse.ArgumentParser(description="LangGraph 日志分析与任务分配")
+    parser.add_argument("--log", default="somewhere errors in WebPageTranslateService")
+    parser.add_argument("--src-base", default=str(DEFAULT_SOURCE))
+    parser.add_argument("--max-rounds", type=int, default=8)
+    args = parser.parse_args()
+    result = run_workflow(args.log, args.src_base, max_rounds=args.max_rounds)
+    print("日志分析结果：")
+    print(json.dumps(result["log_analysis"], ensure_ascii=False, indent=2))
+    print("任务分配结果：")
+    print(json.dumps(result["task_assignment"], ensure_ascii=False, indent=2))
 
-    model = ChatDeepSeek(
-        model="deepseek-chat",
-        temperature=0,
-        api_key=os.getenv("DEEPSEEK_API_KEY")
-    )
-
-    # 把工具告诉模型
-    model_with_tools = model.bind_tools([search_code])
-
-    # 消息历史
-    messages = [
-        HumanMessage(
-            content="请帮我查找 WebPageTranslateService 的源码，"
-                    "源码目录是 test/test_codebase"
-        )
-    ]
-
-    while True:
-
-        response = model_with_tools.invoke(messages)
-
-        messages.append(response)
-
-        print("\n模型回答：")
-        print(response.content)
-
-        # 没有工具调用 → Agent 完成
-        if not response.tool_calls:
-            print("\n最终回答：")
-            print(response.content)
-            break
-
-        # 有工具调用 → 执行
-        for tool_call in response.tool_calls:
-
-            if tool_call["name"] == "search_code":
-
-                result = search_code.invoke(
-                    tool_call["args"]
-                )
-
-                print("\nTool Result：")
-                print(result)
-
-                messages.append(
-                    ToolMessage(
-                        content=json.dumps(
-                            result,
-                            ensure_ascii=False
-                        ),
-                        tool_call_id=tool_call["id"]
-                    )
-                )
 
 if __name__ == "__main__":
     main()

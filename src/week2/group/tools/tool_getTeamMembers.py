@@ -1,3 +1,4 @@
+from langchain_core.tools import tool
 
 teams = [
     {
@@ -50,7 +51,9 @@ teams = [
 
 
 
-def get_team_members(team_group: str):
+@tool
+def get_team_members(team_group: str) -> list[dict]:
+    """获取团队成员及技能，支持后端开发组、前端开发组、测试组。"""
     for team in teams:
         if team["team_group"] == team_group:
             return team["team_members"]

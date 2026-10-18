@@ -24,5 +24,6 @@ dist/
 # Local editor and operating system files
 .vscode/
 .idea/
+.workbuddy/
 .DS_Store
 Thumbs.db
