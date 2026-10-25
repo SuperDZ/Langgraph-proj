@@ -126,8 +126,18 @@ def test_invalid_g1_decisions_never_pass(env, case):
         with pytest.raises(ApprovalError):
             approvals.decide(approval_id=result.approval_ids[0], decision=ApprovalDecision.APPROVE,
                              principal_id="owner", now=now + timedelta(hours=72))
-        result = gates.evaluate(g1_request(), now=now + timedelta(hours=72))
-        assert result.status is GateStatus.REJECTED
+        # 过期不是终局：重评估不复用已过期请求，而是以递增版本重建并等待新的真人决定
+        later = now + timedelta(hours=72)
+        result = gates.evaluate(g1_request(), now=later)
+        assert result.status is GateStatus.PENDING
+        assert result.approval_ids != []
+        fresh = store.get_approval_request(result.approval_ids[0])
+        assert fresh.request_version > 1 and fresh.decision is None
+        for approval_id in result.approval_ids:
+            if store.get_approval_request(approval_id).decision is None:
+                approvals.decide(approval_id=approval_id, decision=ApprovalDecision.APPROVE,
+                                 principal_id="owner", now=later)
+        assert gates.evaluate(g1_request(), now=later).status is GateStatus.PASSED
     elif case == "rejected":
         approvals.decide(approval_id=result.approval_ids[0], decision=ApprovalDecision.REJECT,
                          principal_id="owner", now=now)
@@ -281,3 +291,22 @@ def test_older_pass_cannot_override_latest_rejection(env):
     assert store.latest_passing_gate("r", "G3") is None
     with pytest.raises(TransitionRejected):
         transitions.require_fresh_passing_gate("r", "G3")
+
+
+@pytest.mark.ac("AC-28", "AC-55")
+def test_revoked_approval_is_recreated_with_bumped_version(env):
+    """审批被撤销不是死局：重评估以递增版本重建请求，等待新的真人决定。"""
+    store, _, _, approvals, gates, now = env
+    result = gates.evaluate(g1_request(), now=now)
+    first = result.approval_ids[0]
+    approvals.revoke(approval_id=first, principal_id="owner", reason="approver unavailable")
+    replay = gates.evaluate(g1_request(), now=now)
+    assert replay.status is GateStatus.PENDING
+    fresh = store.get_approval_request(replay.approval_ids[0])
+    assert fresh.approval_id != first and fresh.request_version == 2 and fresh.decision is None
+    assert len(store.approval_requests_for("r")) == 3
+    for approval_id in replay.approval_ids:
+        if store.get_approval_request(approval_id).decision is None:
+            approvals.decide(approval_id=approval_id, decision=ApprovalDecision.APPROVE,
+                             principal_id="owner", now=now)
+    assert gates.evaluate(g1_request(), now=now).status is GateStatus.PASSED

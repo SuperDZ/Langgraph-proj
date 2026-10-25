@@ -60,9 +60,10 @@ class ApprovalRequestService:
     ) -> tuple[ApprovalRequest, bool]:
         """幂等创建。
 
-        返回 ``(request, created)``。``created=False`` 表示命中已存在的同版本请求，
-        不会产生第二条记录（规范 §7.5 唯一索引 ApprovalRequest(run_id, subject_type,
-        input_digest, request_version)）。
+        返回 ``(request, created)``。命中同输入下仍可复用的请求时返回
+        ``(request, False)``；已撤销、已过期或已被拒绝的旧请求不复用，
+        而是以递增的 ``request_version`` 重新创建（规范 §7.5 唯一索引
+        ApprovalRequest(run_id, subject_type, input_digest, request_version)）。
         """
         if actor_id != GATE_EVALUATOR:
             raise ApprovalError(
@@ -70,13 +71,22 @@ class ApprovalRequestService:
             )
 
         moment = now or utc_now()
-        for existing in self.store.approval_requests_for(run_id):
-            if (
-                existing.subject_type is subject_type
-                and existing.input_digest == input_digest
-                and existing.request_version == request_version
-            ):
-                return existing, False
+        same_subject = [
+            existing for existing in self.store.approval_requests_for(run_id)
+            if existing.subject_type is subject_type and existing.input_digest == input_digest
+        ]
+        # 同一输入版本已被真人明确拒绝：拒绝是对内容的终局裁定，不自动重建
+        # 请求；需变更内容（新 digest）后重新走流程。
+        rejected = [existing for existing in same_subject if existing.decision is ApprovalDecision.REJECT]
+        if rejected:
+            return max(rejected, key=lambda r: r.request_version), False
+        # 已撤销/已过期的请求不能被幂等复用，否则同一输入将永远无法再次审批；
+        # 命中可复用请求时直接返回，否则以递增版本重新创建。
+        reusable = [existing for existing in same_subject if self._reusable(existing, moment)]
+        if reusable:
+            return max(reusable, key=lambda r: r.request_version), False
+        highest = max((existing.request_version for existing in same_subject), default=0)
+        request_version = max(request_version, highest + 1)
 
         request = ApprovalRequest(
             approval_id=f"apr-{uuid4().hex}",
@@ -106,6 +116,13 @@ class ApprovalRequestService:
             ),
         )
         return request, True
+
+    @staticmethod
+    def _reusable(request: ApprovalRequest, moment: datetime) -> bool:
+        """请求是否仍可被复用（尚未撤销/过期，且未被拒绝）。"""
+        if request.revoked or request.expires_at <= moment:
+            return False
+        return True
 
     def get(self, approval_id: str) -> ApprovalRequest:
         return self.store.get_approval_request(approval_id)
