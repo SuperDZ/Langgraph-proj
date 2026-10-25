@@ -227,14 +227,17 @@ def test_patch_committed_before_crash_is_replayed_without_a_second_model_proposa
         raise OSError("simulated process failure after Git commit")
     monkeypatch.setattr(first.workspace, "apply", crash)
     try:
-        with pytest.raises(OSError):
-            first.start("r", "fix bug")
+        # 崩溃被收敛为 BLOCKED + 证据，而不是传播或留下僵尸 RUNNING
+        result = first.start("r", "fix bug")
+        assert result["status"] == "BLOCKED"
         assert Counter(role for role, _ in adapter.calls)["backend"] == 1
     finally:
         first.close()
         first.store.close()
     second = build_demo(data_dir=tmp_path, run_id="r", runner=FakeTestRunner(), adapter=adapter)
     try:
+        run = second.store.get_run("r")
+        second.transitions.transition("r", target_status=RunStatus.RUNNING, expected_version=run.state_version)
         assert second.start("r", "fix bug")["phase"] == "RELEASE_AUTHORIZATION"
         assert Counter(role for role, _ in adapter.calls)["backend"] == 2
         assert len(second.workspace.git("log", "--format=%H").splitlines()) == 3
@@ -268,14 +271,16 @@ def test_recovery_rejects_cached_tests_after_clean_head_change(tmp_path, monkeyp
         return event(state, kind, actor, key, value)
     monkeypatch.setattr(first, "_event", crash)
     try:
-        with pytest.raises(OSError):
-            first.start("r", "fix bug")
+        result = first.start("r", "fix bug")
+        assert result["status"] == "BLOCKED"
         first.workspace.git("commit", "--allow-empty", "-m", "external HEAD drift")
     finally:
         first.close()
         first.store.close()
     second = build_demo(data_dir=tmp_path, run_id="r", runner=FakeTestRunner())
     try:
+        run = second.store.get_run("r")
+        second.transitions.transition("r", target_status=RunStatus.RUNNING, expected_version=run.state_version)
         assert second.start("r", "fix bug")["status"] == "BLOCKED"
         assert second.runner.calls == 0
         assert second.store.latest_gate_result("r", "G2") is None
@@ -396,3 +401,26 @@ def test_invalid_delivery_evidence_rejects_g2_instead_of_crashing(factory, damag
     assert result.status is GateStatus.REJECTED
     assert workflow.store.get_run("r").status is RunStatus.BLOCKED
     assert "DELIVERY_EVIDENCE_UNREADABLE_OR_INVALID" in result.blocker_issue_ids
+
+
+@pytest.mark.ac("AC-06")
+def test_unexpected_node_exception_blocks_run_with_evidence_and_stays_resumable(factory, monkeypatch):
+    """未预期异常不得留下永久 RUNNING 的僵尸 Run：必须落 BLOCKED + 证据，且可恢复。"""
+    workflow = factory()
+
+    def crash(workspace, *, attempt):
+        raise KeyError("workspace file vanished")
+
+    monkeypatch.setattr(workflow.runner, "run", crash)
+    result = workflow.start("r", "fix bug")
+    assert result["status"] == "BLOCKED"
+    blocked = [a for a in workflow.store.artifacts_for("r") if a.type == "WORKFLOW_BLOCKED"]
+    assert blocked
+    body = workflow.archive.read(blocked[-1].artifact_id, run_id="r")
+    assert "unexpected KeyError" in body["reason"]
+
+    monkeypatch.undo()
+    run = workflow.store.get_run("r")
+    workflow.transitions.transition("r", target_status=RunStatus.RUNNING, expected_version=run.state_version)
+    resumed = workflow.start("r", "fix bug")
+    assert resumed["phase"] == "RELEASE_AUTHORIZATION" and resumed["status"] == "WAITING_APPROVAL"

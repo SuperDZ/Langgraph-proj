@@ -22,6 +22,7 @@ from ..contracts.enums import (
     RunPhase,
     RunStatus,
     RunType,
+    TERMINAL_RUN_STATUSES,
 )
 from ..contracts.models import ExecutionEvent, GateResult, Run, utc_now
 from ..contracts.transitions import (
@@ -186,6 +187,16 @@ class StateTransitionService:
 
             new_phase = target_phase if target_phase is not None else current_phase
             new_status = target_status if target_status is not None else current_status
+
+            # 终态拒绝先于 no-op 早退：终态 Run 对任何调用（含目标相同的调用）都必须拒绝。
+            if current_status in TERMINAL_RUN_STATUSES:
+                self._reject(run_id, current, "Terminal Run cannot be changed")
+
+            # no-op：目标与当前一致时直接返回，不递增版本、不写事件。
+            # 否则事件日志无法回放出 state_version 的每次变化，且节点重放会
+            # 空烧版本号，令持旧版本的客户端 CAS 批量 409。
+            if new_phase is current_phase and new_status is current_status:
+                return current
 
             self._reject(
                 run_id,

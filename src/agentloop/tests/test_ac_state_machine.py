@@ -292,3 +292,30 @@ def test_ac51_delivery_is_the_only_successful_terminal():
         if RunPhase.DELIVERY in targets
     }
     assert with_delivery_exit == {RunPhase.G3}, "只有 G3 可通往 DELIVERY"
+
+
+def test_noop_transition_keeps_version_and_event_log(store: InMemoryStore, transitions: StateTransitionService):
+    """no-op 迁移不空烧 state_version：事件日志必须能回放每一次版本变化。"""
+    store.put_run(
+        Run(
+            run_id="run-noop",
+            run_type=RunType.DELIVERY,
+            project_id="p",
+            phase=RunPhase.INTAKE,
+            status=RunStatus.RUNNING,
+            trigger_source="USER",
+            config_snapshot_id="s",
+        )
+    )
+    before = store.get_run("run-noop")
+    events_before = len(store.events_for("run-noop"))
+    result = transitions.transition(
+        "run-noop", target_phase=RunPhase.INTAKE, target_status=RunStatus.RUNNING
+    )
+    assert result.state_version == before.state_version
+    assert len(store.events_for("run-noop")) == events_before
+    # 恢复重放（携带旧版本号重复调用）同样不再累计版本或产生 409
+    again = transitions.transition(
+        "run-noop", target_status=RunStatus.RUNNING, expected_version=before.state_version
+    )
+    assert again.state_version == before.state_version

@@ -525,6 +525,18 @@ class DeliveryWorkflow:
             self.archive.put(run_id=run_id, kind="WORKFLOW_BLOCKED", producer="orchestrator", value={"reason": str(exc)})
             if run.status is not RunStatus.BLOCKED:
                 self.transitions.transition(run_id, target_status=RunStatus.BLOCKED, expected_version=run.state_version)
+        except Exception as exc:
+            # 未预期异常（工作区文件缺失、checkpoint 锁、模型契约错误等）同样必须
+            # 离开 RUNNING 并落证据，否则会形成重启后无限重放的僵尸 Run。
+            run = self.store.get_run(run_id)
+            if run.status in {RunStatus.CANCEL_REQUESTED,RunStatus.CANCELLING,RunStatus.CANCELLED,RunStatus.NEEDS_RECONCILIATION,RunStatus.FAILED,RunStatus.COMPLETED}:
+                return self.summary(run_id)
+            import traceback
+            self.archive.put(run_id=run_id, kind="WORKFLOW_BLOCKED", producer="orchestrator",
+                             value={"reason": f"unexpected {type(exc).__name__}: {exc}",
+                                    "traceback": traceback.format_exc()[-8000:]})
+            if run.status is not RunStatus.BLOCKED:
+                self.transitions.transition(run_id, target_status=RunStatus.BLOCKED, expected_version=run.state_version)
         return self.summary(run_id)
 
     def confirm_g1(self, run_id, principal_id):
@@ -538,8 +550,10 @@ class DeliveryWorkflow:
                 self.approvals.decide(approval_id=approval.approval_id, principal_id=principal_id, decision=ApprovalDecision.APPROVE)
         return self._invoke(run_id, Command(resume=True))
 
-    def authorize_simulation(self, run_id, principal_id):
+    def authorize_simulation(self, run_id, principal_id, decision=None):
         from ..contracts.enums import ApprovalDecision, ReleaseAction
+        if decision is None:
+            decision = ApprovalDecision.APPROVE
         self._assert_config(run_id)
         run = self.store.get_run(run_id)
         if run.status is RunStatus.COMPLETED:
@@ -549,11 +563,17 @@ class DeliveryWorkflow:
         if run.phase is not RunPhase.RELEASE_AUTHORIZATION or run.status is not RunStatus.WAITING_APPROVAL:
             raise ValueError("当前 Run 不在模拟发布授权等待点")
         self.workspace.assert_revision(run.baseline_versions["commit"])
-        release = self.store.releases_for(run_id)[-1]
+        release = next((r for r in reversed(self.store.releases_for(run_id))), None)
+        if release is None:
+            raise ValueError("等待授权的 Release 不存在")
         request = self.releases.request(release_id=release.release_id, principal_id=principal_id,
             environment_id="simulation", target_ids=["local-simulator"], action_scope=[ReleaseAction.DEPLOY])
         authorization = self.releases.decide(request_id=request.authorization_request_id, principal_id=principal_id,
-                                             decision=ApprovalDecision.APPROVE)
+                                             decision=decision)
+        if decision is not ApprovalDecision.APPROVE:
+            # 拒绝：Run 已由 decide 迁移到 BLOCKED，不恢复图执行；
+            # 重新授权可再次进入等待点。
+            return self.summary(run_id)
         return self._invoke(run_id, Command(resume=authorization.authorization_id))
 
     def summary(self, run_id):

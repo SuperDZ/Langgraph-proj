@@ -4,7 +4,7 @@ from collections import Counter
 
 import pytest
 
-from agentloop.core.contracts.enums import EventType, GateStatus, IssueCategory, IssueStatus
+from agentloop.core.contracts.enums import EventType, GateStatus, IssueCategory, IssueStatus, RunStatus
 from agentloop.examples.demo import build_demo
 from agentloop.examples.scripted import ScriptedSecurityRepairAdapter
 from .test_ac_delivery import FakeTestRunner, SpyAdapter
@@ -112,13 +112,16 @@ def test_crash_after_remediation_commit_reuses_evidence_and_enters_leader_once(t
             raise OSError("crash after atomic remediation order")
     monkeypatch.setattr(first.store, "transaction", fail_after_commit)
     try:
-        with pytest.raises(OSError):
-            first.start("r", "fix")
+        # 崩溃被收敛为 BLOCKED + 证据；业务事务提交、checkpoint 未写入的现场保留
+        result = first.start("r", "fix")
+        assert result["status"] == "BLOCKED"
         assert first.store.count_events_of_type(crash_event) == 1
     finally:
         close(first)
     second = build_demo(data_dir=tmp_path, run_id="r", runner=FakeTestRunner(), adapter=adapter)
     try:
+        run = second.store.get_run("r")
+        second.transitions.transition("r", target_status=RunStatus.RUNNING, expected_version=run.state_version)
         assert second.start("r", "fix")["phase"] == "RELEASE_AUTHORIZATION"
         assert second.store.count_events_of_type(EventType.EXTERNAL_REWORK) == 1
         assert second.store.count_events_of_type(EventType.ISSUE_RESOLVED) == 1
