@@ -1,0 +1,12 @@
+{
+  "observed_at": "2026-10-25T12:05:02.876055+00:00",
+  "client_review_date": "2026-10-25",
+  "provider": "deepseek",
+  "endpoint": "https://api.deepseek.com/models",
+  "successful_completion": false,
+  "credentials_logged": false,
+  "scope": "Authentication/model-list preflight only; no generation or quality claim.",
+  "status": "BLOCKED",
+  "http_status": 401,
+  "error_code": "rejected"
+}

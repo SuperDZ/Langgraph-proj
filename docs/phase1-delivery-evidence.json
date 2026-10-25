@@ -1,0 +1,1132 @@
+{
+  "summary": {
+    "run_id": "phase1-spring-20261021",
+    "phase": "DELIVERY",
+    "status": "COMPLETED",
+    "state_version": 18,
+    "baseline": {
+      "spec": "3255dd62cfc8556376af918d91813444174ef6eb2517108e3b1fc67379e00ce3",
+      "architecture": "88a3feed2c9a48108d32ef09629e9bfb1d3c3bd0349c0290e078d87cf27ccae8",
+      "commit": "f77d9368783c9858131bc2a74fdbe324bea78c16"
+    },
+    "checkpoint_next": [],
+    "mode": "SCRIPTED_WORKERS_LOCAL_TESTS_SIMULATED_DEPLOYMENT",
+    "workspace": "E:\\VibeCoding\\Langgraph-proj\\.agentloop\\phase1-spring-20261021\\workspace",
+    "event_count": 52
+  },
+  "evidence_boundary": "Scripted role outputs; actual Maven/Spring HTTP assertions; fake human demo identity; local simulated deployment only.",
+  "artifacts": [
+    {
+      "metadata": {
+        "artifact_id": "d45dfe0d509bf079f8bcd7fe84f983d51a5e7321f326809036bdbaff7401c9d1",
+        "run_id": "phase1-spring-20261021",
+        "type": "CONFIG_SNAPSHOT",
+        "version": "f8dc70d8a12a6a4bbfb31fe948f5fd860943190fe939e3ab0481f828cc619eda",
+        "sha256": "f8dc70d8a12a6a4bbfb31fe948f5fd860943190fe939e3ab0481f828cc619eda",
+        "uri": "E:\\VibeCoding\\Langgraph-proj\\.agentloop\\artifacts\\f8\\f8dc70d8a12a6a4bbfb31fe948f5fd860943190fe939e3ab0481f828cc619eda.json",
+        "producer_task_id": "orchestrator",
+        "trust_level": "verified_internal",
+        "created_at": "2026-10-20T18:13:30.529774Z"
+      },
+      "body": {
+        "changes_ui": false,
+        "max_department_attempts": 3,
+        "max_rework_rounds": 3,
+        "max_steps": 100,
+        "production_code_changed": true,
+        "project_id": "phase1-demo",
+        "require_confirmation": false,
+        "role_profiles": {
+          "architecture-expert": "scripted-demo",
+          "backend": "scripted-demo",
+          "code-review": "scripted-demo",
+          "engineering-leader": "scripted-demo",
+          "expert-leader": "scripted-demo",
+          "product-analyst": "scripted-demo",
+          "product-expert": "scripted-demo",
+          "product-leader": "scripted-demo",
+          "security-expert": "scripted-demo",
+          "testing": "scripted-demo",
+          "ux-agent": "scripted-demo"
+        }
+      }
+    },
+    {
+      "metadata": {
+        "artifact_id": "544d1ebfa20005c19df04b794fdb175a2f51dda48d4400669d539480bb5579db",
+        "run_id": "phase1-spring-20261021",
+        "type": "AGENT_REPLY",
+        "version": "96645eda8e813afc9cd26b9af7e490e29607bc45eaff95ff74f6aea58ea4ca62",
+        "sha256": "96645eda8e813afc9cd26b9af7e490e29607bc45eaff95ff74f6aea58ea4ca62",
+        "uri": "E:\\VibeCoding\\Langgraph-proj\\.agentloop\\artifacts\\96\\96645eda8e813afc9cd26b9af7e490e29607bc45eaff95ff74f6aea58ea4ca62.json",
+        "producer_task_id": "product-analyst:68b16a4b79d175e21adb93f29f5a585077605c54826e14899fbc3dfab4bfa3a2",
+        "trust_level": "model_generated",
+        "created_at": "2026-10-20T18:13:30.610936Z"
+      },
+      "body": {
+        "input_digest": "68b16a4b79d175e21adb93f29f5a585077605c54826e14899fbc3dfab4bfa3a2",
+        "output": {
+          "criteria": [
+            {
+              "criterion_id": "missing",
+              "description": "缺失参数返回400"
+            },
+            {
+              "criterion_id": "empty",
+              "description": "空串返回400"
+            },
+            {
+              "criterion_id": "blank",
+              "description": "空白返回400"
+            },
+            {
+              "criterion_id": "valid",
+              "description": "合法参数保留问候语"
+            }
+          ],
+          "goal": "修复 /hello 的缺失、空串和空白参数错误，保留合法参数行为。",
+          "out_of_scope": [],
+          "title": "修复 hello 参数校验"
+        },
+        "profile": "scripted-demo",
+        "role": "product-analyst"
+      }
+    },
+    {
+      "metadata": {
+        "artifact_id": "fbea3c2563592e83232e2e0df64b2b716fc65a47c0b845dfdb14f73cd8b7f4cb",
+        "run_id": "phase1-spring-20261021",
+        "type": "SPEC",
+        "version": "3255dd62cfc8556376af918d91813444174ef6eb2517108e3b1fc67379e00ce3",
+        "sha256": "3255dd62cfc8556376af918d91813444174ef6eb2517108e3b1fc67379e00ce3",
+        "uri": "E:\\VibeCoding\\Langgraph-proj\\.agentloop\\artifacts\\32\\3255dd62cfc8556376af918d91813444174ef6eb2517108e3b1fc67379e00ce3.json",
+        "producer_task_id": "product-analyst",
+        "trust_level": "model_generated",
+        "created_at": "2026-10-20T18:13:30.640692Z"
+      },
+      "body": {
+        "criteria": [
+          {
+            "criterion_id": "missing",
+            "description": "缺失参数返回400"
+          },
+          {
+            "criterion_id": "empty",
+            "description": "空串返回400"
+          },
+          {
+            "criterion_id": "blank",
+            "description": "空白返回400"
+          },
+          {
+            "criterion_id": "valid",
+            "description": "合法参数保留问候语"
+          }
+        ],
+        "goal": "修复 /hello 的缺失、空串和空白参数错误，保留合法参数行为。",
+        "out_of_scope": [],
+        "title": "修复 hello 参数校验"
+      }
+    },
+    {
+      "metadata": {
+        "artifact_id": "4729b5c16a49b2242240d8697856d921969a55a212f884420ee40a761c0c9bee",
+        "run_id": "phase1-spring-20261021",
+        "type": "AGENT_REPLY",
+        "version": "a8aa660f4c3ce7a0762ce94507e4eb91da68eebaf736d61c3f9a81e6b067650f",
+        "sha256": "a8aa660f4c3ce7a0762ce94507e4eb91da68eebaf736d61c3f9a81e6b067650f",
+        "uri": "E:\\VibeCoding\\Langgraph-proj\\.agentloop\\artifacts\\a8\\a8aa660f4c3ce7a0762ce94507e4eb91da68eebaf736d61c3f9a81e6b067650f.json",
+        "producer_task_id": "product-leader:33bb5fa7330e53eb0ec9d7ee5c7544e15350cc174da5e73da032fc0ae168ea13",
+        "trust_level": "model_generated",
+        "created_at": "2026-10-20T18:13:30.667893Z"
+      },
+      "body": {
+        "input_digest": "33bb5fa7330e53eb0ec9d7ee5c7544e15350cc174da5e73da032fc0ae168ea13",
+        "output": {
+          "accepted": true,
+          "input_digest": "3255dd62cfc8556376af918d91813444174ef6eb2517108e3b1fc67379e00ce3",
+          "reasons": []
+        },
+        "profile": "scripted-demo",
+        "role": "product-leader"
+      }
+    },
+    {
+      "metadata": {
+        "artifact_id": "d8fe464b3b692fdd6980d301dc3b33257cf23d8276109f50af77329f567620e2",
+        "run_id": "phase1-spring-20261021",
+        "type": "AGENT_REPLY",
+        "version": "dad64da4e070d923d8d37ba2eb77b5785cd8dfba4f54b4ddb5d5bff4b6edb933",
+        "sha256": "dad64da4e070d923d8d37ba2eb77b5785cd8dfba4f54b4ddb5d5bff4b6edb933",
+        "uri": "E:\\VibeCoding\\Langgraph-proj\\.agentloop\\artifacts\\da\\dad64da4e070d923d8d37ba2eb77b5785cd8dfba4f54b4ddb5d5bff4b6edb933.json",
+        "producer_task_id": "product-expert:dc70db80df8eefb139bc9cf93a0aaecbfb877de59f62fd087a03fae3a263401f",
+        "trust_level": "model_generated",
+        "created_at": "2026-10-20T18:13:30.723899Z"
+      },
+      "body": {
+        "input_digest": "dc70db80df8eefb139bc9cf93a0aaecbfb877de59f62fd087a03fae3a263401f",
+        "output": {
+          "accepted": true,
+          "input_digest": "3255dd62cfc8556376af918d91813444174ef6eb2517108e3b1fc67379e00ce3",
+          "reasons": []
+        },
+        "profile": "scripted-demo",
+        "role": "product-expert"
+      }
+    },
+    {
+      "metadata": {
+        "artifact_id": "da8175fba15f1eb34aedd52b19f197fac039873fa5b101a901eb797751c7ca41",
+        "run_id": "phase1-spring-20261021",
+        "type": "AGENT_REPLY",
+        "version": "d961b18b40e33df5595736d1b5848129fea1196e9ea1bb49951b78bba5ca94b8",
+        "sha256": "d961b18b40e33df5595736d1b5848129fea1196e9ea1bb49951b78bba5ca94b8",
+        "uri": "E:\\VibeCoding\\Langgraph-proj\\.agentloop\\artifacts\\d9\\d961b18b40e33df5595736d1b5848129fea1196e9ea1bb49951b78bba5ca94b8.json",
+        "producer_task_id": "architecture-expert:ddb5eb1c52df4ca29733ec6cd15109997a94855023ef253a4f72178deb13eda0",
+        "trust_level": "model_generated",
+        "created_at": "2026-10-20T18:13:30.747029Z"
+      },
+      "body": {
+        "input_digest": "ddb5eb1c52df4ca29733ec6cd15109997a94855023ef253a4f72178deb13eda0",
+        "output": {
+          "editable_paths": [
+            "src/main/java/example/HelloController.java"
+          ],
+          "risks": [
+            "不得改变合法参数行为或削弱测试"
+          ],
+          "spec_digest": "3255dd62cfc8556376af918d91813444174ef6eb2517108e3b1fc67379e00ce3",
+          "summary": "在 Controller 校验参数，固定 HTTP 回归验证"
+        },
+        "profile": "scripted-demo",
+        "role": "architecture-expert"
+      }
+    },
+    {
+      "metadata": {
+        "artifact_id": "958547afb66861e85cf6775b0c1783f746821d78d877f935f60e9f9933da2e4b",
+        "run_id": "phase1-spring-20261021",
+        "type": "ARCHITECTURE",
+        "version": "88a3feed2c9a48108d32ef09629e9bfb1d3c3bd0349c0290e078d87cf27ccae8",
+        "sha256": "88a3feed2c9a48108d32ef09629e9bfb1d3c3bd0349c0290e078d87cf27ccae8",
+        "uri": "E:\\VibeCoding\\Langgraph-proj\\.agentloop\\artifacts\\88\\88a3feed2c9a48108d32ef09629e9bfb1d3c3bd0349c0290e078d87cf27ccae8.json",
+        "producer_task_id": "architecture-expert",
+        "trust_level": "model_generated",
+        "created_at": "2026-10-20T18:13:30.772332Z"
+      },
+      "body": {
+        "editable_paths": [
+          "src/main/java/example/HelloController.java"
+        ],
+        "risks": [
+          "不得改变合法参数行为或削弱测试"
+        ],
+        "spec_digest": "3255dd62cfc8556376af918d91813444174ef6eb2517108e3b1fc67379e00ce3",
+        "summary": "在 Controller 校验参数，固定 HTTP 回归验证"
+      }
+    },
+    {
+      "metadata": {
+        "artifact_id": "1061845c4a95b6c8a286460d423f6ebc34d6555a8de05140ede8b4208cb881c0",
+        "run_id": "phase1-spring-20261021",
+        "type": "AGENT_REPLY",
+        "version": "5bbe4b8720eacb712177d5842a0c139fdb9a158017f228ab2a1ff72210a8dae7",
+        "sha256": "5bbe4b8720eacb712177d5842a0c139fdb9a158017f228ab2a1ff72210a8dae7",
+        "uri": "E:\\VibeCoding\\Langgraph-proj\\.agentloop\\artifacts\\5b\\5bbe4b8720eacb712177d5842a0c139fdb9a158017f228ab2a1ff72210a8dae7.json",
+        "producer_task_id": "expert-leader:5a6efde77852204fce361da8ec2132310fc836e78225b5db62e483405cbf6f8e",
+        "trust_level": "model_generated",
+        "created_at": "2026-10-20T18:13:30.794562Z"
+      },
+      "body": {
+        "input_digest": "5a6efde77852204fce361da8ec2132310fc836e78225b5db62e483405cbf6f8e",
+        "output": {
+          "accepted": true,
+          "input_digest": "88a3feed2c9a48108d32ef09629e9bfb1d3c3bd0349c0290e078d87cf27ccae8",
+          "reasons": []
+        },
+        "profile": "scripted-demo",
+        "role": "expert-leader"
+      }
+    },
+    {
+      "metadata": {
+        "artifact_id": "ba0133e87ff34e22e414a3471354f8bc7cc7276b4b368d7eb511afb858c030be",
+        "run_id": "phase1-spring-20261021",
+        "type": "AGENT_REPLY",
+        "version": "24114b62fb8cdcc2b9a56888867e8b8957b0014c23d4fdef12fcaacfe2c54e79",
+        "sha256": "24114b62fb8cdcc2b9a56888867e8b8957b0014c23d4fdef12fcaacfe2c54e79",
+        "uri": "E:\\VibeCoding\\Langgraph-proj\\.agentloop\\artifacts\\24\\24114b62fb8cdcc2b9a56888867e8b8957b0014c23d4fdef12fcaacfe2c54e79.json",
+        "producer_task_id": "engineering-leader:d89f439ec86acc7b0830a1d044519446c1453ee780f5e42506173d01716ebbd2",
+        "trust_level": "model_generated",
+        "created_at": "2026-10-20T18:13:30.860588Z"
+      },
+      "body": {
+        "input_digest": "d89f439ec86acc7b0830a1d044519446c1453ee780f5e42506173d01716ebbd2",
+        "output": {
+          "backend_task": "补齐参数校验",
+          "summary": "后端实现并执行固定验收测试",
+          "test_criteria_ids": [
+            "missing",
+            "empty",
+            "blank",
+            "valid"
+          ]
+        },
+        "profile": "scripted-demo",
+        "role": "engineering-leader"
+      }
+    },
+    {
+      "metadata": {
+        "artifact_id": "be200137f3bdc65ede0c767d0906d60eee93c4bc517e8f533cc9d638c600657a",
+        "run_id": "phase1-spring-20261021",
+        "type": "AGENT_REPLY",
+        "version": "f512d89b6392946c722882a61793d836f84aa80000f2954f08c404801c847e20",
+        "sha256": "f512d89b6392946c722882a61793d836f84aa80000f2954f08c404801c847e20",
+        "uri": "E:\\VibeCoding\\Langgraph-proj\\.agentloop\\artifacts\\f5\\f512d89b6392946c722882a61793d836f84aa80000f2954f08c404801c847e20.json",
+        "producer_task_id": "backend:384183c59bd1f3a779ce648912221a9a42491b8c9964a2ee7a31bb6f047dd7f3",
+        "trust_level": "model_generated",
+        "created_at": "2026-10-20T18:13:30.882894Z"
+      },
+      "body": {
+        "input_digest": "384183c59bd1f3a779ce648912221a9a42491b8c9964a2ee7a31bb6f047dd7f3",
+        "output": {
+          "changes": [
+            {
+              "content": "package example;\n\nimport org.springframework.http.ResponseEntity;\nimport org.springframework.web.bind.annotation.GetMapping;\nimport org.springframework.web.bind.annotation.RequestParam;\nimport org.springframework.web.bind.annotation.RestController;\n\n@RestController\npublic class HelloController {\n    @GetMapping(\"/hello\")\n    public ResponseEntity<String> hello(@RequestParam(required = false) String name) {\n        if (name == null) return ResponseEntity.badRequest().body(\"name required\");\n        return ResponseEntity.ok(\"Hello, \" + name.trim());\n    }\n}\n",
+              "expected_sha256": "af305da8fcd6556c8b7bcea6d8bfca93ef4feb9dbf021b57e8d0bf005f0c4698",
+              "path": "src/main/java/example/HelloController.java"
+            }
+          ],
+          "summary": "演示候选补丁"
+        },
+        "profile": "scripted-demo",
+        "role": "backend"
+      }
+    },
+    {
+      "metadata": {
+        "artifact_id": "7994e1119db60eb2b92664be725c01f2b01d7a99ce5543c97c4c6ef3edfeba24",
+        "run_id": "phase1-spring-20261021",
+        "type": "AGENT_REPLY",
+        "version": "7cc771f3f8d8c1bc72544389a3fa87bd43b621e3a3b8491adc178c2148942b04",
+        "sha256": "7cc771f3f8d8c1bc72544389a3fa87bd43b621e3a3b8491adc178c2148942b04",
+        "uri": "E:\\VibeCoding\\Langgraph-proj\\.agentloop\\artifacts\\7c\\7cc771f3f8d8c1bc72544389a3fa87bd43b621e3a3b8491adc178c2148942b04.json",
+        "producer_task_id": "code-review:62b6987d786fd1d3650a7f1f77bc4915f2dfa9115e45ce620a61645837a675e3",
+        "trust_level": "model_generated",
+        "created_at": "2026-10-20T18:13:31.728427Z"
+      },
+      "body": {
+        "input_digest": "62b6987d786fd1d3650a7f1f77bc4915f2dfa9115e45ce620a61645837a675e3",
+        "output": {
+          "accepted": true,
+          "input_digest": "75e6772062be1b51f3e7571170604e1eccd86c11",
+          "reasons": []
+        },
+        "profile": "scripted-demo",
+        "role": "code-review"
+      }
+    },
+    {
+      "metadata": {
+        "artifact_id": "502de3048b49a9d6b46d82b8a57281550286ab3fbc4040ac909b25ff614349df",
+        "run_id": "phase1-spring-20261021",
+        "type": "TEST_EXECUTION",
+        "version": "4332402746b0278954cc46e4bc9b7a4f54bd0b539ba76c133ac96eea7ba41b2c",
+        "sha256": "4332402746b0278954cc46e4bc9b7a4f54bd0b539ba76c133ac96eea7ba41b2c",
+        "uri": "E:\\VibeCoding\\Langgraph-proj\\.agentloop\\artifacts\\43\\4332402746b0278954cc46e4bc9b7a4f54bd0b539ba76c133ac96eea7ba41b2c.json",
+        "producer_task_id": "test-executor",
+        "trust_level": "verified_internal",
+        "created_at": "2026-10-20T18:14:11.990489Z"
+      },
+      "body": {
+        "architecture_digest": "88a3feed2c9a48108d32ef09629e9bfb1d3c3bd0349c0290e078d87cf27ccae8",
+        "commit_sha": "75e6772062be1b51f3e7571170604e1eccd86c11",
+        "decision": "FAIL",
+        "exit_code": 1,
+        "failed": 2,
+        "integrity_valid": true,
+        "log": "[INFO] Scanning for projects...\n[INFO] \n[INFO] -------------------< example:agentloop-bug-fixture >--------------------\n[INFO] Building agentloop-bug-fixture 1.0.0\n[INFO]   from pom.xml\n[INFO] --------------------------------[ jar ]---------------------------------\n[INFO] \n[INFO] --- resources:3.3.1:resources (default-resources) @ agentloop-bug-fixture ---\n[INFO] skip non existing resourceDirectory E:\\VibeCoding\\Langgraph-proj\\.agentloop\\phase1-spring-20261021\\workspace\\src\\main\\resources\n[INFO] skip non existing resourceDirectory E:\\VibeCoding\\Langgraph-proj\\.agentloop\\phase1-spring-20261021\\workspace\\src\\main\\resources\n[INFO] \n[INFO] --- compiler:3.14.1:compile (default-compile) @ agentloop-bug-fixture ---\n[INFO] Recompiling the module because of changed source code.\n[INFO] Compiling 2 source files with javac [debug parameters release 21] to target\\classes\n[INFO] \n[INFO] --- resources:3.3.1:testResources (default-testResources) @ agentloop-bug-fixture ---\n[INFO] skip non existing resourceDirectory E:\\VibeCoding\\Langgraph-proj\\.agentloop\\phase1-spring-20261021\\workspace\\src\\test\\resources\n[INFO] \n[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ agentloop-bug-fixture ---\n[INFO] Recompiling the module because of changed dependency.\n[INFO] Compiling 1 source file with javac [debug parameters release 21] to target\\test-classes\n[INFO] \n[INFO] --- surefire:3.5.6:test (default-test) @ agentloop-bug-fixture ---\n[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider\n[INFO] \n[INFO] -------------------------------------------------------\n[INFO]  T E S T S\n[INFO] -------------------------------------------------------\n[INFO] Running example.HelloControllerTest\n02:13:55.586 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [example.HelloControllerTest]: HelloControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.\n02:13:55.976 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration example.Application for test class example.HelloControllerTest\n\n  .   ____          _            __ _ _\n /\\\\ / ___'_ __ _ _(_)_ __  __ _ \\ \\ \\ \\\n( ( )\\___ | '_ | '_| | '_ \\/ _` | \\ \\ \\ \\\n \\\\/  ___)| |_)| | | | | || (_| |  ) ) ) )\n  '  |____| .__|_| |_|_| |_\\__, | / / / /\n =========|_|==============|___/=/_/_/_/\n\n :: Spring Boot ::               (v3.5.16)\n\n2026-10-21T02:13:58.240+08:00  INFO 24172 --- [           main] example.HelloControllerTest              : Starting HelloControllerTest using Java 21.0.12.1 with PID 24172 (started by VisualDz in E:\\VibeCoding\\Langgraph-proj\\.agentloop\\phase1-spring-20261021\\workspace)\n2026-10-21T02:13:58.242+08:00  INFO 24172 --- [           main] example.HelloControllerTest              : No active profile set, falling back to 1 default profile: \"default\"\n2026-10-21T02:14:04.892+08:00  INFO 24172 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 0 (http)\n2026-10-21T02:14:04.917+08:00  INFO 24172 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]\n2026-10-21T02:14:04.918+08:00  INFO 24172 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.55]\n2026-10-21T02:14:05.016+08:00  INFO 24172 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext\n2026-10-21T02:14:05.018+08:00  INFO 24172 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 6720 ms\n2026-10-21T02:14:07.241+08:00  INFO 24172 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 63222 (http) with context path '/'\n2026-10-21T02:14:07.267+08:00  INFO 24172 --- [           main] example.HelloControllerTest              : Started HelloControllerTest in 10.16 seconds (process running for 14.57)\n2026-10-21T02:14:10.373+08:00  INFO 24172 --- [o-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'\n2026-10-21T02:14:10.373+08:00  INFO 24172 --- [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'\n2026-10-21T02:14:10.373+08:00  INFO 24172 --- [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms\n[ERROR] Tests run: 4, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 15.68 s <<< FAILURE! -- in example.HelloControllerTest\n[ERROR] example.HelloControllerTest.blankNameReturns400 -- Time elapsed: 3.453 s <<< FAILURE!\norg.opentest4j.AssertionFailedError: expected: <400> but was: <200>\n\tat org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)\n\tat org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)\n\tat org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)\n\tat org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)\n\tat org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:145)\n\tat org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:531)\n\tat example.HelloControllerTest.blankNameReturns400(HelloControllerTest.java:21)\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:580)\n\tat java.base/java.util.ArrayList.forEach(ArrayList.java:1596)\n\tat java.base/java.util.ArrayList.forEach(ArrayList.java:1596)\n\n[ERROR] example.HelloControllerTest.emptyNameReturns400 -- Time elapsed: 0.031 s <<< FAILURE!\norg.opentest4j.AssertionFailedError: expected: <400> but was: <200>\n\tat org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)\n\tat org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)\n\tat org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)\n\tat org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)\n\tat org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:145)\n\tat org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:531)\n\tat example.HelloControllerTest.emptyNameReturns400(HelloControllerTest.java:20)\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:580)\n\tat java.base/java.util.ArrayList.forEach(ArrayList.java:1596)\n\tat java.base/java.util.ArrayList.forEach(ArrayList.java:1596)\n\n[INFO] \n[INFO] Results:\n[INFO] \n[ERROR] Failures: \n[ERROR]   HelloControllerTest.blankNameReturns400:21 expected: <400> but was: <200>\n[ERROR]   HelloControllerTest.emptyNameReturns400:20 expected: <400> but was: <200>\n[INFO] \n[ERROR] Tests run: 4, Failures: 2, Errors: 0, Skipped: 0\n[INFO] \n[INFO] ------------------------------------------------------------------------\n[INFO] BUILD FAILURE\n[INFO] ------------------------------------------------------------------------\n[INFO] Total time:  32.047 s\n[INFO] Finished at: 2026-10-21T02:14:11+08:00\n[INFO] ------------------------------------------------------------------------\n[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.6:test (default-test) on project agentloop-bug-fixture: There are test failures.\n[ERROR] \n[ERROR] See E:\\VibeCoding\\Langgraph-proj\\.agentloop\\phase1-spring-20261021\\workspace\\target\\agentloop-reports-1 for the individual test results.\n[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.\n[ERROR] -> [Help 1]\n[ERROR] \n[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.\n[ERROR] Re-run Maven using the -X switch to enable full debug logging.\n[ERROR] \n[ERROR] For more information about the errors and possible solutions, please read the following articles:\n[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException\nMockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3\nOpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended\nWARNING: A Java agent has been loaded dynamically (E:\\VibeCoding\\Langgraph-proj\\.agentloop\\m2\\net\\bytebuddy\\byte-buddy-agent\\1.17.8\\byte-buddy-agent-1.17.8.jar)\nWARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning\nWARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information\nWARNING: Dynamic loading of agents will be disallowed by default in a future release\n",
+        "required_tests_complete": true,
+        "skipped": 0,
+        "spec_digest": "3255dd62cfc8556376af918d91813444174ef6eb2517108e3b1fc67379e00ce3",
+        "tests": [
+          "blankNameReturns400",
+          "emptyNameReturns400",
+          "missingNameReturns400",
+          "validNamePreservesGreeting"
+        ],
+        "total": 4
+      }
+    },
+    {
+      "metadata": {
+        "artifact_id": "6c4ce4ca3acf74732ed9f287bb2cb79820efbf9d1f076798ad83b0b5b451bbff",
+        "run_id": "phase1-spring-20261021",
+        "type": "AGENT_REPLY",
+        "version": "87d2f390659c78d602cae88488ddf228b33c9a6653c319d159bd6dfaa284201c",
+        "sha256": "87d2f390659c78d602cae88488ddf228b33c9a6653c319d159bd6dfaa284201c",
+        "uri": "E:\\VibeCoding\\Langgraph-proj\\.agentloop\\artifacts\\87\\87d2f390659c78d602cae88488ddf228b33c9a6653c319d159bd6dfaa284201c.json",
+        "producer_task_id": "testing:4815474ae967bbb33578d209ed7f6dea053f1d19152de75deadc4faed6fe326e",
+        "trust_level": "model_generated",
+        "created_at": "2026-10-20T18:14:12.015401Z"
+      },
+      "body": {
+        "input_digest": "4815474ae967bbb33578d209ed7f6dea053f1d19152de75deadc4faed6fe326e",
+        "output": {
+          "category": "CODE_DEFECT",
+          "explanation": "固定 HTTP 测试仍有失败，退回 Backend 修复边界"
+        },
+        "profile": "scripted-demo",
+        "role": "testing"
+      }
+    },
+    {
+      "metadata": {
+        "artifact_id": "9d50559bc2a702c7fb43f25cd84f75b05d98a36b7f0dbed66c1a9da022cfc54d",
+        "run_id": "phase1-spring-20261021",
+        "type": "AGENT_REPLY",
+        "version": "144ca3fbb0e742e61ae06c0aaf1fcc8593eb81af7c5d44c8cd513b30d060a934",
+        "sha256": "144ca3fbb0e742e61ae06c0aaf1fcc8593eb81af7c5d44c8cd513b30d060a934",
+        "uri": "E:\\VibeCoding\\Langgraph-proj\\.agentloop\\artifacts\\14\\144ca3fbb0e742e61ae06c0aaf1fcc8593eb81af7c5d44c8cd513b30d060a934.json",
+        "producer_task_id": "backend:039202c5e44bb667febd0aeb860b0edd98f1c1bd01b9940cce56f21dc3390e56",
+        "trust_level": "model_generated",
+        "created_at": "2026-10-20T18:14:12.048554Z"
+      },
+      "body": {
+        "input_digest": "039202c5e44bb667febd0aeb860b0edd98f1c1bd01b9940cce56f21dc3390e56",
+        "output": {
+          "changes": [
+            {
+              "content": "package example;\n\nimport org.springframework.http.ResponseEntity;\nimport org.springframework.web.bind.annotation.GetMapping;\nimport org.springframework.web.bind.annotation.RequestParam;\nimport org.springframework.web.bind.annotation.RestController;\n\n@RestController\npublic class HelloController {\n    @GetMapping(\"/hello\")\n    public ResponseEntity<String> hello(@RequestParam(required = false) String name) {\n        if (name == null || name.isBlank()) return ResponseEntity.badRequest().body(\"name required\");\n        return ResponseEntity.ok(\"Hello, \" + name.trim());\n    }\n}\n",
+              "expected_sha256": "0e30bef88f4a1d5ac6c2083518475a6d4766af36956bd924bc55b4142ae60a9d",
+              "path": "src/main/java/example/HelloController.java"
+            }
+          ],
+          "summary": "演示候选补丁"
+        },
+        "profile": "scripted-demo",
+        "role": "backend"
+      }
+    },
+    {
+      "metadata": {
+        "artifact_id": "51238bb1a755b8a35ebb3e6921dc2b42af9f3313c356bf19fac07521d24cbf64",
+        "run_id": "phase1-spring-20261021",
+        "type": "AGENT_REPLY",
+        "version": "fe6b69cd7a0d2681cbd9ace3ec865e1381f954a2874804570cb1ec6497ea9fa4",
+        "sha256": "fe6b69cd7a0d2681cbd9ace3ec865e1381f954a2874804570cb1ec6497ea9fa4",
+        "uri": "E:\\VibeCoding\\Langgraph-proj\\.agentloop\\artifacts\\fe\\fe6b69cd7a0d2681cbd9ace3ec865e1381f954a2874804570cb1ec6497ea9fa4.json",
+        "producer_task_id": "code-review:afc49625bbe17016efba7a87993d9f1565a914710f59f4dc06af26ce2ab5a1c1",
+        "trust_level": "model_generated",
+        "created_at": "2026-10-20T18:14:12.904155Z"
+      },
+      "body": {
+        "input_digest": "afc49625bbe17016efba7a87993d9f1565a914710f59f4dc06af26ce2ab5a1c1",
+        "output": {
+          "accepted": true,
+          "input_digest": "f77d9368783c9858131bc2a74fdbe324bea78c16",
+          "reasons": []
+        },
+        "profile": "scripted-demo",
+        "role": "code-review"
+      }
+    },
+    {
+      "metadata": {
+        "artifact_id": "240783ddda4d5424a32ce6f97fada164913844e12ca503f85ed84378f7cb1111",
+        "run_id": "phase1-spring-20261021",
+        "type": "TEST_EXECUTION",
+        "version": "1dab299f52f7748d1e825a6e932d0e330af480aae74a6247a7e89db56af5c2d5",
+        "sha256": "1dab299f52f7748d1e825a6e932d0e330af480aae74a6247a7e89db56af5c2d5",
+        "uri": "E:\\VibeCoding\\Langgraph-proj\\.agentloop\\artifacts\\1d\\1dab299f52f7748d1e825a6e932d0e330af480aae74a6247a7e89db56af5c2d5.json",
+        "producer_task_id": "test-executor",
+        "trust_level": "verified_internal",
+        "created_at": "2026-10-20T18:14:55.944291Z"
+      },
+      "body": {
+        "architecture_digest": "88a3feed2c9a48108d32ef09629e9bfb1d3c3bd0349c0290e078d87cf27ccae8",
+        "commit_sha": "f77d9368783c9858131bc2a74fdbe324bea78c16",
+        "decision": "PASS",
+        "exit_code": 0,
+        "failed": 0,
+        "integrity_valid": true,
+        "log": "[INFO] Scanning for projects...\n[INFO] \n[INFO] -------------------< example:agentloop-bug-fixture >--------------------\n[INFO] Building agentloop-bug-fixture 1.0.0\n[INFO]   from pom.xml\n[INFO] --------------------------------[ jar ]---------------------------------\n[INFO] \n[INFO] --- resources:3.3.1:resources (default-resources) @ agentloop-bug-fixture ---\n[INFO] skip non existing resourceDirectory E:\\VibeCoding\\Langgraph-proj\\.agentloop\\phase1-spring-20261021\\workspace\\src\\main\\resources\n[INFO] skip non existing resourceDirectory E:\\VibeCoding\\Langgraph-proj\\.agentloop\\phase1-spring-20261021\\workspace\\src\\main\\resources\n[INFO] \n[INFO] --- compiler:3.14.1:compile (default-compile) @ agentloop-bug-fixture ---\n[INFO] Recompiling the module because of changed source code.\n[INFO] Compiling 2 source files with javac [debug parameters release 21] to target\\classes\n[INFO] \n[INFO] --- resources:3.3.1:testResources (default-testResources) @ agentloop-bug-fixture ---\n[INFO] skip non existing resourceDirectory E:\\VibeCoding\\Langgraph-proj\\.agentloop\\phase1-spring-20261021\\workspace\\src\\test\\resources\n[INFO] \n[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ agentloop-bug-fixture ---\n[INFO] Recompiling the module because of changed dependency.\n[INFO] Compiling 1 source file with javac [debug parameters release 21] to target\\test-classes\n[INFO] \n[INFO] --- surefire:3.5.6:test (default-test) @ agentloop-bug-fixture ---\n[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider\n[INFO] \n[INFO] -------------------------------------------------------\n[INFO]  T E S T S\n[INFO] -------------------------------------------------------\n[INFO] Running example.HelloControllerTest\n02:14:39.351 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [example.HelloControllerTest]: HelloControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.\n02:14:40.088 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration example.Application for test class example.HelloControllerTest\n\n  .   ____          _            __ _ _\n /\\\\ / ___'_ __ _ _(_)_ __  __ _ \\ \\ \\ \\\n( ( )\\___ | '_ | '_| | '_ \\/ _` | \\ \\ \\ \\\n \\\\/  ___)| |_)| | | | | || (_| |  ) ) ) )\n  '  |____| .__|_| |_|_| |_\\__, | / / / /\n =========|_|==============|___/=/_/_/_/\n\n :: Spring Boot ::               (v3.5.16)\n\n2026-10-21T02:14:43.275+08:00  INFO 14928 --- [           main] example.HelloControllerTest              : Starting HelloControllerTest using Java 21.0.12.1 with PID 14928 (started by VisualDz in E:\\VibeCoding\\Langgraph-proj\\.agentloop\\phase1-spring-20261021\\workspace)\n2026-10-21T02:14:43.300+08:00  INFO 14928 --- [           main] example.HelloControllerTest              : No active profile set, falling back to 1 default profile: \"default\"\n2026-10-21T02:14:48.423+08:00  INFO 14928 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 0 (http)\n2026-10-21T02:14:48.465+08:00  INFO 14928 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]\n2026-10-21T02:14:48.467+08:00  INFO 14928 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.55]\n2026-10-21T02:14:48.567+08:00  INFO 14928 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext\n2026-10-21T02:14:48.569+08:00  INFO 14928 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 5213 ms\n2026-10-21T02:14:51.466+08:00  INFO 14928 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 56331 (http) with context path '/'\n2026-10-21T02:14:51.479+08:00  INFO 14928 --- [           main] example.HelloControllerTest              : Started HelloControllerTest in 10.524 seconds (process running for 15.056)\n2026-10-21T02:14:54.389+08:00  INFO 14928 --- [o-auto-1-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'\n2026-10-21T02:14:54.389+08:00  INFO 14928 --- [o-auto-1-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'\n2026-10-21T02:14:54.390+08:00  INFO 14928 --- [o-auto-1-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms\n[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 16.26 s -- in example.HelloControllerTest\n[INFO] \n[INFO] Results:\n[INFO] \n[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0\n[INFO] \n[INFO] ------------------------------------------------------------------------\n[INFO] BUILD SUCCESS\n[INFO] ------------------------------------------------------------------------\n[INFO] Total time:  34.346 s\n[INFO] Finished at: 2026-10-21T02:14:55+08:00\n[INFO] ------------------------------------------------------------------------\nMockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3\nOpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended\nWARNING: A Java agent has been loaded dynamically (E:\\VibeCoding\\Langgraph-proj\\.agentloop\\m2\\net\\bytebuddy\\byte-buddy-agent\\1.17.8\\byte-buddy-agent-1.17.8.jar)\nWARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning\nWARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information\nWARNING: Dynamic loading of agents will be disallowed by default in a future release\n",
+        "required_tests_complete": true,
+        "skipped": 0,
+        "spec_digest": "3255dd62cfc8556376af918d91813444174ef6eb2517108e3b1fc67379e00ce3",
+        "tests": [
+          "blankNameReturns400",
+          "emptyNameReturns400",
+          "missingNameReturns400",
+          "validNamePreservesGreeting"
+        ],
+        "total": 4
+      }
+    },
+    {
+      "metadata": {
+        "artifact_id": "bc0bf481cc0a880628364761ab06438fc03ed373c1440f45a91d0a9c946fbf88",
+        "run_id": "phase1-spring-20261021",
+        "type": "AGENT_REPLY",
+        "version": "cbbf55e480883d5835374babc3552fd2a1a54d5319a9d690793f73ddfe15a701",
+        "sha256": "cbbf55e480883d5835374babc3552fd2a1a54d5319a9d690793f73ddfe15a701",
+        "uri": "E:\\VibeCoding\\Langgraph-proj\\.agentloop\\artifacts\\cb\\cbbf55e480883d5835374babc3552fd2a1a54d5319a9d690793f73ddfe15a701.json",
+        "producer_task_id": "engineering-leader:f099f9f31a8ad8b3e3b2e6c1c2d47d65c49881a1c7f22bae291ae1b08f7eb0a2",
+        "trust_level": "model_generated",
+        "created_at": "2026-10-20T18:14:55.967396Z"
+      },
+      "body": {
+        "input_digest": "f099f9f31a8ad8b3e3b2e6c1c2d47d65c49881a1c7f22bae291ae1b08f7eb0a2",
+        "output": {
+          "accepted": true,
+          "input_digest": "f77d9368783c9858131bc2a74fdbe324bea78c16",
+          "reasons": []
+        },
+        "profile": "scripted-demo",
+        "role": "engineering-leader"
+      }
+    },
+    {
+      "metadata": {
+        "artifact_id": "ab6399f21a782785e3d2e7939a340cad1a256b4b8cc2127e736a790286612b37",
+        "run_id": "phase1-spring-20261021",
+        "type": "SECURITY_SCAN",
+        "version": "2fcb62bedfbb311f4cd4a9c1cfba2fe8fb7bfe745d02230fde170bb42c08791f",
+        "sha256": "2fcb62bedfbb311f4cd4a9c1cfba2fe8fb7bfe745d02230fde170bb42c08791f",
+        "uri": "E:\\VibeCoding\\Langgraph-proj\\.agentloop\\artifacts\\2f\\2fcb62bedfbb311f4cd4a9c1cfba2fe8fb7bfe745d02230fde170bb42c08791f.json",
+        "producer_task_id": "local-policy-scanner",
+        "trust_level": "verified_internal",
+        "created_at": "2026-10-20T18:14:56.009555Z"
+      },
+      "body": {
+        "commit": "f77d9368783c9858131bc2a74fdbe324bea78c16",
+        "findings": [],
+        "scope": "configured Java source process execution patterns only"
+      }
+    },
+    {
+      "metadata": {
+        "artifact_id": "4a488bc9e2e9de73f6a0fe86fb7dcc722c9ae759f40f8e8178cb96e67b27c13e",
+        "run_id": "phase1-spring-20261021",
+        "type": "AGENT_REPLY",
+        "version": "21012bbd1e2d093b32fb73de4b93655b597354f79ee6e40c4e35de6591c69c1e",
+        "sha256": "21012bbd1e2d093b32fb73de4b93655b597354f79ee6e40c4e35de6591c69c1e",
+        "uri": "E:\\VibeCoding\\Langgraph-proj\\.agentloop\\artifacts\\21\\21012bbd1e2d093b32fb73de4b93655b597354f79ee6e40c4e35de6591c69c1e.json",
+        "producer_task_id": "security-expert:2b226ea8ad591022c7a7de5a70696501ef865461acb45cd4b48b839bfffea6f0",
+        "trust_level": "model_generated",
+        "created_at": "2026-10-20T18:14:56.037950Z"
+      },
+      "body": {
+        "input_digest": "2b226ea8ad591022c7a7de5a70696501ef865461acb45cd4b48b839bfffea6f0",
+        "output": {
+          "findings": [],
+          "input_digest": "f77d9368783c9858131bc2a74fdbe324bea78c16",
+          "limitations": [
+            "脚本专家；仅结合演示范围的进程执行模式扫描，非完整安全审计"
+          ]
+        },
+        "profile": "scripted-demo",
+        "role": "security-expert"
+      }
+    },
+    {
+      "metadata": {
+        "artifact_id": "6749824dd505c8e84d0fac7a0bbfefe2509439b9448e42db0554f5988645f5f6",
+        "run_id": "phase1-spring-20261021",
+        "type": "DELIVERY_EVIDENCE",
+        "version": "01b880c44c1dea7c94ae99a3b4581ae3030649d5a2bfd1d111e36535a63cb209",
+        "sha256": "01b880c44c1dea7c94ae99a3b4581ae3030649d5a2bfd1d111e36535a63cb209",
+        "uri": "E:\\VibeCoding\\Langgraph-proj\\.agentloop\\artifacts\\01\\01b880c44c1dea7c94ae99a3b4581ae3030649d5a2bfd1d111e36535a63cb209.json",
+        "producer_task_id": "orchestrator:g2",
+        "trust_level": "verified_internal",
+        "created_at": "2026-10-20T18:14:56.077757Z"
+      },
+      "body": {
+        "acceptance_id": "bc0bf481cc0a880628364761ab06438fc03ed373c1440f45a91d0a9c946fbf88",
+        "architecture": "88a3feed2c9a48108d32ef09629e9bfb1d3c3bd0349c0290e078d87cf27ccae8",
+        "commit": "f77d9368783c9858131bc2a74fdbe324bea78c16",
+        "review_id": "51238bb1a755b8a35ebb3e6921dc2b42af9f3313c356bf19fac07521d24cbf64",
+        "review_triggered": true,
+        "scan_id": "ab6399f21a782785e3d2e7939a340cad1a256b4b8cc2127e736a790286612b37",
+        "security_id": "4a488bc9e2e9de73f6a0fe86fb7dcc722c9ae759f40f8e8178cb96e67b27c13e",
+        "spec": "3255dd62cfc8556376af918d91813444174ef6eb2517108e3b1fc67379e00ce3",
+        "test_id": "240783ddda4d5424a32ce6f97fada164913844e12ca503f85ed84378f7cb1111"
+      }
+    }
+  ],
+  "events": [
+    {
+      "event_id": "evt-c34ff12eac414d7abb63cc6d17bbdd28",
+      "run_id": "phase1-spring-20261021",
+      "type": "RUN_CREATED",
+      "actor_id": "system",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:13:30.503035Z",
+      "payload_ref": "run_type=DELIVERY;phase=INTAKE;status=CREATED",
+      "idempotency_key": "phase1-spring-20261021:RUN_CREATED",
+      "sequence": 1
+    },
+    {
+      "event_id": "evt-73d58e5140504e93be12aa660e10ecd0",
+      "run_id": "phase1-spring-20261021",
+      "type": "RUN_STATUS_CHANGED",
+      "actor_id": "system",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:13:30.508918Z",
+      "payload_ref": "CREATED->RUNNING;",
+      "idempotency_key": "phase1-spring-20261021:STATUS:2",
+      "sequence": 2
+    },
+    {
+      "event_id": "evt-d5788dfc312c42a2adf72143327054b0",
+      "run_id": "phase1-spring-20261021",
+      "type": "RUN_PHASE_CHANGED",
+      "actor_id": "system",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:13:30.586439Z",
+      "payload_ref": "INTAKE->PRODUCT;",
+      "idempotency_key": "phase1-spring-20261021:PHASE:3",
+      "sequence": 3
+    },
+    {
+      "event_id": "evt-6bb7ebe3b43d4d56ab7b91e9c3a65820",
+      "run_id": "phase1-spring-20261021",
+      "type": "WORKER_OUTPUT_RECORDED",
+      "actor_id": "product-analyst",
+      "actor_type": "AGENT",
+      "timestamp": "2026-10-20T18:13:30.611236Z",
+      "payload_ref": "544d1ebfa20005c19df04b794fdb175a2f51dda48d4400669d539480bb5579db",
+      "idempotency_key": "phase1-spring-20261021:WORKER:product-analyst:68b16a4b79d175e21adb93f29f5a585077605c54826e14899fbc3dfab4bfa3a2",
+      "sequence": 4
+    },
+    {
+      "event_id": "evt-eaada69687aa4962bd12cfd5e1e22112",
+      "run_id": "phase1-spring-20261021",
+      "type": "CHECK_TRIGGERED",
+      "actor_id": "orchestrator",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:13:30.643793Z",
+      "payload_ref": "{\"reason\":\"trusted UI change flag\",\"role\":\"ux-agent\",\"triggered\":false}",
+      "idempotency_key": "phase1-spring-20261021:CHECK_TRIGGERED:ux:3255dd62cfc8556376af918d91813444174ef6eb2517108e3b1fc67379e00ce3",
+      "sequence": 5
+    },
+    {
+      "event_id": "evt-923bcb876a4343adb3362d29884c94b8",
+      "run_id": "phase1-spring-20261021",
+      "type": "WORKER_OUTPUT_RECORDED",
+      "actor_id": "product-leader",
+      "actor_type": "AGENT",
+      "timestamp": "2026-10-20T18:13:30.668209Z",
+      "payload_ref": "4729b5c16a49b2242240d8697856d921969a55a212f884420ee40a761c0c9bee",
+      "idempotency_key": "phase1-spring-20261021:WORKER:product-leader:33bb5fa7330e53eb0ec9d7ee5c7544e15350cc174da5e73da032fc0ae168ea13",
+      "sequence": 6
+    },
+    {
+      "event_id": "evt-d38960459f1c41f5b18159bea724c9d7",
+      "run_id": "phase1-spring-20261021",
+      "type": "BASELINE_CHANGED",
+      "actor_id": "orchestrator",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:13:30.676275Z",
+      "payload_ref": "spec=3255dd62cfc8556376af918d91813444174ef6eb2517108e3b1fc67379e00ce3",
+      "idempotency_key": "phase1-spring-20261021:BASELINE:4",
+      "sequence": 7
+    },
+    {
+      "event_id": "evt-e29995dcf5514e8bb93ae66dd7b2446b",
+      "run_id": "phase1-spring-20261021",
+      "type": "DEPARTMENT_ACCEPTED",
+      "actor_id": "product-leader",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:13:30.679360Z",
+      "payload_ref": "{\"department\":\"product\"}",
+      "idempotency_key": "phase1-spring-20261021:DEPARTMENT_ACCEPTED:3255dd62cfc8556376af918d91813444174ef6eb2517108e3b1fc67379e00ce3",
+      "sequence": 8
+    },
+    {
+      "event_id": "evt-e76ea96a5eb14371a01262a003444967",
+      "run_id": "phase1-spring-20261021",
+      "type": "RUN_PHASE_CHANGED",
+      "actor_id": "system",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:13:30.683567Z",
+      "payload_ref": "PRODUCT->PRODUCT_AUDIT;",
+      "idempotency_key": "phase1-spring-20261021:PHASE:5",
+      "sequence": 9
+    },
+    {
+      "event_id": "evt-79308f5a09774c67ae49c90c35e934b1",
+      "run_id": "phase1-spring-20261021",
+      "type": "WORKER_OUTPUT_RECORDED",
+      "actor_id": "product-expert",
+      "actor_type": "AGENT",
+      "timestamp": "2026-10-20T18:13:30.724198Z",
+      "payload_ref": "d8fe464b3b692fdd6980d301dc3b33257cf23d8276109f50af77329f567620e2",
+      "idempotency_key": "phase1-spring-20261021:WORKER:product-expert:dc70db80df8eefb139bc9cf93a0aaecbfb877de59f62fd087a03fae3a263401f",
+      "sequence": 10
+    },
+    {
+      "event_id": "evt-89acb827c8114fb7a164f96a4a0f8b70",
+      "run_id": "phase1-spring-20261021",
+      "type": "RUN_PHASE_CHANGED",
+      "actor_id": "system",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:13:30.726657Z",
+      "payload_ref": "PRODUCT_AUDIT->ARCHITECTURE;",
+      "idempotency_key": "phase1-spring-20261021:PHASE:6",
+      "sequence": 11
+    },
+    {
+      "event_id": "evt-04c218b240104d16a1ad784349dcc10a",
+      "run_id": "phase1-spring-20261021",
+      "type": "WORKER_OUTPUT_RECORDED",
+      "actor_id": "architecture-expert",
+      "actor_type": "AGENT",
+      "timestamp": "2026-10-20T18:13:30.747346Z",
+      "payload_ref": "da8175fba15f1eb34aedd52b19f197fac039873fa5b101a901eb797751c7ca41",
+      "idempotency_key": "phase1-spring-20261021:WORKER:architecture-expert:ddb5eb1c52df4ca29733ec6cd15109997a94855023ef253a4f72178deb13eda0",
+      "sequence": 12
+    },
+    {
+      "event_id": "evt-a6a525e6c5854698825dbd3e019ce2aa",
+      "run_id": "phase1-spring-20261021",
+      "type": "WORKER_OUTPUT_RECORDED",
+      "actor_id": "expert-leader",
+      "actor_type": "AGENT",
+      "timestamp": "2026-10-20T18:13:30.794932Z",
+      "payload_ref": "1061845c4a95b6c8a286460d423f6ebc34d6555a8de05140ede8b4208cb881c0",
+      "idempotency_key": "phase1-spring-20261021:WORKER:expert-leader:5a6efde77852204fce361da8ec2132310fc836e78225b5db62e483405cbf6f8e",
+      "sequence": 13
+    },
+    {
+      "event_id": "evt-2c175a2f8cbc4d24b1aa0a6003160aa2",
+      "run_id": "phase1-spring-20261021",
+      "type": "BASELINE_CHANGED",
+      "actor_id": "orchestrator",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:13:30.797262Z",
+      "payload_ref": "architecture=88a3feed2c9a48108d32ef09629e9bfb1d3c3bd0349c0290e078d87cf27ccae8",
+      "idempotency_key": "phase1-spring-20261021:BASELINE:7",
+      "sequence": 14
+    },
+    {
+      "event_id": "evt-8736b0c162c5421ab1ae0420ea204728",
+      "run_id": "phase1-spring-20261021",
+      "type": "DEPARTMENT_ACCEPTED",
+      "actor_id": "expert-leader",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:13:30.801378Z",
+      "payload_ref": "{\"mode\":\"FRONT\"}",
+      "idempotency_key": "phase1-spring-20261021:DEPARTMENT_ACCEPTED:88a3feed2c9a48108d32ef09629e9bfb1d3c3bd0349c0290e078d87cf27ccae8",
+      "sequence": 15
+    },
+    {
+      "event_id": "evt-2cbcad7236504b8b935dd87ccfc1e3f7",
+      "run_id": "phase1-spring-20261021",
+      "type": "RUN_PHASE_CHANGED",
+      "actor_id": "system",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:13:30.807834Z",
+      "payload_ref": "ARCHITECTURE->G1;",
+      "idempotency_key": "phase1-spring-20261021:PHASE:8",
+      "sequence": 16
+    },
+    {
+      "event_id": "evt-dbbe66e38e3945cf84d8c1bcade093b1",
+      "run_id": "phase1-spring-20261021",
+      "type": "GATE_RESULT_RECORDED",
+      "actor_id": "GATE_EVALUATOR",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:13:30.822245Z",
+      "payload_ref": "G1:NOT_EVALUATED->PENDING;digest=sha256:2e1e8f91bd46d44729fa988f195fdf91959b85fce43432e15b69b36fbeb43925",
+      "idempotency_key": "phase1-spring-20261021:G1:gate-fa1949a5984e45a8a0c4d05e6f1c741d:PENDING",
+      "sequence": 17
+    },
+    {
+      "event_id": "evt-555d048e67804e6f9ac9b495f69163d0",
+      "run_id": "phase1-spring-20261021",
+      "type": "GATE_RESULT_RECORDED",
+      "actor_id": "GATE_EVALUATOR",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:13:30.822649Z",
+      "payload_ref": "G1:PENDING->PASSED;digest=sha256:2e1e8f91bd46d44729fa988f195fdf91959b85fce43432e15b69b36fbeb43925",
+      "idempotency_key": "phase1-spring-20261021:G1:gate-fa1949a5984e45a8a0c4d05e6f1c741d:PASSED",
+      "sequence": 18
+    },
+    {
+      "event_id": "evt-33dae8e0f7b14fb0ba1ee00c7ffed1f3",
+      "run_id": "phase1-spring-20261021",
+      "type": "RUN_PHASE_CHANGED",
+      "actor_id": "system",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:13:30.829089Z",
+      "payload_ref": "G1->ENGINEERING;",
+      "idempotency_key": "phase1-spring-20261021:PHASE:9",
+      "sequence": 19
+    },
+    {
+      "event_id": "evt-7d13e6b633a44eef98cbb92471084bea",
+      "run_id": "phase1-spring-20261021",
+      "type": "WORKER_OUTPUT_RECORDED",
+      "actor_id": "engineering-leader",
+      "actor_type": "AGENT",
+      "timestamp": "2026-10-20T18:13:30.860867Z",
+      "payload_ref": "ba0133e87ff34e22e414a3471354f8bc7cc7276b4b368d7eb511afb858c030be",
+      "idempotency_key": "phase1-spring-20261021:WORKER:engineering-leader:d89f439ec86acc7b0830a1d044519446c1453ee780f5e42506173d01716ebbd2",
+      "sequence": 20
+    },
+    {
+      "event_id": "evt-18496a0d1b8e44a188089712f117a7a5",
+      "run_id": "phase1-spring-20261021",
+      "type": "WORKER_OUTPUT_RECORDED",
+      "actor_id": "backend",
+      "actor_type": "AGENT",
+      "timestamp": "2026-10-20T18:13:30.883230Z",
+      "payload_ref": "be200137f3bdc65ede0c767d0906d60eee93c4bc517e8f533cc9d638c600657a",
+      "idempotency_key": "phase1-spring-20261021:WORKER:backend:384183c59bd1f3a779ce648912221a9a42491b8c9964a2ee7a31bb6f047dd7f3",
+      "sequence": 21
+    },
+    {
+      "event_id": "evt-827feef1d488418993d17256dfa5e352",
+      "run_id": "phase1-spring-20261021",
+      "type": "BASELINE_CHANGED",
+      "actor_id": "orchestrator",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:13:31.446136Z",
+      "payload_ref": "commit=75e6772062be1b51f3e7571170604e1eccd86c11",
+      "idempotency_key": "phase1-spring-20261021:BASELINE:10",
+      "sequence": 22
+    },
+    {
+      "event_id": "evt-5b937c1f3f2f46baa574b742c4b189e4",
+      "run_id": "phase1-spring-20261021",
+      "type": "CHECK_TRIGGERED",
+      "actor_id": "orchestrator",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:13:31.617699Z",
+      "payload_ref": "{\"commit\":\"75e6772062be1b51f3e7571170604e1eccd86c11\",\"role\":\"code-review\",\"triggered\":true}",
+      "idempotency_key": "phase1-spring-20261021:CHECK_TRIGGERED:review:75e6772062be1b51f3e7571170604e1eccd86c11",
+      "sequence": 23
+    },
+    {
+      "event_id": "evt-05ce95fb22934453919e4f6320e1e9fb",
+      "run_id": "phase1-spring-20261021",
+      "type": "WORKER_OUTPUT_RECORDED",
+      "actor_id": "code-review",
+      "actor_type": "AGENT",
+      "timestamp": "2026-10-20T18:13:31.728753Z",
+      "payload_ref": "7994e1119db60eb2b92664be725c01f2b01d7a99ce5543c97c4c6ef3edfeba24",
+      "idempotency_key": "phase1-spring-20261021:WORKER:code-review:62b6987d786fd1d3650a7f1f77bc4915f2dfa9115e45ce620a61645837a675e3",
+      "sequence": 24
+    },
+    {
+      "event_id": "evt-e6816631b623425d8b76e4fcda89ab41",
+      "run_id": "phase1-spring-20261021",
+      "type": "TEST_EXECUTED",
+      "actor_id": "testing",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:14:11.992701Z",
+      "payload_ref": "{\"artifact_id\":\"502de3048b49a9d6b46d82b8a57281550286ab3fbc4040ac909b25ff614349df\",\"commit\":\"75e6772062be1b51f3e7571170604e1eccd86c11\",\"decision\":\"FAIL\"}",
+      "idempotency_key": "phase1-spring-20261021:TEST_EXECUTED:1:502de3048b49a9d6b46d82b8a57281550286ab3fbc4040ac909b25ff614349df",
+      "sequence": 25
+    },
+    {
+      "event_id": "evt-c33fe962bc724a7487d9800de85addcb",
+      "run_id": "phase1-spring-20261021",
+      "type": "WORKER_OUTPUT_RECORDED",
+      "actor_id": "testing",
+      "actor_type": "AGENT",
+      "timestamp": "2026-10-20T18:14:12.015696Z",
+      "payload_ref": "6c4ce4ca3acf74732ed9f287bb2cb79820efbf9d1f076798ad83b0b5b451bbff",
+      "idempotency_key": "phase1-spring-20261021:WORKER:testing:4815474ae967bbb33578d209ed7f6dea053f1d19152de75deadc4faed6fe326e",
+      "sequence": 26
+    },
+    {
+      "event_id": "evt-34cd8df1d6954bebab4174c6ae239aa5",
+      "run_id": "phase1-spring-20261021",
+      "type": "LOCAL_REWORK",
+      "actor_id": "orchestrator",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:14:12.020872Z",
+      "payload_ref": "{\"attempt\":1,\"reason\":\"固定 HTTP 测试仍有失败，退回 Backend 修复边界\",\"target\":\"backend\"}",
+      "idempotency_key": "phase1-spring-20261021:LOCAL_REWORK:1:固定 HTTP 测试仍有失败，退回 Backend 修复边界",
+      "sequence": 27
+    },
+    {
+      "event_id": "evt-52dd0985452a4109b74b482596683ada",
+      "run_id": "phase1-spring-20261021",
+      "type": "WORKER_OUTPUT_RECORDED",
+      "actor_id": "backend",
+      "actor_type": "AGENT",
+      "timestamp": "2026-10-20T18:14:12.048831Z",
+      "payload_ref": "9d50559bc2a702c7fb43f25cd84f75b05d98a36b7f0dbed66c1a9da022cfc54d",
+      "idempotency_key": "phase1-spring-20261021:WORKER:backend:039202c5e44bb667febd0aeb860b0edd98f1c1bd01b9940cce56f21dc3390e56",
+      "sequence": 28
+    },
+    {
+      "event_id": "evt-7e0683063a62460bb47d90d664656b3f",
+      "run_id": "phase1-spring-20261021",
+      "type": "BASELINE_CHANGED",
+      "actor_id": "orchestrator",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:14:12.659847Z",
+      "payload_ref": "commit=f77d9368783c9858131bc2a74fdbe324bea78c16",
+      "idempotency_key": "phase1-spring-20261021:BASELINE:11",
+      "sequence": 29
+    },
+    {
+      "event_id": "evt-73a3800e6d4a4e549146b1aeb6234a1b",
+      "run_id": "phase1-spring-20261021",
+      "type": "CHECK_TRIGGERED",
+      "actor_id": "orchestrator",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:14:12.813163Z",
+      "payload_ref": "{\"commit\":\"f77d9368783c9858131bc2a74fdbe324bea78c16\",\"role\":\"code-review\",\"triggered\":true}",
+      "idempotency_key": "phase1-spring-20261021:CHECK_TRIGGERED:review:f77d9368783c9858131bc2a74fdbe324bea78c16",
+      "sequence": 30
+    },
+    {
+      "event_id": "evt-3adbcfbd98a8430e9d64c6ba45276ee9",
+      "run_id": "phase1-spring-20261021",
+      "type": "WORKER_OUTPUT_RECORDED",
+      "actor_id": "code-review",
+      "actor_type": "AGENT",
+      "timestamp": "2026-10-20T18:14:12.904448Z",
+      "payload_ref": "51238bb1a755b8a35ebb3e6921dc2b42af9f3313c356bf19fac07521d24cbf64",
+      "idempotency_key": "phase1-spring-20261021:WORKER:code-review:afc49625bbe17016efba7a87993d9f1565a914710f59f4dc06af26ce2ab5a1c1",
+      "sequence": 31
+    },
+    {
+      "event_id": "evt-c576dd4bfbdf4af2b14a295e2318204e",
+      "run_id": "phase1-spring-20261021",
+      "type": "TEST_EXECUTED",
+      "actor_id": "testing",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:14:55.947235Z",
+      "payload_ref": "{\"artifact_id\":\"240783ddda4d5424a32ce6f97fada164913844e12ca503f85ed84378f7cb1111\",\"commit\":\"f77d9368783c9858131bc2a74fdbe324bea78c16\",\"decision\":\"PASS\"}",
+      "idempotency_key": "phase1-spring-20261021:TEST_EXECUTED:2:240783ddda4d5424a32ce6f97fada164913844e12ca503f85ed84378f7cb1111",
+      "sequence": 32
+    },
+    {
+      "event_id": "evt-da50c7855f5749408e6f0c2ce3741b7c",
+      "run_id": "phase1-spring-20261021",
+      "type": "WORKER_OUTPUT_RECORDED",
+      "actor_id": "engineering-leader",
+      "actor_type": "AGENT",
+      "timestamp": "2026-10-20T18:14:55.967656Z",
+      "payload_ref": "bc0bf481cc0a880628364761ab06438fc03ed373c1440f45a91d0a9c946fbf88",
+      "idempotency_key": "phase1-spring-20261021:WORKER:engineering-leader:f099f9f31a8ad8b3e3b2e6c1c2d47d65c49881a1c7f22bae291ae1b08f7eb0a2",
+      "sequence": 33
+    },
+    {
+      "event_id": "evt-f856fd85cfdd44528a69f8a3cbe32ecd",
+      "run_id": "phase1-spring-20261021",
+      "type": "DEPARTMENT_ACCEPTED",
+      "actor_id": "engineering-leader",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:14:55.973650Z",
+      "payload_ref": "{\"department\":\"engineering\"}",
+      "idempotency_key": "phase1-spring-20261021:DEPARTMENT_ACCEPTED:f77d9368783c9858131bc2a74fdbe324bea78c16",
+      "sequence": 34
+    },
+    {
+      "event_id": "evt-3719197c49624c7ba5eb6e27ddcdd363",
+      "run_id": "phase1-spring-20261021",
+      "type": "RUN_PHASE_CHANGED",
+      "actor_id": "system",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:14:55.979102Z",
+      "payload_ref": "ENGINEERING->SECURITY_REVIEW;",
+      "idempotency_key": "phase1-spring-20261021:PHASE:12",
+      "sequence": 35
+    },
+    {
+      "event_id": "evt-cadd463404e84bf08c8c3959246475ae",
+      "run_id": "phase1-spring-20261021",
+      "type": "WORKER_OUTPUT_RECORDED",
+      "actor_id": "security-expert",
+      "actor_type": "AGENT",
+      "timestamp": "2026-10-20T18:14:56.038213Z",
+      "payload_ref": "4a488bc9e2e9de73f6a0fe86fb7dcc722c9ae759f40f8e8178cb96e67b27c13e",
+      "idempotency_key": "phase1-spring-20261021:WORKER:security-expert:2b226ea8ad591022c7a7de5a70696501ef865461acb45cd4b48b839bfffea6f0",
+      "sequence": 36
+    },
+    {
+      "event_id": "evt-96eb667c0292460f86efa2068c1a7795",
+      "run_id": "phase1-spring-20261021",
+      "type": "RUN_PHASE_CHANGED",
+      "actor_id": "system",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:14:56.059575Z",
+      "payload_ref": "SECURITY_REVIEW->G2;",
+      "idempotency_key": "phase1-spring-20261021:PHASE:13",
+      "sequence": 37
+    },
+    {
+      "event_id": "evt-9ef250d45ab54bb4a38031b7be761361",
+      "run_id": "phase1-spring-20261021",
+      "type": "GATE_RESULT_RECORDED",
+      "actor_id": "GATE_EVALUATOR",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:14:56.087099Z",
+      "payload_ref": "G2:NOT_EVALUATED->PENDING;digest=01b880c44c1dea7c94ae99a3b4581ae3030649d5a2bfd1d111e36535a63cb209",
+      "idempotency_key": "phase1-spring-20261021:G2:gate-d70d60fa27e947d98edaa42737f26696:PENDING",
+      "sequence": 38
+    },
+    {
+      "event_id": "evt-73d118fcfa0c4afe84bdeff0c0051e80",
+      "run_id": "phase1-spring-20261021",
+      "type": "GATE_RESULT_RECORDED",
+      "actor_id": "GATE_EVALUATOR",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:14:56.087617Z",
+      "payload_ref": "G2:PENDING->PASSED;digest=01b880c44c1dea7c94ae99a3b4581ae3030649d5a2bfd1d111e36535a63cb209",
+      "idempotency_key": "phase1-spring-20261021:G2:gate-d70d60fa27e947d98edaa42737f26696:PASSED",
+      "sequence": 39
+    },
+    {
+      "event_id": "evt-9a308f6ff2df4e09ace088625ca24907",
+      "run_id": "phase1-spring-20261021",
+      "type": "RUN_PHASE_CHANGED",
+      "actor_id": "system",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:14:56.093186Z",
+      "payload_ref": "G2->RELEASE_AUTHORIZATION;",
+      "idempotency_key": "phase1-spring-20261021:PHASE:14",
+      "sequence": 40
+    },
+    {
+      "event_id": "evt-ecdeb76424f04421b2a0b12023326151",
+      "run_id": "phase1-spring-20261021",
+      "type": "RELEASE_CREATED",
+      "actor_id": "orchestrator",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:14:56.096721Z",
+      "payload_ref": "{\"release_id\":\"release-389db3cbbd6f4861878221a07506b43b\",\"run_id\":\"phase1-spring-20261021\",\"project_id\":\"phase1-demo\",\"spec_digest\":\"3255dd62cfc8556376af918d91813444174ef6eb2517108e3b1fc67379e00ce3\",\"architecture_digest\":\"88a3feed2c9a48108d32ef09629e9bfb1d3c3bd0349c0290e078d87cf27ccae8\",\"commit_sha\":\"f77d9368783c9858131bc2a74fdbe324bea78c16\",\"artifact_digest\":\"f77d9368783c9858131bc2a74fdbe324bea78c16\",\"g2_gate_result_id\":\"gate-d70d60fa27e947d98edaa42737f26696\",\"version\":\"1\",\"status\":\"READY\",\"created_at\":\"2026-10-20T18:14:56.096600Z\"}",
+      "idempotency_key": "release-389db3cbbd6f4861878221a07506b43b:CREATED",
+      "sequence": 41
+    },
+    {
+      "event_id": "evt-94cf7a5770ca476f869a41d2e1721b50",
+      "run_id": "phase1-spring-20261021",
+      "type": "RUN_STATUS_CHANGED",
+      "actor_id": "system",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:14:56.099826Z",
+      "payload_ref": "RUNNING->WAITING_APPROVAL;",
+      "idempotency_key": "phase1-spring-20261021:STATUS:15",
+      "sequence": 42
+    },
+    {
+      "event_id": "evt-dfed427c9d5c4371827bf80069d803c8",
+      "run_id": "phase1-spring-20261021",
+      "type": "RELEASE_AUTHORIZATION_REQUESTED",
+      "actor_id": "demo-owner",
+      "actor_type": "HUMAN",
+      "timestamp": "2026-10-20T18:16:18.485973Z",
+      "payload_ref": "{\"authorization_request_id\":\"auth-request-da23101def874b78ab87aaccd416f15e\",\"release_id\":\"release-389db3cbbd6f4861878221a07506b43b\",\"run_id\":\"phase1-spring-20261021\",\"environment_id\":\"simulation\",\"target_ids\":[\"local-simulator\"],\"action_scope\":[\"DEPLOY\"],\"requested_by\":\"demo-owner\",\"request_version\":1,\"policy_version\":\"release-policy-v1.2\",\"status\":\"PENDING\",\"requested_at\":\"2026-10-20T18:16:18.485263Z\",\"expires_at\":\"2026-10-20T19:16:18.485263Z\",\"decided_by\":null,\"decision_reason\":null}",
+      "idempotency_key": "auth-request-da23101def874b78ab87aaccd416f15e:REQUESTED",
+      "sequence": 43
+    },
+    {
+      "event_id": "evt-89465e66426546c89318e393174a7d75",
+      "run_id": "phase1-spring-20261021",
+      "type": "RELEASE_AUTHORIZATION_DECIDED",
+      "actor_id": "demo-owner",
+      "actor_type": "HUMAN",
+      "timestamp": "2026-10-20T18:16:18.489937Z",
+      "payload_ref": "{\"authorization_request_id\":\"auth-request-da23101def874b78ab87aaccd416f15e\",\"release_id\":\"release-389db3cbbd6f4861878221a07506b43b\",\"run_id\":\"phase1-spring-20261021\",\"environment_id\":\"simulation\",\"target_ids\":[\"local-simulator\"],\"action_scope\":[\"DEPLOY\"],\"requested_by\":\"demo-owner\",\"request_version\":1,\"policy_version\":\"release-policy-v1.2\",\"status\":\"APPROVED\",\"requested_at\":\"2026-10-20T18:16:18.485263Z\",\"expires_at\":\"2026-10-20T19:16:18.485263Z\",\"decided_by\":\"demo-owner\",\"decision_reason\":null}",
+      "idempotency_key": "auth-request-da23101def874b78ab87aaccd416f15e:DECIDED",
+      "sequence": 44
+    },
+    {
+      "event_id": "evt-1c59798ba54741bcb9d0796ae95116d4",
+      "run_id": "phase1-spring-20261021",
+      "type": "RUN_PHASE_CHANGED",
+      "actor_id": "system",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:16:18.514839Z",
+      "payload_ref": "RELEASE_AUTHORIZATION->DEPLOYMENT;",
+      "idempotency_key": "phase1-spring-20261021:PHASE:16",
+      "sequence": 45
+    },
+    {
+      "event_id": "evt-35d38fe2c3774087804efebb1a1f3605",
+      "run_id": "phase1-spring-20261021",
+      "type": "RUN_STATUS_CHANGED",
+      "actor_id": "system",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:16:18.515064Z",
+      "payload_ref": "WAITING_APPROVAL->RUNNING;",
+      "idempotency_key": "phase1-spring-20261021:STATUS:16",
+      "sequence": 46
+    },
+    {
+      "event_id": "evt-f4b33d31afa74a7bb16effb11dadff75",
+      "run_id": "phase1-spring-20261021",
+      "type": "DEPLOYMENT_RESULT_RECORDED",
+      "actor_id": "local-simulator",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:16:18.515496Z",
+      "payload_ref": "{\"deployment_id\":\"simulation-931cc99565204ab98695e0bce8a344ce\",\"release_id\":\"release-389db3cbbd6f4861878221a07506b43b\",\"run_id\":\"phase1-spring-20261021\",\"attempt_no\":1,\"environment_id\":\"simulation\",\"target_ids\":[\"local-simulator\"],\"release_artifact_digest\":\"f77d9368783c9858131bc2a74fdbe324bea78c16\",\"authorization_id\":\"auth-c0824ae369244f9aac572bbce9bb9a05\",\"status\":\"SUCCEEDED\",\"reconcile_state\":\"NOT_REQUIRED\",\"rollback_operation_id\":null,\"gate3_result_id\":null,\"external_operation_id\":null}",
+      "idempotency_key": "phase1-spring-20261021:SIMULATE:auth-c0824ae369244f9aac572bbce9bb9a05",
+      "sequence": 47
+    },
+    {
+      "event_id": "evt-8ba539b1071e416289a29395d576e549",
+      "run_id": "phase1-spring-20261021",
+      "type": "RUN_PHASE_CHANGED",
+      "actor_id": "system",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:16:18.519111Z",
+      "payload_ref": "DEPLOYMENT->G3;",
+      "idempotency_key": "phase1-spring-20261021:PHASE:17",
+      "sequence": 48
+    },
+    {
+      "event_id": "evt-5793398b958746b4ae90126e9606c305",
+      "run_id": "phase1-spring-20261021",
+      "type": "GATE_RESULT_RECORDED",
+      "actor_id": "GATE_EVALUATOR",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:16:18.521798Z",
+      "payload_ref": "G3:NOT_EVALUATED->PENDING;digest=simulation-931cc99565204ab98695e0bce8a344ce",
+      "idempotency_key": "phase1-spring-20261021:G3:gate-a535f93ed9db47e29b09ed6795ce0240:PENDING",
+      "sequence": 49
+    },
+    {
+      "event_id": "evt-f8f10cfa972047b59905ccfd3f72c546",
+      "run_id": "phase1-spring-20261021",
+      "type": "GATE_RESULT_RECORDED",
+      "actor_id": "GATE_EVALUATOR",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:16:18.522225Z",
+      "payload_ref": "G3:PENDING->PASSED;digest=simulation-931cc99565204ab98695e0bce8a344ce",
+      "idempotency_key": "phase1-spring-20261021:G3:gate-a535f93ed9db47e29b09ed6795ce0240:PASSED",
+      "sequence": 50
+    },
+    {
+      "event_id": "evt-dbbc38d93a0a4504986ab510bb4ce9ea",
+      "run_id": "phase1-spring-20261021",
+      "type": "RUN_PHASE_CHANGED",
+      "actor_id": "system",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:16:18.525470Z",
+      "payload_ref": "G3->DELIVERY;G1/G2/G3 均已 PASSED",
+      "idempotency_key": "phase1-spring-20261021:PHASE:18",
+      "sequence": 51
+    },
+    {
+      "event_id": "evt-b99f1b6acef7459689abc56c3804b253",
+      "run_id": "phase1-spring-20261021",
+      "type": "RUN_STATUS_CHANGED",
+      "actor_id": "system",
+      "actor_type": "SYSTEM",
+      "timestamp": "2026-10-20T18:16:18.525601Z",
+      "payload_ref": "RUNNING->COMPLETED;G1/G2/G3 均已 PASSED",
+      "idempotency_key": "phase1-spring-20261021:STATUS:18",
+      "sequence": 52
+    }
+  ]
+}

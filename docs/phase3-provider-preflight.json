@@ -1,0 +1,10 @@
+{
+  "observed_at": "2026-10-25T16:41:32.927536+00:00",
+  "provider": "deepseek",
+  "operation": "model-list preflight only",
+  "successful_generation": false,
+  "credentials_logged": false,
+  "status": "BLOCKED",
+  "http_status": 401,
+  "error_code": "rejected"
+}

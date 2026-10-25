@@ -1,0 +1,13 @@
+{
+  "generated_at": "2026-10-25T16:39:23.874452+00:00",
+  "package_version": "0.4.0",
+  "wheel": "E:\\VibeCoding\\Langgraph-proj\\.agentloop\\dist\\agentloop_platform-0.4.0-py3-none-any.whl",
+  "wheel_sha256": "d440c6e67d78cc3f9a09e4f10842f56fc19fad6082d5a0219973d3884084781b",
+  "module_path": "E:\\VibeCoding\\Langgraph-proj\\.agentloop\\phase3-package-check\\agentloop\\phase3_cli.py",
+  "python_modules_checked": 51,
+  "source_parity": "PASSED",
+  "model_role_count": 13,
+  "cli_config_smoke": "PASSED",
+  "test_sources_excluded": true,
+  "scope": "Installed wheel, 13-role config and source parity. No production deployment or live model generation."
+}

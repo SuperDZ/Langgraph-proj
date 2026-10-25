@@ -1,0 +1,4559 @@
+{
+  "generated_at": "2026-10-21T14:00:02.111241+00:00",
+  "python": "3.13.14",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "exit_code": 0,
+  "scope": "Phase 0/1 core, scripted department workflows, week2 regression; real Maven only when explicitly enabled",
+  "java_integration_requested": true,
+  "versions": {
+    "pydantic": "2.14.1",
+    "langgraph": "1.2.16",
+    "langgraph-checkpoint-sqlite": "3.1.2",
+    "pytest": "9.1.1"
+  },
+  "requirements_count": 49,
+  "acceptance_count": 59,
+  "traceability": [
+    {
+      "acceptance": "AC-01",
+      "requirements": [
+        "REQ-001",
+        "REQ-002"
+      ],
+      "status": "HAS_LINKED_TESTS_REVIEW_SCOPE",
+      "tests": [
+        "src/agentloop/tests/test_ac_delivery.py::test_local_rework_skips_leader_and_waits_for_explicit_simulation_authorization"
+      ]
+    },
+    {
+      "acceptance": "AC-02",
+      "requirements": [
+        "REQ-002",
+        "REQ-003"
+      ],
+      "status": "NO_EXECUTION_EVIDENCE",
+      "tests": []
+    },
+    {
+      "acceptance": "AC-03",
+      "requirements": [
+        "REQ-003",
+        "REQ-019"
+      ],
+      "status": "HAS_LINKED_TESTS_REVIEW_SCOPE",
+      "tests": [
+        "src/agentloop/tests/test_ac_delivery.py::test_product_audit_rejection_routes_to_product_leader"
+      ]
+    },
+    {
+      "acceptance": "AC-04",
+      "requirements": [
+        "REQ-003",
+        "REQ-005"
+      ],
+      "status": "NO_EXECUTION_EVIDENCE",
+      "tests": []
+    },
+    {
+      "acceptance": "AC-05",
+      "requirements": [
+        "REQ-005",
+        "REQ-008"
+      ],
+      "status": "NO_EXECUTION_EVIDENCE",
+      "tests": []
+    },
+    {
+      "acceptance": "AC-06",
+      "requirements": [
+        "REQ-009",
+        "REQ-019"
+      ],
+      "status": "HAS_LINKED_TESTS_REVIEW_SCOPE",
+      "tests": [
+        "src/agentloop/tests/test_ac_delivery.py::test_local_rework_skips_leader_and_waits_for_explicit_simulation_authorization",
+        "src/agentloop/tests/test_ac_java_integration.py::test_real_spring_http_bug_is_repaired_and_fixed_tests_remain_unchanged[False]",
+        "src/agentloop/tests/test_ac_java_integration.py::test_real_spring_http_bug_is_repaired_and_fixed_tests_remain_unchanged[True]"
+      ]
+    },
+    {
+      "acceptance": "AC-07",
+      "requirements": [
+        "REQ-009",
+        "REQ-020"
+      ],
+      "status": "NO_EXECUTION_EVIDENCE",
+      "tests": []
+    },
+    {
+      "acceptance": "AC-08",
+      "requirements": [
+        "REQ-021"
+      ],
+      "status": "HAS_LINKED_TESTS_REVIEW_SCOPE",
+      "tests": [
+        "src/agentloop/tests/test_ac_delivery.py::test_repeated_test_failure_is_bounded"
+      ]
+    },
+    {
+      "acceptance": "AC-09",
+      "requirements": [
+        "REQ-002",
+        "REQ-011"
+      ],
+      "status": "NO_EXECUTION_EVIDENCE",
+      "tests": []
+    },
+    {
+      "acceptance": "AC-10",
+      "requirements": [
+        "REQ-012",
+        "REQ-037"
+      ],
+      "status": "HAS_LINKED_TESTS_REVIEW_SCOPE",
+      "tests": [
+        "src/agentloop/tests/test_ac_approvals.py::test_g2_blocks_hard_findings[CRITICAL]",
+        "src/agentloop/tests/test_ac_approvals.py::test_g2_blocks_hard_findings[HIGH]",
+        "src/agentloop/tests/test_ac_delivery.py::test_high_security_finding_blocks_g2_even_after_passing_tests[CRITICAL]",
+        "src/agentloop/tests/test_ac_delivery.py::test_high_security_finding_blocks_g2_even_after_passing_tests[HIGH]",
+        "src/agentloop/tests/test_ac_security_remediation.py::test_crash_after_remediation_commit_reuses_evidence_and_enters_leader_once[EXTERNAL_REWORK]",
+        "src/agentloop/tests/test_ac_security_remediation.py::test_crash_after_remediation_commit_reuses_evidence_and_enters_leader_once[ISSUE_RESOLVED]",
+        "src/agentloop/tests/test_ac_security_remediation.py::test_g2_verified_code_finding_reenters_leader_and_resolves_only_after_revalidation",
+        "src/agentloop/tests/test_ac_security_remediation.py::test_issue_cannot_be_resolved_using_failed_or_old_delivery_proof[failed_test]",
+        "src/agentloop/tests/test_ac_security_remediation.py::test_issue_cannot_be_resolved_using_failed_or_old_delivery_proof[stale_review]",
+        "src/agentloop/tests/test_ac_security_remediation.py::test_security_demo_profile_survives_reopen_without_repeating_the_flag",
+        "src/agentloop/tests/test_ac_security_remediation.py::test_unfixed_security_findings_stay_open_and_cannot_loop_forever[False]",
+        "src/agentloop/tests/test_ac_security_remediation.py::test_unfixed_security_findings_stay_open_and_cannot_loop_forever[True]",
+        "src/agentloop/tests/test_ac_security_remediation.py::test_unknown_expert_root_cause_stays_unassigned_and_cannot_be_auto_resolved"
+      ]
+    },
+    {
+      "acceptance": "AC-11",
+      "requirements": [
+        "REQ-012",
+        "REQ-037"
+      ],
+      "status": "HAS_LINKED_TESTS_REVIEW_SCOPE",
+      "tests": [
+        "src/agentloop/tests/test_ac_delivery.py::test_high_security_finding_blocks_g2_even_after_passing_tests[CRITICAL]",
+        "src/agentloop/tests/test_ac_delivery.py::test_high_security_finding_blocks_g2_even_after_passing_tests[HIGH]",
+        "src/agentloop/tests/test_ac_java_integration.py::test_real_spring_http_bug_is_repaired_and_fixed_tests_remain_unchanged[False]",
+        "src/agentloop/tests/test_ac_java_integration.py::test_real_spring_http_bug_is_repaired_and_fixed_tests_remain_unchanged[True]"
+      ]
+    },
+    {
+      "acceptance": "AC-12",
+      "requirements": [
+        "REQ-014",
+        "REQ-015"
+      ],
+      "status": "NO_EXECUTION_EVIDENCE",
+      "tests": []
+    },
+    {
+      "acceptance": "AC-13",
+      "requirements": [
+        "REQ-016"
+      ],
+      "status": "HAS_LINKED_TESTS_REVIEW_SCOPE",
+      "tests": [
+        "src/agentloop/tests/test_ac_approvals.py::test_mock_g3_only_passes_healthy_bound_deployment[False]",
+        "src/agentloop/tests/test_ac_approvals.py::test_mock_g3_only_passes_healthy_bound_deployment[None]",
+        "src/agentloop/tests/test_ac_approvals.py::test_mock_g3_only_passes_healthy_bound_deployment[True]"
+      ]
+    },
+    {
+      "acceptance": "AC-14",
+      "requirements": [
+        "REQ-022"
+      ],
+      "status": "NO_EXECUTION_EVIDENCE",
+      "tests": []
+    },
+    {
+      "acceptance": "AC-15",
+      "requirements": [
+        "REQ-027",
+        "REQ-040"
+      ],
+      "status": "NO_EXECUTION_EVIDENCE",
+      "tests": []
+    },
+    {
+      "acceptance": "AC-16",
+      "requirements": [
+        "REQ-026",
+        "REQ-028"
+      ],
+      "status": "NO_EXECUTION_EVIDENCE",
+      "tests": []
+    },
+    {
+      "acceptance": "AC-17",
+      "requirements": [
+        "REQ-026",
+        "REQ-032"
+      ],
+      "status": "HAS_LINKED_TESTS_REVIEW_SCOPE",
+      "tests": [
+        "src/agentloop/tests/test_ac_delivery.py::test_configuration_cannot_be_replaced_when_resuming"
+      ]
+    },
+    {
+      "acceptance": "AC-18",
+      "requirements": [
+        "REQ-029",
+        "REQ-038"
+      ],
+      "status": "NO_EXECUTION_EVIDENCE",
+      "tests": []
+    },
+    {
+      "acceptance": "AC-19",
+      "requirements": [
+        "REQ-029",
+        "REQ-032"
+      ],
+      "status": "NO_EXECUTION_EVIDENCE",
+      "tests": []
+    },
+    {
+      "acceptance": "AC-20",
+      "requirements": [
+        "REQ-029"
+      ],
+      "status": "NO_EXECUTION_EVIDENCE",
+      "tests": []
+    },
+    {
+      "acceptance": "AC-21",
+      "requirements": [
+        "REQ-031"
+      ],
+      "status": "NO_EXECUTION_EVIDENCE",
+      "tests": []
+    },
+    {
+      "acceptance": "AC-22",
+      "requirements": [
+        "REQ-030",
+        "REQ-040"
+      ],
+      "status": "NO_EXECUTION_EVIDENCE",
+      "tests": []
+    },
+    {
+      "acceptance": "AC-23",
+      "requirements": [
+        "REQ-030",
+        "REQ-032"
+      ],
+      "status": "NO_EXECUTION_EVIDENCE",
+      "tests": []
+    },
+    {
+      "acceptance": "AC-24",
+      "requirements": [
+        "REQ-033",
+        "REQ-039"
+      ],
+      "status": "HAS_LINKED_TESTS_REVIEW_SCOPE",
+      "tests": [
+        "src/agentloop/tests/test_ac_delivery.py::test_patch_committed_before_crash_is_replayed_without_a_second_model_proposal",
+        "src/agentloop/tests/test_ac_delivery.py::test_reopen_g1_uses_original_configuration_and_cached_department_outputs",
+        "src/agentloop/tests/test_ac_recovery.py::test_separate_processes_resume_original_checkpoint_without_duplicate_events",
+        "src/agentloop/tests/test_ac_security_remediation.py::test_crash_after_remediation_commit_reuses_evidence_and_enters_leader_once[EXTERNAL_REWORK]",
+        "src/agentloop/tests/test_ac_security_remediation.py::test_crash_after_remediation_commit_reuses_evidence_and_enters_leader_once[ISSUE_RESOLVED]"
+      ]
+    },
+    {
+      "acceptance": "AC-25",
+      "requirements": [
+        "REQ-020",
+        "REQ-032"
+      ],
+      "status": "HAS_LINKED_TESTS_REVIEW_SCOPE",
+      "tests": [
+        "src/agentloop/tests/test_ac_workspace_evidence.py::test_archive_verifies_original_bytes_and_run_scope"
+      ]
+    },
+    {
+      "acceptance": "AC-26",
+      "requirements": [
+        "REQ-017",
+        "REQ-038"
+      ],
+      "status": "NO_EXECUTION_EVIDENCE",
+      "tests": []
+    },
+    {
+      "acceptance": "AC-27",
+      "requirements": [
+        "REQ-006",
+        "REQ-036"
+      ],
+      "status": "HAS_LINKED_TESTS_REVIEW_SCOPE",
+      "tests": [
+        "src/agentloop/tests/test_ac_recovery.py::test_multiple_questions_restore_original_wait_state_only_after_all_answers",
+        "src/agentloop/tests/test_ac_recovery.py::test_separate_processes_resume_original_checkpoint_without_duplicate_events"
+      ]
+    },
+    {
+      "acceptance": "AC-28",
+      "requirements": [
+        "REQ-005",
+        "REQ-007",
+        "REQ-036"
+      ],
+      "status": "HAS_LINKED_TESTS_REVIEW_SCOPE",
+      "tests": [
+        "src/agentloop/tests/test_ac_approvals.py::test_approval_decision_uses_server_identity_and_project_roles[agent]",
+        "src/agentloop/tests/test_ac_approvals.py::test_approval_decision_uses_server_identity_and_project_roles[approver]",
+        "src/agentloop/tests/test_ac_approvals.py::test_approval_decision_uses_server_identity_and_project_roles[outsider]",
+        "src/agentloop/tests/test_ac_approvals.py::test_approval_decision_uses_server_identity_and_project_roles[system]",
+        "src/agentloop/tests/test_ac_approvals.py::test_g1_waits_for_both_approvals_then_rechecks_same_pending_record",
+        "src/agentloop/tests/test_ac_approvals.py::test_project_policy_and_risk_trigger_control_required_confirmations[policy0-triggers0-1]",
+        "src/agentloop/tests/test_ac_approvals.py::test_project_policy_and_risk_trigger_control_required_confirmations[policy1-triggers1-0]",
+        "src/agentloop/tests/test_ac_approvals.py::test_project_policy_and_risk_trigger_control_required_confirmations[policy2-triggers2-2]",
+        "src/agentloop/tests/test_ac_delivery.py::test_g1_checkpoint_blocks_all_backend_calls_until_human_confirmation"
+      ]
+    },
+    {
+      "acceptance": "AC-29",
+      "requirements": [
+        "REQ-007"
+      ],
+      "status": "HAS_LINKED_TESTS_REVIEW_SCOPE",
+      "tests": [
+        "src/agentloop/tests/test_ac_approvals.py::test_optional_confirmation_disabled_for_this_run"
+      ]
+    },
+    {
+      "acceptance": "AC-30",
+      "requirements": [
+        "REQ-014",
+        "REQ-015",
+        "REQ-036"
+      ],
+      "status": "HAS_LINKED_TESTS_REVIEW_SCOPE",
+      "tests": [
+        "src/agentloop/tests/test_ac_approvals.py::test_human_release_approver_issues_bound_authorization",
+        "src/agentloop/tests/test_ac_approvals.py::test_release_approval_rejects_unauthorized_people_and_services[agent]",
+        "src/agentloop/tests/test_ac_approvals.py::test_release_approval_rejects_unauthorized_people_and_services[outsider]",
+        "src/agentloop/tests/test_ac_approvals.py::test_release_approval_rejects_unauthorized_people_and_services[owner]",
+        "src/agentloop/tests/test_ac_approvals.py::test_release_approval_rejects_unauthorized_people_and_services[system]"
+      ]
+    },
+    {
+      "acceptance": "AC-31",
+      "requirements": [
+        "REQ-014",
+        "REQ-015"
+      ],
+      "status": "NO_EXECUTION_EVIDENCE",
+      "tests": []
+    },
+    {
+      "acceptance": "AC-32",
+      "requirements": [
+        "REQ-018"
+      ],
+      "status": "HAS_LINKED_TESTS_REVIEW_SCOPE",
+      "tests": [
+        "src/agentloop/tests/test_ac_state_machine.py::test_ac32_phase_and_status_are_independent_enums",
+        "src/agentloop/tests/test_ac_state_machine.py::test_ac46_cannot_complete_while_gate_pending",
+        "src/agentloop/tests/test_ac_state_machine.py::test_ac51_composite_guard_blocks_gate_with_created_status",
+        "src/agentloop/tests/test_ac_state_machine.py::test_ac51_concurrent_state_version_conflict_preserves_state",
+        "src/agentloop/tests/test_ac_state_machine.py::test_ac51_delivery_is_the_only_successful_terminal",
+        "src/agentloop/tests/test_ac_state_machine.py::test_ac51_exhaustive_phase_whitelist",
+        "src/agentloop/tests/test_ac_state_machine.py::test_ac51_g1_rejection_routes_to_upstream_phases",
+        "src/agentloop/tests/test_ac_state_machine.py::test_ac51_gate_result_whitelist_is_terminal_after_reject",
+        "src/agentloop/tests/test_ac_state_machine.py::test_ac51_recovery_phase_accepts_only_recovery_statuses",
+        "src/agentloop/tests/test_ac_state_machine.py::test_ac51_terminal_status_cannot_revive"
+      ]
+    },
+    {
+      "acceptance": "AC-33",
+      "requirements": [
+        "REQ-019",
+        "REQ-020"
+      ],
+      "status": "HAS_LINKED_TESTS_REVIEW_SCOPE",
+      "tests": [
+        "src/agentloop/tests/test_ac_routing.py::test_agent_cannot_submit_server_owned_fields[issue-final_gate_result]",
+        "src/agentloop/tests/test_ac_routing.py::test_agent_cannot_submit_server_owned_fields[issue-routed_leader]",
+        "src/agentloop/tests/test_ac_routing.py::test_agent_cannot_submit_server_owned_fields[issue-target_leader]",
+        "src/agentloop/tests/test_ac_routing.py::test_agent_cannot_submit_server_owned_fields[report-final_gate_result]",
+        "src/agentloop/tests/test_ac_routing.py::test_agent_cannot_submit_server_owned_fields[report-routed_leader]",
+        "src/agentloop/tests/test_ac_routing.py::test_agent_cannot_submit_server_owned_fields[report-target_leader]",
+        "src/agentloop/tests/test_ac_routing.py::test_empty_evidence_is_rejected",
+        "src/agentloop/tests/test_ac_routing.py::test_router_binds_agent_identity_and_rejects_reused_key_payload"
+      ]
+    },
+    {
+      "acceptance": "AC-34",
+      "requirements": [
+        "REQ-004",
+        "REQ-010"
+      ],
+      "status": "HAS_LINKED_TESTS_REVIEW_SCOPE",
+      "tests": [
+        "src/agentloop/tests/test_ac_delivery.py::test_review_failure_returns_directly_to_backend",
+        "src/agentloop/tests/test_ac_delivery.py::test_ux_and_production_review_triggers_are_recorded[False]",
+        "src/agentloop/tests/test_ac_delivery.py::test_ux_and_production_review_triggers_are_recorded[True]"
+      ]
+    },
+    {
+      "acceptance": "AC-35",
+      "requirements": [
+        "REQ-017",
+        "REQ-038"
+      ],
+      "status": "NO_EXECUTION_EVIDENCE",
+      "tests": []
+    },
+    {
+      "acceptance": "AC-36",
+      "requirements": [
+        "REQ-028",
+        "REQ-030"
+      ],
+      "status": "NO_EXECUTION_EVIDENCE",
+      "tests": []
+    },
+    {
+      "acceptance": "AC-37",
+      "requirements": [
+        "REQ-021",
+        "REQ-024",
+        "REQ-039"
+      ],
+      "status": "NO_EXECUTION_EVIDENCE",
+      "tests": []
+    },
+    {
+      "acceptance": "AC-38",
+      "requirements": [
+        "REQ-025"
+      ],
+      "status": "HAS_LINKED_TESTS_REVIEW_SCOPE",
+      "tests": [
+        "src/agentloop/tests/test_ac_workspace_evidence.py::test_all_changes_are_validated_before_first_write",
+        "src/agentloop/tests/test_ac_workspace_evidence.py::test_backend_cannot_change_tests_build_config_or_escape_workspace[../outside]",
+        "src/agentloop/tests/test_ac_workspace_evidence.py::test_backend_cannot_change_tests_build_config_or_escape_workspace[/absolute]",
+        "src/agentloop/tests/test_ac_workspace_evidence.py::test_backend_cannot_change_tests_build_config_or_escape_workspace[C:/outside]",
+        "src/agentloop/tests/test_ac_workspace_evidence.py::test_backend_cannot_change_tests_build_config_or_escape_workspace[pom.xml]",
+        "src/agentloop/tests/test_ac_workspace_evidence.py::test_backend_cannot_change_tests_build_config_or_escape_workspace[src/test/java/example/HelloControllerTest.java]",
+        "src/agentloop/tests/test_ac_workspace_evidence.py::test_backend_cannot_change_tests_build_config_or_escape_workspace[src\\\\main\\\\escape]",
+        "src/agentloop/tests/test_ac_workspace_evidence.py::test_executor_uses_junit_and_exit_status_instead_of_text[exit-mismatch-INCONCLUSIVE]",
+        "src/agentloop/tests/test_ac_workspace_evidence.py::test_executor_uses_junit_and_exit_status_instead_of_text[fail-FAIL]",
+        "src/agentloop/tests/test_ac_workspace_evidence.py::test_executor_uses_junit_and_exit_status_instead_of_text[missing-INCONCLUSIVE]",
+        "src/agentloop/tests/test_ac_workspace_evidence.py::test_executor_uses_junit_and_exit_status_instead_of_text[pass-PASS]",
+        "src/agentloop/tests/test_ac_workspace_evidence.py::test_executor_uses_junit_and_exit_status_instead_of_text[skipped-INCONCLUSIVE]"
+      ]
+    },
+    {
+      "acceptance": "AC-39",
+      "requirements": [
+        "REQ-028",
+        "REQ-037"
+      ],
+      "status": "NO_EXECUTION_EVIDENCE",
+      "tests": []
+    },
+    {
+      "acceptance": "AC-40",
+      "requirements": [
+        "REQ-023",
+        "REQ-022"
+      ],
+      "status": "NO_EXECUTION_EVIDENCE",
+      "tests": []
+    },
+    {
+      "acceptance": "AC-41",
+      "requirements": [
+        "REQ-012",
+        "REQ-013"
+      ],
+      "status": "NO_EXECUTION_EVIDENCE",
+      "tests": []
+    },
+    {
+      "acceptance": "AC-42",
+      "requirements": [
+        "REQ-033",
+        "REQ-034"
+      ],
+      "status": "NO_EXECUTION_EVIDENCE",
+      "tests": []
+    },
+    {
+      "acceptance": "AC-43",
+      "requirements": [
+        "REQ-035"
+      ],
+      "status": "NO_EXECUTION_EVIDENCE",
+      "tests": []
+    },
+    {
+      "acceptance": "AC-44",
+      "requirements": [
+        "REQ-007",
+        "REQ-020",
+        "REQ-032"
+      ],
+      "status": "HAS_LINKED_TESTS_REVIEW_SCOPE",
+      "tests": [
+        "src/agentloop/tests/test_ac_approvals.py::test_invalid_g1_decisions_never_pass[baseline_changed]",
+        "src/agentloop/tests/test_ac_approvals.py::test_invalid_g1_decisions_never_pass[expired]",
+        "src/agentloop/tests/test_ac_approvals.py::test_invalid_g1_decisions_never_pass[rejected]",
+        "src/agentloop/tests/test_ac_approvals.py::test_passed_g1_rechecks_approval_at_time_of_use[expired]",
+        "src/agentloop/tests/test_ac_approvals.py::test_passed_g1_rechecks_approval_at_time_of_use[principal_disabled]",
+        "src/agentloop/tests/test_ac_approvals.py::test_passed_g1_rechecks_approval_at_time_of_use[role_expired]",
+        "src/agentloop/tests/test_ac_approvals.py::test_revocation_invalidates_passed_gate",
+        "src/agentloop/tests/test_ac_workspace_evidence.py::test_stale_patch_is_rejected_without_commit_change"
+      ]
+    },
+    {
+      "acceptance": "AC-45",
+      "requirements": [
+        "REQ-019",
+        "REQ-020"
+      ],
+      "status": "HAS_LINKED_TESTS_REVIEW_SCOPE",
+      "tests": [
+        "src/agentloop/tests/test_ac_routing.py::test_free_text_does_not_override_structured_routing",
+        "src/agentloop/tests/test_ac_routing.py::test_unknown_or_conflicting_responsibility_is_escalated[CODE_DEFECT-SPEC_DEFECT]",
+        "src/agentloop/tests/test_ac_routing.py::test_unknown_or_conflicting_responsibility_is_escalated[SECURITY_FINDING-None]",
+        "src/agentloop/tests/test_ac_routing.py::test_unknown_or_conflicting_responsibility_is_escalated[UNCLASSIFIED-None]"
+      ]
+    },
+    {
+      "acceptance": "AC-46",
+      "requirements": [
+        "REQ-018"
+      ],
+      "status": "HAS_LINKED_TESTS_REVIEW_SCOPE",
+      "tests": [
+        "src/agentloop/tests/test_ac_approvals.py::test_mock_g3_only_passes_healthy_bound_deployment[False]",
+        "src/agentloop/tests/test_ac_approvals.py::test_mock_g3_only_passes_healthy_bound_deployment[None]",
+        "src/agentloop/tests/test_ac_approvals.py::test_mock_g3_only_passes_healthy_bound_deployment[True]",
+        "src/agentloop/tests/test_ac_approvals.py::test_older_pass_cannot_override_latest_rejection",
+        "src/agentloop/tests/test_ac_state_machine.py::test_ac32_phase_and_status_are_independent_enums",
+        "src/agentloop/tests/test_ac_state_machine.py::test_ac46_cannot_complete_while_gate_pending",
+        "src/agentloop/tests/test_ac_state_machine.py::test_ac51_composite_guard_blocks_gate_with_created_status",
+        "src/agentloop/tests/test_ac_state_machine.py::test_ac51_concurrent_state_version_conflict_preserves_state",
+        "src/agentloop/tests/test_ac_state_machine.py::test_ac51_delivery_is_the_only_successful_terminal",
+        "src/agentloop/tests/test_ac_state_machine.py::test_ac51_exhaustive_phase_whitelist",
+        "src/agentloop/tests/test_ac_state_machine.py::test_ac51_g1_rejection_routes_to_upstream_phases",
+        "src/agentloop/tests/test_ac_state_machine.py::test_ac51_gate_result_whitelist_is_terminal_after_reject",
+        "src/agentloop/tests/test_ac_state_machine.py::test_ac51_recovery_phase_accepts_only_recovery_statuses",
+        "src/agentloop/tests/test_ac_state_machine.py::test_ac51_terminal_status_cannot_revive"
+      ]
+    },
+    {
+      "acceptance": "AC-47",
+      "requirements": [
+        "REQ-001",
+        "REQ-002"
+      ],
+      "status": "NO_EXECUTION_EVIDENCE",
+      "tests": []
+    },
+    {
+      "acceptance": "AC-48",
+      "requirements": [
+        "REQ-006",
+        "REQ-015",
+        "REQ-040"
+      ],
+      "status": "HAS_LINKED_TESTS_REVIEW_SCOPE",
+      "tests": [
+        "src/agentloop/tests/test_ac_recovery.py::test_other_project_and_agent_cannot_answer_clarification[agent]",
+        "src/agentloop/tests/test_ac_recovery.py::test_other_project_and_agent_cannot_answer_clarification[outsider]"
+      ]
+    },
+    {
+      "acceptance": "AC-49",
+      "requirements": [
+        "REQ-016",
+        "REQ-041"
+      ],
+      "status": "NO_EXECUTION_EVIDENCE",
+      "tests": []
+    },
+    {
+      "acceptance": "AC-50",
+      "requirements": [
+        "REQ-033",
+        "REQ-041"
+      ],
+      "status": "NO_EXECUTION_EVIDENCE",
+      "tests": []
+    },
+    {
+      "acceptance": "AC-51",
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "status": "HAS_LINKED_TESTS_REVIEW_SCOPE",
+      "tests": [
+        "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[NOT_EVALUATED-NOT_EVALUATED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[NOT_EVALUATED-PASSED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[NOT_EVALUATED-PENDING]",
+        "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[NOT_EVALUATED-REJECTED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[NOT_EVALUATED-STALE]",
+        "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[PASSED-NOT_EVALUATED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[PASSED-PASSED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[PASSED-PENDING]",
+        "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[PASSED-REJECTED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[PASSED-STALE]",
+        "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[PENDING-NOT_EVALUATED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[PENDING-PASSED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[PENDING-PENDING]",
+        "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[PENDING-REJECTED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[PENDING-STALE]",
+        "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[REJECTED-NOT_EVALUATED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[REJECTED-PASSED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[REJECTED-PENDING]",
+        "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[REJECTED-REJECTED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[REJECTED-STALE]",
+        "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[STALE-NOT_EVALUATED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[STALE-PASSED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[STALE-PENDING]",
+        "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[STALE-REJECTED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[STALE-STALE]",
+        "src/agentloop/tests/test_ac_matrices.py::test_phase_table_matches_authoritative_specification",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[BLOCKED-BLOCKED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[BLOCKED-CANCELLED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[BLOCKED-CANCELLING]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[BLOCKED-CANCEL_REQUESTED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[BLOCKED-COMPLETED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[BLOCKED-CREATED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[BLOCKED-FAILED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[BLOCKED-NEEDS_RECONCILIATION]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[BLOCKED-PAUSED_FOR_HUMAN]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[BLOCKED-RUNNING]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[BLOCKED-WAITING_APPROVAL]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[BLOCKED-WAITING_GATE]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLED-BLOCKED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLED-CANCELLED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLED-CANCELLING]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLED-CANCEL_REQUESTED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLED-COMPLETED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLED-CREATED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLED-FAILED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLED-NEEDS_RECONCILIATION]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLED-PAUSED_FOR_HUMAN]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLED-RUNNING]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLED-WAITING_APPROVAL]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLED-WAITING_GATE]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLING-BLOCKED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLING-CANCELLED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLING-CANCELLING]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLING-CANCEL_REQUESTED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLING-COMPLETED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLING-CREATED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLING-FAILED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLING-NEEDS_RECONCILIATION]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLING-PAUSED_FOR_HUMAN]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLING-RUNNING]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLING-WAITING_APPROVAL]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLING-WAITING_GATE]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCEL_REQUESTED-BLOCKED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCEL_REQUESTED-CANCELLED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCEL_REQUESTED-CANCELLING]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCEL_REQUESTED-CANCEL_REQUESTED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCEL_REQUESTED-COMPLETED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCEL_REQUESTED-CREATED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCEL_REQUESTED-FAILED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCEL_REQUESTED-NEEDS_RECONCILIATION]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCEL_REQUESTED-PAUSED_FOR_HUMAN]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCEL_REQUESTED-RUNNING]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCEL_REQUESTED-WAITING_APPROVAL]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCEL_REQUESTED-WAITING_GATE]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[COMPLETED-BLOCKED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[COMPLETED-CANCELLED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[COMPLETED-CANCELLING]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[COMPLETED-CANCEL_REQUESTED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[COMPLETED-COMPLETED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[COMPLETED-CREATED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[COMPLETED-FAILED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[COMPLETED-NEEDS_RECONCILIATION]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[COMPLETED-PAUSED_FOR_HUMAN]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[COMPLETED-RUNNING]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[COMPLETED-WAITING_APPROVAL]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[COMPLETED-WAITING_GATE]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CREATED-BLOCKED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CREATED-CANCELLED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CREATED-CANCELLING]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CREATED-CANCEL_REQUESTED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CREATED-COMPLETED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CREATED-CREATED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CREATED-FAILED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CREATED-NEEDS_RECONCILIATION]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CREATED-PAUSED_FOR_HUMAN]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CREATED-RUNNING]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CREATED-WAITING_APPROVAL]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CREATED-WAITING_GATE]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[FAILED-BLOCKED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[FAILED-CANCELLED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[FAILED-CANCELLING]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[FAILED-CANCEL_REQUESTED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[FAILED-COMPLETED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[FAILED-CREATED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[FAILED-FAILED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[FAILED-NEEDS_RECONCILIATION]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[FAILED-PAUSED_FOR_HUMAN]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[FAILED-RUNNING]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[FAILED-WAITING_APPROVAL]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[FAILED-WAITING_GATE]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[NEEDS_RECONCILIATION-BLOCKED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[NEEDS_RECONCILIATION-CANCELLED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[NEEDS_RECONCILIATION-CANCELLING]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[NEEDS_RECONCILIATION-CANCEL_REQUESTED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[NEEDS_RECONCILIATION-COMPLETED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[NEEDS_RECONCILIATION-CREATED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[NEEDS_RECONCILIATION-FAILED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[NEEDS_RECONCILIATION-NEEDS_RECONCILIATION]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[NEEDS_RECONCILIATION-PAUSED_FOR_HUMAN]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[NEEDS_RECONCILIATION-RUNNING]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[NEEDS_RECONCILIATION-WAITING_APPROVAL]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[NEEDS_RECONCILIATION-WAITING_GATE]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[PAUSED_FOR_HUMAN-BLOCKED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[PAUSED_FOR_HUMAN-CANCELLED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[PAUSED_FOR_HUMAN-CANCELLING]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[PAUSED_FOR_HUMAN-CANCEL_REQUESTED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[PAUSED_FOR_HUMAN-COMPLETED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[PAUSED_FOR_HUMAN-CREATED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[PAUSED_FOR_HUMAN-FAILED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[PAUSED_FOR_HUMAN-NEEDS_RECONCILIATION]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[PAUSED_FOR_HUMAN-PAUSED_FOR_HUMAN]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[PAUSED_FOR_HUMAN-RUNNING]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[PAUSED_FOR_HUMAN-WAITING_APPROVAL]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[PAUSED_FOR_HUMAN-WAITING_GATE]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[RUNNING-BLOCKED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[RUNNING-CANCELLED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[RUNNING-CANCELLING]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[RUNNING-CANCEL_REQUESTED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[RUNNING-COMPLETED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[RUNNING-CREATED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[RUNNING-FAILED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[RUNNING-NEEDS_RECONCILIATION]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[RUNNING-PAUSED_FOR_HUMAN]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[RUNNING-RUNNING]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[RUNNING-WAITING_APPROVAL]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[RUNNING-WAITING_GATE]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_APPROVAL-BLOCKED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_APPROVAL-CANCELLED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_APPROVAL-CANCELLING]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_APPROVAL-CANCEL_REQUESTED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_APPROVAL-COMPLETED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_APPROVAL-CREATED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_APPROVAL-FAILED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_APPROVAL-NEEDS_RECONCILIATION]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_APPROVAL-PAUSED_FOR_HUMAN]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_APPROVAL-RUNNING]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_APPROVAL-WAITING_APPROVAL]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_APPROVAL-WAITING_GATE]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_GATE-BLOCKED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_GATE-CANCELLED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_GATE-CANCELLING]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_GATE-CANCEL_REQUESTED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_GATE-COMPLETED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_GATE-CREATED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_GATE-FAILED]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_GATE-NEEDS_RECONCILIATION]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_GATE-PAUSED_FOR_HUMAN]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_GATE-RUNNING]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_GATE-WAITING_APPROVAL]",
+        "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_GATE-WAITING_GATE]",
+        "src/agentloop/tests/test_ac_recovery.py::test_state_and_event_both_roll_back_on_event_write_failure",
+        "src/agentloop/tests/test_ac_recovery.py::test_two_sqlite_connections_do_not_overwrite_stale_state_version",
+        "src/agentloop/tests/test_ac_state_machine.py::test_ac32_phase_and_status_are_independent_enums",
+        "src/agentloop/tests/test_ac_state_machine.py::test_ac46_cannot_complete_while_gate_pending",
+        "src/agentloop/tests/test_ac_state_machine.py::test_ac51_composite_guard_blocks_gate_with_created_status",
+        "src/agentloop/tests/test_ac_state_machine.py::test_ac51_concurrent_state_version_conflict_preserves_state",
+        "src/agentloop/tests/test_ac_state_machine.py::test_ac51_delivery_is_the_only_successful_terminal",
+        "src/agentloop/tests/test_ac_state_machine.py::test_ac51_exhaustive_phase_whitelist",
+        "src/agentloop/tests/test_ac_state_machine.py::test_ac51_g1_rejection_routes_to_upstream_phases",
+        "src/agentloop/tests/test_ac_state_machine.py::test_ac51_gate_result_whitelist_is_terminal_after_reject",
+        "src/agentloop/tests/test_ac_state_machine.py::test_ac51_recovery_phase_accepts_only_recovery_statuses",
+        "src/agentloop/tests/test_ac_state_machine.py::test_ac51_terminal_status_cannot_revive"
+      ]
+    },
+    {
+      "acceptance": "AC-52",
+      "requirements": [
+        "REQ-013",
+        "REQ-045"
+      ],
+      "status": "NO_EXECUTION_EVIDENCE",
+      "tests": []
+    },
+    {
+      "acceptance": "AC-53",
+      "requirements": [
+        "REQ-030",
+        "REQ-046"
+      ],
+      "status": "NO_EXECUTION_EVIDENCE",
+      "tests": []
+    },
+    {
+      "acceptance": "AC-54",
+      "requirements": [
+        "REQ-014",
+        "REQ-044"
+      ],
+      "status": "NO_EXECUTION_EVIDENCE",
+      "tests": []
+    },
+    {
+      "acceptance": "AC-55",
+      "requirements": [
+        "REQ-007",
+        "REQ-047"
+      ],
+      "status": "HAS_LINKED_TESTS_REVIEW_SCOPE",
+      "tests": [
+        "src/agentloop/tests/test_ac_approvals.py::test_g1_waits_for_both_approvals_then_rechecks_same_pending_record",
+        "src/agentloop/tests/test_ac_approvals.py::test_only_gate_evaluator_can_create_g1_requests[agent]",
+        "src/agentloop/tests/test_ac_approvals.py::test_only_gate_evaluator_can_create_g1_requests[owner]",
+        "src/agentloop/tests/test_ac_approvals.py::test_only_gate_evaluator_can_create_g1_requests[system]"
+      ]
+    },
+    {
+      "acceptance": "AC-56",
+      "requirements": [
+        "REQ-015",
+        "REQ-043",
+        "REQ-048"
+      ],
+      "status": "NO_EXECUTION_EVIDENCE",
+      "tests": []
+    },
+    {
+      "acceptance": "AC-57",
+      "requirements": [
+        "REQ-014",
+        "REQ-044"
+      ],
+      "status": "NO_EXECUTION_EVIDENCE",
+      "tests": []
+    },
+    {
+      "acceptance": "AC-58",
+      "requirements": [
+        "REQ-016",
+        "REQ-041",
+        "REQ-044"
+      ],
+      "status": "NO_EXECUTION_EVIDENCE",
+      "tests": []
+    },
+    {
+      "acceptance": "AC-59",
+      "requirements": [
+        "REQ-018",
+        "REQ-041",
+        "REQ-049"
+      ],
+      "status": "HAS_LINKED_TESTS_REVIEW_SCOPE",
+      "tests": [
+        "src/agentloop/tests/test_ac_security_remediation.py::test_crash_after_remediation_commit_reuses_evidence_and_enters_leader_once[EXTERNAL_REWORK]",
+        "src/agentloop/tests/test_ac_security_remediation.py::test_crash_after_remediation_commit_reuses_evidence_and_enters_leader_once[ISSUE_RESOLVED]",
+        "src/agentloop/tests/test_ac_security_remediation.py::test_g2_verified_code_finding_reenters_leader_and_resolves_only_after_revalidation",
+        "src/agentloop/tests/test_ac_security_remediation.py::test_issue_cannot_be_resolved_using_failed_or_old_delivery_proof[failed_test]",
+        "src/agentloop/tests/test_ac_security_remediation.py::test_issue_cannot_be_resolved_using_failed_or_old_delivery_proof[stale_review]",
+        "src/agentloop/tests/test_ac_security_remediation.py::test_security_demo_profile_survives_reopen_without_repeating_the_flag",
+        "src/agentloop/tests/test_ac_security_remediation.py::test_unfixed_security_findings_stay_open_and_cannot_loop_forever[False]",
+        "src/agentloop/tests/test_ac_security_remediation.py::test_unfixed_security_findings_stay_open_and_cannot_loop_forever[True]",
+        "src/agentloop/tests/test_ac_security_remediation.py::test_unknown_expert_root_cause_stays_unassigned_and_cannot_be_auto_resolved"
+      ]
+    }
+  ],
+  "tests": [
+    {
+      "nodeid": "src/agentloop/tests/test_ac_approvals.py::test_approval_decision_uses_server_identity_and_project_roles[agent]",
+      "acceptance": [
+        "AC-28"
+      ],
+      "requirements": [
+        "REQ-005",
+        "REQ-007",
+        "REQ-014",
+        "REQ-015",
+        "REQ-047"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_approvals.py::test_approval_decision_uses_server_identity_and_project_roles[approver]",
+      "acceptance": [
+        "AC-28"
+      ],
+      "requirements": [
+        "REQ-005",
+        "REQ-007",
+        "REQ-014",
+        "REQ-015",
+        "REQ-047"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_approvals.py::test_approval_decision_uses_server_identity_and_project_roles[outsider]",
+      "acceptance": [
+        "AC-28"
+      ],
+      "requirements": [
+        "REQ-005",
+        "REQ-007",
+        "REQ-014",
+        "REQ-015",
+        "REQ-047"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_approvals.py::test_approval_decision_uses_server_identity_and_project_roles[system]",
+      "acceptance": [
+        "AC-28"
+      ],
+      "requirements": [
+        "REQ-005",
+        "REQ-007",
+        "REQ-014",
+        "REQ-015",
+        "REQ-047"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_approvals.py::test_g1_waits_for_both_approvals_then_rechecks_same_pending_record",
+      "acceptance": [
+        "AC-28",
+        "AC-55"
+      ],
+      "requirements": [
+        "REQ-005",
+        "REQ-007",
+        "REQ-014",
+        "REQ-015",
+        "REQ-047"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_approvals.py::test_g2_blocks_hard_findings[CRITICAL]",
+      "acceptance": [
+        "AC-10"
+      ],
+      "requirements": [
+        "REQ-005",
+        "REQ-007",
+        "REQ-014",
+        "REQ-015",
+        "REQ-047"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_approvals.py::test_g2_blocks_hard_findings[HIGH]",
+      "acceptance": [
+        "AC-10"
+      ],
+      "requirements": [
+        "REQ-005",
+        "REQ-007",
+        "REQ-014",
+        "REQ-015",
+        "REQ-047"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_approvals.py::test_human_release_approver_issues_bound_authorization",
+      "acceptance": [
+        "AC-30"
+      ],
+      "requirements": [
+        "REQ-005",
+        "REQ-007",
+        "REQ-014",
+        "REQ-015",
+        "REQ-047"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_approvals.py::test_invalid_g1_decisions_never_pass[baseline_changed]",
+      "acceptance": [
+        "AC-44"
+      ],
+      "requirements": [
+        "REQ-005",
+        "REQ-007",
+        "REQ-014",
+        "REQ-015",
+        "REQ-047"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_approvals.py::test_invalid_g1_decisions_never_pass[expired]",
+      "acceptance": [
+        "AC-44"
+      ],
+      "requirements": [
+        "REQ-005",
+        "REQ-007",
+        "REQ-014",
+        "REQ-015",
+        "REQ-047"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_approvals.py::test_invalid_g1_decisions_never_pass[rejected]",
+      "acceptance": [
+        "AC-44"
+      ],
+      "requirements": [
+        "REQ-005",
+        "REQ-007",
+        "REQ-014",
+        "REQ-015",
+        "REQ-047"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_approvals.py::test_mock_g3_only_passes_healthy_bound_deployment[False]",
+      "acceptance": [
+        "AC-13",
+        "AC-46"
+      ],
+      "requirements": [
+        "REQ-005",
+        "REQ-007",
+        "REQ-014",
+        "REQ-015",
+        "REQ-047"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_approvals.py::test_mock_g3_only_passes_healthy_bound_deployment[None]",
+      "acceptance": [
+        "AC-13",
+        "AC-46"
+      ],
+      "requirements": [
+        "REQ-005",
+        "REQ-007",
+        "REQ-014",
+        "REQ-015",
+        "REQ-047"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_approvals.py::test_mock_g3_only_passes_healthy_bound_deployment[True]",
+      "acceptance": [
+        "AC-13",
+        "AC-46"
+      ],
+      "requirements": [
+        "REQ-005",
+        "REQ-007",
+        "REQ-014",
+        "REQ-015",
+        "REQ-047"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_approvals.py::test_older_pass_cannot_override_latest_rejection",
+      "acceptance": [
+        "AC-46"
+      ],
+      "requirements": [
+        "REQ-005",
+        "REQ-007",
+        "REQ-014",
+        "REQ-015",
+        "REQ-047"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_approvals.py::test_only_gate_evaluator_can_create_g1_requests[agent]",
+      "acceptance": [
+        "AC-55"
+      ],
+      "requirements": [
+        "REQ-005",
+        "REQ-007",
+        "REQ-014",
+        "REQ-015",
+        "REQ-047"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_approvals.py::test_only_gate_evaluator_can_create_g1_requests[owner]",
+      "acceptance": [
+        "AC-55"
+      ],
+      "requirements": [
+        "REQ-005",
+        "REQ-007",
+        "REQ-014",
+        "REQ-015",
+        "REQ-047"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_approvals.py::test_only_gate_evaluator_can_create_g1_requests[system]",
+      "acceptance": [
+        "AC-55"
+      ],
+      "requirements": [
+        "REQ-005",
+        "REQ-007",
+        "REQ-014",
+        "REQ-015",
+        "REQ-047"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_approvals.py::test_optional_confirmation_disabled_for_this_run",
+      "acceptance": [
+        "AC-29"
+      ],
+      "requirements": [
+        "REQ-005",
+        "REQ-007",
+        "REQ-014",
+        "REQ-015",
+        "REQ-047"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_approvals.py::test_passed_g1_rechecks_approval_at_time_of_use[expired]",
+      "acceptance": [
+        "AC-44"
+      ],
+      "requirements": [
+        "REQ-005",
+        "REQ-007",
+        "REQ-014",
+        "REQ-015",
+        "REQ-047"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_approvals.py::test_passed_g1_rechecks_approval_at_time_of_use[principal_disabled]",
+      "acceptance": [
+        "AC-44"
+      ],
+      "requirements": [
+        "REQ-005",
+        "REQ-007",
+        "REQ-014",
+        "REQ-015",
+        "REQ-047"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_approvals.py::test_passed_g1_rechecks_approval_at_time_of_use[role_expired]",
+      "acceptance": [
+        "AC-44"
+      ],
+      "requirements": [
+        "REQ-005",
+        "REQ-007",
+        "REQ-014",
+        "REQ-015",
+        "REQ-047"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_approvals.py::test_project_policy_and_risk_trigger_control_required_confirmations[policy0-triggers0-1]",
+      "acceptance": [
+        "AC-28"
+      ],
+      "requirements": [
+        "REQ-005",
+        "REQ-007",
+        "REQ-014",
+        "REQ-015",
+        "REQ-047"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_approvals.py::test_project_policy_and_risk_trigger_control_required_confirmations[policy1-triggers1-0]",
+      "acceptance": [
+        "AC-28"
+      ],
+      "requirements": [
+        "REQ-005",
+        "REQ-007",
+        "REQ-014",
+        "REQ-015",
+        "REQ-047"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_approvals.py::test_project_policy_and_risk_trigger_control_required_confirmations[policy2-triggers2-2]",
+      "acceptance": [
+        "AC-28"
+      ],
+      "requirements": [
+        "REQ-005",
+        "REQ-007",
+        "REQ-014",
+        "REQ-015",
+        "REQ-047"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_approvals.py::test_release_approval_rejects_unauthorized_people_and_services[agent]",
+      "acceptance": [
+        "AC-30"
+      ],
+      "requirements": [
+        "REQ-005",
+        "REQ-007",
+        "REQ-014",
+        "REQ-015",
+        "REQ-047"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_approvals.py::test_release_approval_rejects_unauthorized_people_and_services[outsider]",
+      "acceptance": [
+        "AC-30"
+      ],
+      "requirements": [
+        "REQ-005",
+        "REQ-007",
+        "REQ-014",
+        "REQ-015",
+        "REQ-047"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_approvals.py::test_release_approval_rejects_unauthorized_people_and_services[owner]",
+      "acceptance": [
+        "AC-30"
+      ],
+      "requirements": [
+        "REQ-005",
+        "REQ-007",
+        "REQ-014",
+        "REQ-015",
+        "REQ-047"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_approvals.py::test_release_approval_rejects_unauthorized_people_and_services[system]",
+      "acceptance": [
+        "AC-30"
+      ],
+      "requirements": [
+        "REQ-005",
+        "REQ-007",
+        "REQ-014",
+        "REQ-015",
+        "REQ-047"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_approvals.py::test_revocation_invalidates_passed_gate",
+      "acceptance": [
+        "AC-44"
+      ],
+      "requirements": [
+        "REQ-005",
+        "REQ-007",
+        "REQ-014",
+        "REQ-015",
+        "REQ-047"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_delivery.py::test_backend_receives_leader_plan_and_must_obey_approved_architecture[False]",
+      "acceptance": [],
+      "requirements": [
+        "REQ-003",
+        "REQ-005",
+        "REQ-008",
+        "REQ-009",
+        "REQ-010",
+        "REQ-011",
+        "REQ-021",
+        "REQ-032"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_delivery.py::test_backend_receives_leader_plan_and_must_obey_approved_architecture[True]",
+      "acceptance": [],
+      "requirements": [
+        "REQ-003",
+        "REQ-005",
+        "REQ-008",
+        "REQ-009",
+        "REQ-010",
+        "REQ-011",
+        "REQ-021",
+        "REQ-032"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_delivery.py::test_bound_commit_requires_original_delivery_evidence_in_g2",
+      "acceptance": [],
+      "requirements": [
+        "REQ-003",
+        "REQ-005",
+        "REQ-008",
+        "REQ-009",
+        "REQ-010",
+        "REQ-011",
+        "REQ-021",
+        "REQ-032"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_delivery.py::test_configuration_cannot_be_replaced_when_resuming",
+      "acceptance": [
+        "AC-17"
+      ],
+      "requirements": [
+        "REQ-003",
+        "REQ-005",
+        "REQ-008",
+        "REQ-009",
+        "REQ-010",
+        "REQ-011",
+        "REQ-021",
+        "REQ-032"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_delivery.py::test_g1_checkpoint_blocks_all_backend_calls_until_human_confirmation",
+      "acceptance": [
+        "AC-28"
+      ],
+      "requirements": [
+        "REQ-003",
+        "REQ-005",
+        "REQ-008",
+        "REQ-009",
+        "REQ-010",
+        "REQ-011",
+        "REQ-021",
+        "REQ-032"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_delivery.py::test_high_security_finding_blocks_g2_even_after_passing_tests[CRITICAL]",
+      "acceptance": [
+        "AC-10",
+        "AC-11"
+      ],
+      "requirements": [
+        "REQ-003",
+        "REQ-005",
+        "REQ-008",
+        "REQ-009",
+        "REQ-010",
+        "REQ-011",
+        "REQ-021",
+        "REQ-032"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_delivery.py::test_high_security_finding_blocks_g2_even_after_passing_tests[HIGH]",
+      "acceptance": [
+        "AC-10",
+        "AC-11"
+      ],
+      "requirements": [
+        "REQ-003",
+        "REQ-005",
+        "REQ-008",
+        "REQ-009",
+        "REQ-010",
+        "REQ-011",
+        "REQ-021",
+        "REQ-032"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_delivery.py::test_invalid_delivery_evidence_rejects_g2_instead_of_crashing[corrupt_blob]",
+      "acceptance": [],
+      "requirements": [
+        "REQ-003",
+        "REQ-005",
+        "REQ-008",
+        "REQ-009",
+        "REQ-010",
+        "REQ-011",
+        "REQ-021",
+        "REQ-032"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_delivery.py::test_invalid_delivery_evidence_rejects_g2_instead_of_crashing[missing_reference]",
+      "acceptance": [],
+      "requirements": [
+        "REQ-003",
+        "REQ-005",
+        "REQ-008",
+        "REQ-009",
+        "REQ-010",
+        "REQ-011",
+        "REQ-021",
+        "REQ-032"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_delivery.py::test_local_rework_skips_leader_and_waits_for_explicit_simulation_authorization",
+      "acceptance": [
+        "AC-01",
+        "AC-06"
+      ],
+      "requirements": [
+        "REQ-003",
+        "REQ-005",
+        "REQ-008",
+        "REQ-009",
+        "REQ-010",
+        "REQ-011",
+        "REQ-021",
+        "REQ-032"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_delivery.py::test_new_blocker_after_g2_prevents_release_authorization[CRITICAL]",
+      "acceptance": [],
+      "requirements": [
+        "REQ-003",
+        "REQ-005",
+        "REQ-008",
+        "REQ-009",
+        "REQ-010",
+        "REQ-011",
+        "REQ-021",
+        "REQ-032"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_delivery.py::test_new_blocker_after_g2_prevents_release_authorization[HIGH]",
+      "acceptance": [],
+      "requirements": [
+        "REQ-003",
+        "REQ-005",
+        "REQ-008",
+        "REQ-009",
+        "REQ-010",
+        "REQ-011",
+        "REQ-021",
+        "REQ-032"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_delivery.py::test_patch_committed_before_crash_is_replayed_without_a_second_model_proposal",
+      "acceptance": [
+        "AC-24"
+      ],
+      "requirements": [
+        "REQ-003",
+        "REQ-005",
+        "REQ-008",
+        "REQ-009",
+        "REQ-010",
+        "REQ-011",
+        "REQ-021",
+        "REQ-032"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_delivery.py::test_product_audit_rejection_routes_to_product_leader",
+      "acceptance": [
+        "AC-03"
+      ],
+      "requirements": [
+        "REQ-003",
+        "REQ-005",
+        "REQ-008",
+        "REQ-009",
+        "REQ-010",
+        "REQ-011",
+        "REQ-021",
+        "REQ-032"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_delivery.py::test_recovery_rejects_cached_tests_after_clean_head_change",
+      "acceptance": [],
+      "requirements": [
+        "REQ-003",
+        "REQ-005",
+        "REQ-008",
+        "REQ-009",
+        "REQ-010",
+        "REQ-011",
+        "REQ-021",
+        "REQ-032"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_delivery.py::test_release_cannot_claim_commit_other_than_the_passing_g2",
+      "acceptance": [],
+      "requirements": [
+        "REQ-003",
+        "REQ-005",
+        "REQ-008",
+        "REQ-009",
+        "REQ-010",
+        "REQ-011",
+        "REQ-021",
+        "REQ-032"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_delivery.py::test_reopen_g1_uses_original_configuration_and_cached_department_outputs",
+      "acceptance": [
+        "AC-24"
+      ],
+      "requirements": [
+        "REQ-003",
+        "REQ-005",
+        "REQ-008",
+        "REQ-009",
+        "REQ-010",
+        "REQ-011",
+        "REQ-021",
+        "REQ-032"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_delivery.py::test_repeated_test_failure_is_bounded",
+      "acceptance": [
+        "AC-08"
+      ],
+      "requirements": [
+        "REQ-003",
+        "REQ-005",
+        "REQ-008",
+        "REQ-009",
+        "REQ-010",
+        "REQ-011",
+        "REQ-021",
+        "REQ-032"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_delivery.py::test_review_failure_returns_directly_to_backend",
+      "acceptance": [
+        "AC-34"
+      ],
+      "requirements": [
+        "REQ-003",
+        "REQ-005",
+        "REQ-008",
+        "REQ-009",
+        "REQ-010",
+        "REQ-011",
+        "REQ-021",
+        "REQ-032"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_delivery.py::test_second_review_includes_changes_retained_from_the_first_commit",
+      "acceptance": [],
+      "requirements": [
+        "REQ-003",
+        "REQ-005",
+        "REQ-008",
+        "REQ-009",
+        "REQ-010",
+        "REQ-011",
+        "REQ-021",
+        "REQ-032"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_delivery.py::test_simulation_rejects_authorization_from_an_obsolete_g2",
+      "acceptance": [],
+      "requirements": [
+        "REQ-003",
+        "REQ-005",
+        "REQ-008",
+        "REQ-009",
+        "REQ-010",
+        "REQ-011",
+        "REQ-021",
+        "REQ-032"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_delivery.py::test_ux_and_production_review_triggers_are_recorded[False]",
+      "acceptance": [
+        "AC-34"
+      ],
+      "requirements": [
+        "REQ-003",
+        "REQ-005",
+        "REQ-008",
+        "REQ-009",
+        "REQ-010",
+        "REQ-011",
+        "REQ-021",
+        "REQ-032"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_delivery.py::test_ux_and_production_review_triggers_are_recorded[True]",
+      "acceptance": [
+        "AC-34"
+      ],
+      "requirements": [
+        "REQ-003",
+        "REQ-005",
+        "REQ-008",
+        "REQ-009",
+        "REQ-010",
+        "REQ-011",
+        "REQ-021",
+        "REQ-032"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_delivery.py::test_workspace_change_before_authorization_cannot_issue_or_consume_permission[commit]",
+      "acceptance": [],
+      "requirements": [
+        "REQ-003",
+        "REQ-005",
+        "REQ-008",
+        "REQ-009",
+        "REQ-010",
+        "REQ-011",
+        "REQ-021",
+        "REQ-032"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_delivery.py::test_workspace_change_before_authorization_cannot_issue_or_consume_permission[untracked_source]",
+      "acceptance": [],
+      "requirements": [
+        "REQ-003",
+        "REQ-005",
+        "REQ-008",
+        "REQ-009",
+        "REQ-010",
+        "REQ-011",
+        "REQ-021",
+        "REQ-032"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_java_integration.py::test_real_spring_http_bug_is_repaired_and_fixed_tests_remain_unchanged[False]",
+      "acceptance": [
+        "AC-06",
+        "AC-11"
+      ],
+      "requirements": [
+        "REQ-009",
+        "REQ-011",
+        "REQ-032"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_java_integration.py::test_real_spring_http_bug_is_repaired_and_fixed_tests_remain_unchanged[True]",
+      "acceptance": [
+        "AC-06",
+        "AC-11"
+      ],
+      "requirements": [
+        "REQ-009",
+        "REQ-011",
+        "REQ-032"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[NOT_EVALUATED-NOT_EVALUATED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[NOT_EVALUATED-PASSED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[NOT_EVALUATED-PENDING]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[NOT_EVALUATED-REJECTED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[NOT_EVALUATED-STALE]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[PASSED-NOT_EVALUATED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[PASSED-PASSED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[PASSED-PENDING]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[PASSED-REJECTED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[PASSED-STALE]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[PENDING-NOT_EVALUATED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[PENDING-PASSED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[PENDING-PENDING]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[PENDING-REJECTED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[PENDING-STALE]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[REJECTED-NOT_EVALUATED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[REJECTED-PASSED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[REJECTED-PENDING]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[REJECTED-REJECTED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[REJECTED-STALE]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[STALE-NOT_EVALUATED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[STALE-PASSED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[STALE-PENDING]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[STALE-REJECTED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_gate_transition_matrix[STALE-STALE]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_phase_table_matches_authoritative_specification",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[BLOCKED-BLOCKED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[BLOCKED-CANCELLED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[BLOCKED-CANCELLING]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[BLOCKED-CANCEL_REQUESTED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[BLOCKED-COMPLETED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[BLOCKED-CREATED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[BLOCKED-FAILED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[BLOCKED-NEEDS_RECONCILIATION]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[BLOCKED-PAUSED_FOR_HUMAN]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[BLOCKED-RUNNING]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[BLOCKED-WAITING_APPROVAL]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[BLOCKED-WAITING_GATE]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLED-BLOCKED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLED-CANCELLED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLED-CANCELLING]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLED-CANCEL_REQUESTED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLED-COMPLETED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLED-CREATED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLED-FAILED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLED-NEEDS_RECONCILIATION]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLED-PAUSED_FOR_HUMAN]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLED-RUNNING]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLED-WAITING_APPROVAL]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLED-WAITING_GATE]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLING-BLOCKED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLING-CANCELLED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLING-CANCELLING]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLING-CANCEL_REQUESTED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLING-COMPLETED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLING-CREATED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLING-FAILED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLING-NEEDS_RECONCILIATION]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLING-PAUSED_FOR_HUMAN]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLING-RUNNING]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLING-WAITING_APPROVAL]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCELLING-WAITING_GATE]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCEL_REQUESTED-BLOCKED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCEL_REQUESTED-CANCELLED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCEL_REQUESTED-CANCELLING]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCEL_REQUESTED-CANCEL_REQUESTED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCEL_REQUESTED-COMPLETED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCEL_REQUESTED-CREATED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCEL_REQUESTED-FAILED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCEL_REQUESTED-NEEDS_RECONCILIATION]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCEL_REQUESTED-PAUSED_FOR_HUMAN]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCEL_REQUESTED-RUNNING]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCEL_REQUESTED-WAITING_APPROVAL]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CANCEL_REQUESTED-WAITING_GATE]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[COMPLETED-BLOCKED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[COMPLETED-CANCELLED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[COMPLETED-CANCELLING]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[COMPLETED-CANCEL_REQUESTED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[COMPLETED-COMPLETED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[COMPLETED-CREATED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[COMPLETED-FAILED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[COMPLETED-NEEDS_RECONCILIATION]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[COMPLETED-PAUSED_FOR_HUMAN]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[COMPLETED-RUNNING]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[COMPLETED-WAITING_APPROVAL]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[COMPLETED-WAITING_GATE]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CREATED-BLOCKED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CREATED-CANCELLED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CREATED-CANCELLING]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CREATED-CANCEL_REQUESTED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CREATED-COMPLETED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CREATED-CREATED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CREATED-FAILED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CREATED-NEEDS_RECONCILIATION]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CREATED-PAUSED_FOR_HUMAN]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CREATED-RUNNING]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CREATED-WAITING_APPROVAL]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[CREATED-WAITING_GATE]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[FAILED-BLOCKED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[FAILED-CANCELLED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[FAILED-CANCELLING]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[FAILED-CANCEL_REQUESTED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[FAILED-COMPLETED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[FAILED-CREATED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[FAILED-FAILED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[FAILED-NEEDS_RECONCILIATION]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[FAILED-PAUSED_FOR_HUMAN]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[FAILED-RUNNING]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[FAILED-WAITING_APPROVAL]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[FAILED-WAITING_GATE]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[NEEDS_RECONCILIATION-BLOCKED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[NEEDS_RECONCILIATION-CANCELLED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[NEEDS_RECONCILIATION-CANCELLING]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[NEEDS_RECONCILIATION-CANCEL_REQUESTED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[NEEDS_RECONCILIATION-COMPLETED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[NEEDS_RECONCILIATION-CREATED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[NEEDS_RECONCILIATION-FAILED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[NEEDS_RECONCILIATION-NEEDS_RECONCILIATION]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[NEEDS_RECONCILIATION-PAUSED_FOR_HUMAN]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[NEEDS_RECONCILIATION-RUNNING]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[NEEDS_RECONCILIATION-WAITING_APPROVAL]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[NEEDS_RECONCILIATION-WAITING_GATE]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[PAUSED_FOR_HUMAN-BLOCKED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[PAUSED_FOR_HUMAN-CANCELLED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[PAUSED_FOR_HUMAN-CANCELLING]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[PAUSED_FOR_HUMAN-CANCEL_REQUESTED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[PAUSED_FOR_HUMAN-COMPLETED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[PAUSED_FOR_HUMAN-CREATED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[PAUSED_FOR_HUMAN-FAILED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[PAUSED_FOR_HUMAN-NEEDS_RECONCILIATION]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[PAUSED_FOR_HUMAN-PAUSED_FOR_HUMAN]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[PAUSED_FOR_HUMAN-RUNNING]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[PAUSED_FOR_HUMAN-WAITING_APPROVAL]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[PAUSED_FOR_HUMAN-WAITING_GATE]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[RUNNING-BLOCKED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[RUNNING-CANCELLED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[RUNNING-CANCELLING]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[RUNNING-CANCEL_REQUESTED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[RUNNING-COMPLETED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[RUNNING-CREATED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[RUNNING-FAILED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[RUNNING-NEEDS_RECONCILIATION]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[RUNNING-PAUSED_FOR_HUMAN]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[RUNNING-RUNNING]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[RUNNING-WAITING_APPROVAL]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[RUNNING-WAITING_GATE]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_APPROVAL-BLOCKED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_APPROVAL-CANCELLED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_APPROVAL-CANCELLING]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_APPROVAL-CANCEL_REQUESTED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_APPROVAL-COMPLETED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_APPROVAL-CREATED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_APPROVAL-FAILED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_APPROVAL-NEEDS_RECONCILIATION]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_APPROVAL-PAUSED_FOR_HUMAN]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_APPROVAL-RUNNING]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_APPROVAL-WAITING_APPROVAL]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_APPROVAL-WAITING_GATE]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_GATE-BLOCKED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_GATE-CANCELLED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_GATE-CANCELLING]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_GATE-CANCEL_REQUESTED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_GATE-COMPLETED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_GATE-CREATED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_GATE-FAILED]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_GATE-NEEDS_RECONCILIATION]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_GATE-PAUSED_FOR_HUMAN]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_GATE-RUNNING]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_GATE-WAITING_APPROVAL]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_matrices.py::test_status_transition_matrix[WAITING_GATE-WAITING_GATE]",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-018",
+        "REQ-042",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_recovery.py::test_multiple_questions_restore_original_wait_state_only_after_all_answers",
+      "acceptance": [
+        "AC-27"
+      ],
+      "requirements": [
+        "REQ-006",
+        "REQ-033",
+        "REQ-039",
+        "REQ-040",
+        "REQ-042"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_recovery.py::test_other_project_and_agent_cannot_answer_clarification[agent]",
+      "acceptance": [
+        "AC-48"
+      ],
+      "requirements": [
+        "REQ-006",
+        "REQ-033",
+        "REQ-039",
+        "REQ-040",
+        "REQ-042"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_recovery.py::test_other_project_and_agent_cannot_answer_clarification[outsider]",
+      "acceptance": [
+        "AC-48"
+      ],
+      "requirements": [
+        "REQ-006",
+        "REQ-033",
+        "REQ-039",
+        "REQ-040",
+        "REQ-042"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_recovery.py::test_separate_processes_resume_original_checkpoint_without_duplicate_events",
+      "acceptance": [
+        "AC-24",
+        "AC-27"
+      ],
+      "requirements": [
+        "REQ-006",
+        "REQ-033",
+        "REQ-039",
+        "REQ-040",
+        "REQ-042"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_recovery.py::test_state_and_event_both_roll_back_on_event_write_failure",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-006",
+        "REQ-033",
+        "REQ-039",
+        "REQ-040",
+        "REQ-042"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_recovery.py::test_two_sqlite_connections_do_not_overwrite_stale_state_version",
+      "acceptance": [
+        "AC-51"
+      ],
+      "requirements": [
+        "REQ-006",
+        "REQ-033",
+        "REQ-039",
+        "REQ-040",
+        "REQ-042"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_routing.py::test_agent_cannot_submit_server_owned_fields[issue-final_gate_result]",
+      "acceptance": [
+        "AC-33"
+      ],
+      "requirements": [
+        "REQ-019",
+        "REQ-020",
+        "REQ-028"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_routing.py::test_agent_cannot_submit_server_owned_fields[issue-routed_leader]",
+      "acceptance": [
+        "AC-33"
+      ],
+      "requirements": [
+        "REQ-019",
+        "REQ-020",
+        "REQ-028"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_routing.py::test_agent_cannot_submit_server_owned_fields[issue-target_leader]",
+      "acceptance": [
+        "AC-33"
+      ],
+      "requirements": [
+        "REQ-019",
+        "REQ-020",
+        "REQ-028"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_routing.py::test_agent_cannot_submit_server_owned_fields[report-final_gate_result]",
+      "acceptance": [
+        "AC-33"
+      ],
+      "requirements": [
+        "REQ-019",
+        "REQ-020",
+        "REQ-028"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_routing.py::test_agent_cannot_submit_server_owned_fields[report-routed_leader]",
+      "acceptance": [
+        "AC-33"
+      ],
+      "requirements": [
+        "REQ-019",
+        "REQ-020",
+        "REQ-028"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_routing.py::test_agent_cannot_submit_server_owned_fields[report-target_leader]",
+      "acceptance": [
+        "AC-33"
+      ],
+      "requirements": [
+        "REQ-019",
+        "REQ-020",
+        "REQ-028"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_routing.py::test_empty_evidence_is_rejected",
+      "acceptance": [
+        "AC-33"
+      ],
+      "requirements": [
+        "REQ-019",
+        "REQ-020",
+        "REQ-028"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_routing.py::test_free_text_does_not_override_structured_routing",
+      "acceptance": [
+        "AC-45"
+      ],
+      "requirements": [
+        "REQ-019",
+        "REQ-020",
+        "REQ-028"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_routing.py::test_router_binds_agent_identity_and_rejects_reused_key_payload",
+      "acceptance": [
+        "AC-33"
+      ],
+      "requirements": [
+        "REQ-019",
+        "REQ-020",
+        "REQ-028"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_routing.py::test_unknown_or_conflicting_responsibility_is_escalated[CODE_DEFECT-SPEC_DEFECT]",
+      "acceptance": [
+        "AC-45"
+      ],
+      "requirements": [
+        "REQ-019",
+        "REQ-020",
+        "REQ-028"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_routing.py::test_unknown_or_conflicting_responsibility_is_escalated[SECURITY_FINDING-None]",
+      "acceptance": [
+        "AC-45"
+      ],
+      "requirements": [
+        "REQ-019",
+        "REQ-020",
+        "REQ-028"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_routing.py::test_unknown_or_conflicting_responsibility_is_escalated[UNCLASSIFIED-None]",
+      "acceptance": [
+        "AC-45"
+      ],
+      "requirements": [
+        "REQ-019",
+        "REQ-020",
+        "REQ-028"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_security_remediation.py::test_crash_after_remediation_commit_reuses_evidence_and_enters_leader_once[EXTERNAL_REWORK]",
+      "acceptance": [
+        "AC-10",
+        "AC-24",
+        "AC-59"
+      ],
+      "requirements": [
+        "REQ-002",
+        "REQ-012",
+        "REQ-019",
+        "REQ-020",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_security_remediation.py::test_crash_after_remediation_commit_reuses_evidence_and_enters_leader_once[ISSUE_RESOLVED]",
+      "acceptance": [
+        "AC-10",
+        "AC-24",
+        "AC-59"
+      ],
+      "requirements": [
+        "REQ-002",
+        "REQ-012",
+        "REQ-019",
+        "REQ-020",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_security_remediation.py::test_g2_verified_code_finding_reenters_leader_and_resolves_only_after_revalidation",
+      "acceptance": [
+        "AC-10",
+        "AC-59"
+      ],
+      "requirements": [
+        "REQ-002",
+        "REQ-012",
+        "REQ-019",
+        "REQ-020",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_security_remediation.py::test_issue_cannot_be_resolved_using_failed_or_old_delivery_proof[failed_test]",
+      "acceptance": [
+        "AC-10",
+        "AC-59"
+      ],
+      "requirements": [
+        "REQ-002",
+        "REQ-012",
+        "REQ-019",
+        "REQ-020",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_security_remediation.py::test_issue_cannot_be_resolved_using_failed_or_old_delivery_proof[stale_review]",
+      "acceptance": [
+        "AC-10",
+        "AC-59"
+      ],
+      "requirements": [
+        "REQ-002",
+        "REQ-012",
+        "REQ-019",
+        "REQ-020",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_security_remediation.py::test_security_demo_profile_survives_reopen_without_repeating_the_flag",
+      "acceptance": [
+        "AC-10",
+        "AC-59"
+      ],
+      "requirements": [
+        "REQ-002",
+        "REQ-012",
+        "REQ-019",
+        "REQ-020",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_security_remediation.py::test_unfixed_security_findings_stay_open_and_cannot_loop_forever[False]",
+      "acceptance": [
+        "AC-10",
+        "AC-59"
+      ],
+      "requirements": [
+        "REQ-002",
+        "REQ-012",
+        "REQ-019",
+        "REQ-020",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_security_remediation.py::test_unfixed_security_findings_stay_open_and_cannot_loop_forever[True]",
+      "acceptance": [
+        "AC-10",
+        "AC-59"
+      ],
+      "requirements": [
+        "REQ-002",
+        "REQ-012",
+        "REQ-019",
+        "REQ-020",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_security_remediation.py::test_unknown_expert_root_cause_stays_unassigned_and_cannot_be_auto_resolved",
+      "acceptance": [
+        "AC-10",
+        "AC-59"
+      ],
+      "requirements": [
+        "REQ-002",
+        "REQ-012",
+        "REQ-019",
+        "REQ-020",
+        "REQ-049"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_state_machine.py::test_ac32_phase_and_status_are_independent_enums",
+      "acceptance": [
+        "AC-32",
+        "AC-46",
+        "AC-51"
+      ],
+      "requirements": [],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_state_machine.py::test_ac46_cannot_complete_while_gate_pending",
+      "acceptance": [
+        "AC-32",
+        "AC-46",
+        "AC-51"
+      ],
+      "requirements": [],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_state_machine.py::test_ac51_composite_guard_blocks_gate_with_created_status",
+      "acceptance": [
+        "AC-32",
+        "AC-46",
+        "AC-51"
+      ],
+      "requirements": [],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_state_machine.py::test_ac51_concurrent_state_version_conflict_preserves_state",
+      "acceptance": [
+        "AC-32",
+        "AC-46",
+        "AC-51"
+      ],
+      "requirements": [],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_state_machine.py::test_ac51_delivery_is_the_only_successful_terminal",
+      "acceptance": [
+        "AC-32",
+        "AC-46",
+        "AC-51"
+      ],
+      "requirements": [],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_state_machine.py::test_ac51_exhaustive_phase_whitelist",
+      "acceptance": [
+        "AC-32",
+        "AC-46",
+        "AC-51"
+      ],
+      "requirements": [],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_state_machine.py::test_ac51_g1_rejection_routes_to_upstream_phases",
+      "acceptance": [
+        "AC-32",
+        "AC-46",
+        "AC-51"
+      ],
+      "requirements": [],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_state_machine.py::test_ac51_gate_result_whitelist_is_terminal_after_reject",
+      "acceptance": [
+        "AC-32",
+        "AC-46",
+        "AC-51"
+      ],
+      "requirements": [],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_state_machine.py::test_ac51_recovery_phase_accepts_only_recovery_statuses",
+      "acceptance": [
+        "AC-32",
+        "AC-46",
+        "AC-51"
+      ],
+      "requirements": [],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_state_machine.py::test_ac51_terminal_status_cannot_revive",
+      "acceptance": [
+        "AC-32",
+        "AC-46",
+        "AC-51"
+      ],
+      "requirements": [],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_workspace_evidence.py::test_all_changes_are_validated_before_first_write",
+      "acceptance": [
+        "AC-38"
+      ],
+      "requirements": [
+        "REQ-025",
+        "REQ-032",
+        "REQ-037"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_workspace_evidence.py::test_archive_verifies_original_bytes_and_run_scope",
+      "acceptance": [
+        "AC-25"
+      ],
+      "requirements": [
+        "REQ-025",
+        "REQ-032",
+        "REQ-037"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_workspace_evidence.py::test_backend_cannot_change_tests_build_config_or_escape_workspace[../outside]",
+      "acceptance": [
+        "AC-38"
+      ],
+      "requirements": [
+        "REQ-025",
+        "REQ-032",
+        "REQ-037"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_workspace_evidence.py::test_backend_cannot_change_tests_build_config_or_escape_workspace[/absolute]",
+      "acceptance": [
+        "AC-38"
+      ],
+      "requirements": [
+        "REQ-025",
+        "REQ-032",
+        "REQ-037"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_workspace_evidence.py::test_backend_cannot_change_tests_build_config_or_escape_workspace[C:/outside]",
+      "acceptance": [
+        "AC-38"
+      ],
+      "requirements": [
+        "REQ-025",
+        "REQ-032",
+        "REQ-037"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_workspace_evidence.py::test_backend_cannot_change_tests_build_config_or_escape_workspace[pom.xml]",
+      "acceptance": [
+        "AC-38"
+      ],
+      "requirements": [
+        "REQ-025",
+        "REQ-032",
+        "REQ-037"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_workspace_evidence.py::test_backend_cannot_change_tests_build_config_or_escape_workspace[src/test/java/example/HelloControllerTest.java]",
+      "acceptance": [
+        "AC-38"
+      ],
+      "requirements": [
+        "REQ-025",
+        "REQ-032",
+        "REQ-037"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_workspace_evidence.py::test_backend_cannot_change_tests_build_config_or_escape_workspace[src\\\\main\\\\escape]",
+      "acceptance": [
+        "AC-38"
+      ],
+      "requirements": [
+        "REQ-025",
+        "REQ-032",
+        "REQ-037"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_workspace_evidence.py::test_executor_uses_junit_and_exit_status_instead_of_text[exit-mismatch-INCONCLUSIVE]",
+      "acceptance": [
+        "AC-38"
+      ],
+      "requirements": [
+        "REQ-025",
+        "REQ-032",
+        "REQ-037"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_workspace_evidence.py::test_executor_uses_junit_and_exit_status_instead_of_text[fail-FAIL]",
+      "acceptance": [
+        "AC-38"
+      ],
+      "requirements": [
+        "REQ-025",
+        "REQ-032",
+        "REQ-037"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_workspace_evidence.py::test_executor_uses_junit_and_exit_status_instead_of_text[missing-INCONCLUSIVE]",
+      "acceptance": [
+        "AC-38"
+      ],
+      "requirements": [
+        "REQ-025",
+        "REQ-032",
+        "REQ-037"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_workspace_evidence.py::test_executor_uses_junit_and_exit_status_instead_of_text[pass-PASS]",
+      "acceptance": [
+        "AC-38"
+      ],
+      "requirements": [
+        "REQ-025",
+        "REQ-032",
+        "REQ-037"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_workspace_evidence.py::test_executor_uses_junit_and_exit_status_instead_of_text[skipped-INCONCLUSIVE]",
+      "acceptance": [
+        "AC-38"
+      ],
+      "requirements": [
+        "REQ-025",
+        "REQ-032",
+        "REQ-037"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_workspace_evidence.py::test_patch_rejects_preexisting_unrelated_test_changes[False]",
+      "acceptance": [],
+      "requirements": [
+        "REQ-025",
+        "REQ-032",
+        "REQ-037"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_workspace_evidence.py::test_patch_rejects_preexisting_unrelated_test_changes[True]",
+      "acceptance": [],
+      "requirements": [
+        "REQ-025",
+        "REQ-032",
+        "REQ-037"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/agentloop/tests/test_ac_workspace_evidence.py::test_stale_patch_is_rejected_without_commit_change",
+      "acceptance": [
+        "AC-44"
+      ],
+      "requirements": [
+        "REQ-025",
+        "REQ-032",
+        "REQ-037"
+      ],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/week2/test/test_workflow.py::test_actual_deepseek_adapter_uses_tools_and_json_mode",
+      "acceptance": [],
+      "requirements": [],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/week2/test/test_workflow.py::test_all_tools_are_langchain_tools",
+      "acceptance": [],
+      "requirements": [],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/week2/test/test_workflow.py::test_graph_topology_and_invalid_rounds",
+      "acceptance": [],
+      "requirements": [],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/week2/test/test_workflow.py::test_invalid_structured_output_is_rejected[patch0]",
+      "acceptance": [],
+      "requirements": [],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/week2/test/test_workflow.py::test_invalid_structured_output_is_rejected[patch1]",
+      "acceptance": [],
+      "requirements": [],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/week2/test/test_workflow.py::test_invalid_structured_output_is_rejected[patch2]",
+      "acceptance": [],
+      "requirements": [],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/week2/test/test_workflow.py::test_invalid_tool_call_json_is_rejected",
+      "acceptance": [],
+      "requirements": [],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/week2/test/test_workflow.py::test_leader_rejects_missing_lookup_or_unknown_member[False-\\u5f20\\u4e09]",
+      "acceptance": [],
+      "requirements": [],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/week2/test/test_workflow.py::test_leader_rejects_missing_lookup_or_unknown_member[True-\\u865a\\u6784\\u6210\\u5458]",
+      "acceptance": [],
+      "requirements": [],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/week2/test/test_workflow.py::test_max_rounds_stops_endless_tool_calls",
+      "acceptance": [],
+      "requirements": [],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/week2/test/test_workflow.py::test_model_is_created_lazily_without_key",
+      "acceptance": [],
+      "requirements": [],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/week2/test/test_workflow.py::test_no_tool_call_finishes_directly",
+      "acceptance": [],
+      "requirements": [],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/week2/test/test_workflow.py::test_runtime_tool_exception_returns_to_model",
+      "acceptance": [],
+      "requirements": [],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/week2/test/test_workflow.py::test_source_root_cannot_be_overridden",
+      "acceptance": [],
+      "requirements": [],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/week2/test/test_workflow.py::test_source_search_errors[empty-keyword \\u4e0d\\u80fd\\u4e3a\\u7a7a]",
+      "acceptance": [],
+      "requirements": [],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/week2/test/test_workflow.py::test_source_search_errors[file-src_base \\u4e0d\\u662f\\u76ee\\u5f55]",
+      "acceptance": [],
+      "requirements": [],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/week2/test/test_workflow.py::test_source_search_errors[missing-\\u6e90\\u7801\\u76ee\\u5f55\\u4e0d\\u5b58\\u5728]",
+      "acceptance": [],
+      "requirements": [],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/week2/test/test_workflow.py::test_source_search_from_unrelated_working_directory",
+      "acceptance": [],
+      "requirements": [],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/week2/test/test_workflow.py::test_tool_errors_return_to_model[tool_call0]",
+      "acceptance": [],
+      "requirements": [],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/week2/test/test_workflow.py::test_tool_errors_return_to_model[tool_call1]",
+      "acceptance": [],
+      "requirements": [],
+      "result": "PASSED"
+    },
+    {
+      "nodeid": "src/week2/test/test_workflow.py::test_workflow_calls_real_tools_and_passes_analysis",
+      "acceptance": [],
+      "requirements": [],
+      "result": "PASSED"
+    }
+  ],
+  "limitations": [
+    "Linked passing tests do not imply the whole AC or all 49 REQs are accepted.",
+    "Workers are scripted in acceptance tests; no live model quality or production deployment has been verified.",
+    "Only deterministically proven code-policy findings support automatic G2 remediation; upstream and unknown causes remain manual.",
+    "Complete security scanning, production deployment, and Phase 2-5 remain incomplete."
+  ]
+}
