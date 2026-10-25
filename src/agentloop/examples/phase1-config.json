@@ -1,0 +1,22 @@
+{
+  "project_id": "phase1-demo",
+  "changes_ui": false,
+  "production_code_changed": true,
+  "require_confirmation": false,
+  "max_rework_rounds": 3,
+  "max_department_attempts": 3,
+  "max_steps": 100,
+  "role_profiles": {
+    "product-analyst": "scripted-demo",
+    "product-leader": "scripted-demo",
+    "ux-agent": "scripted-demo",
+    "product-expert": "scripted-demo",
+    "architecture-expert": "scripted-demo",
+    "expert-leader": "scripted-demo",
+    "engineering-leader": "scripted-demo",
+    "backend": "scripted-demo",
+    "testing": "scripted-demo",
+    "code-review": "scripted-demo",
+    "security-expert": "scripted-demo"
+  }
+}

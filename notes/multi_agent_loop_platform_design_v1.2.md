@@ -313,7 +313,7 @@ flowchart TD
 
 非法的 `phase` 边、`status` 边、终态复活、跨项目/角色、过期审核、无效 `input_digest`、缺少 Gate 证据和违反组合约束一律返回 `409 INVALID_TRANSITION` 或 `403 FORBIDDEN`，不修改原状态。`phase` 和 `status` 必须按复合守卫共同检查，而不是各自通过即放行。
 
-**组合守卫（最低集合）**：`phase=G1|G2|G3` 且评估待决时 `status=WAITING_GATE|WAITING_APPROVAL|RUNNING`；`phase=DEPLOYMENT_RECOVERY` 可以是 `RUNNING|BLOCKED|NEEDS_RECONCILIATION|CANCEL_REQUESTED|CANCELLING|FAILED`；`phase=DELIVERY` 在父 Run 仅可为 `COMPLETED`；`COMPLETED` 的 `DELIVERY` 必须有最新 G1/G2/G3 通过且生效的批准和交付证据。澄清和全局故障 `PAUSED_FOR_HUMAN`、`BLOCKED` 可以出现在任一非终业务阶段，但 `NEEDS_RECONCILIATION` 必须关联真实未决 `ToolExecution` 或 `Deployment`。
+**组合守卫（最低集合）**：`phase=G1|G2|G3` 且评估待决时 `status=WAITING_GATE|WAITING_APPROVAL|RUNNING`；`phase=DEPLOYMENT_RECOVERY` 可以是 `RUNNING|BLOCKED|NEEDS_RECONCILIATION|CANCEL_REQUESTED|CANCELLING|CANCELLED|FAILED`，其中 `CANCELLED` 必须有取消意图、全部副作用结算和最终安全环境证据；`phase=DELIVERY` 在父 Run 仅可为 `COMPLETED`；`COMPLETED` 的 `DELIVERY` 必须有最新 G1/G2/G3 通过且生效的批准和交付证据。澄清和全局故障 `PAUSED_FOR_HUMAN`、`BLOCKED` 可以出现在任一非终业务阶段，但 `NEEDS_RECONCILIATION` 必须关联真实未决 `ToolExecution` 或 `Deployment`。
 
 #### 2.2.3 GateResult.status 独立迁移白名单
 
@@ -513,7 +513,7 @@ skills:
     - git-workflow@1.2.0
     - codebase-search@1.0.0
 mcp:
-  allowed_servers: [github-readonly, local-workspace]
+  allowed_servers: [github-readonly, local-workspace, test-runner]
 capabilities:
   max_grants: [cap.repo.read, cap.workspace.write, cap.tests.execute, cap.sandbox.execute]
   deny: [cap.deploy.production, cap.secrets.manage]
@@ -535,7 +535,7 @@ skills:
     - spring-boot-debug@1.0.0
     - java-test-guidelines@1.1.0
 mcp:
-  allowed_servers: [github-readonly, local-workspace]
+  allowed_servers: [github-readonly, local-workspace, test-runner]
   allowed_tools: [mcp:local-workspace/read-file, mcp:local-workspace/search-code, mcp:local-workspace/apply-patch, mcp:test-runner/run-tests]
 capabilities:
   requested: [cap.repo.read, cap.workspace.write, cap.tests.execute, cap.sandbox.execute]
@@ -932,7 +932,7 @@ flowchart TD
   "target_ids": ["service-x/server-01"],
   "artifact_digest": "sha256:<image-or-package-digest>",
   "commit_sha": "<git-sha>",
-  "action_scope": ["deploy", "rollback"],
+  "action_scope": ["DEPLOY", "ROLLBACK"],
   "issued_by": "human-user-7",
   "issued_at": "2026-10-18T08:00:00Z",
   "expires_at": "2026-10-18T09:00:00Z",
@@ -1306,7 +1306,7 @@ class ExperienceCurator:
 8. 复盘只能由用户授权动作触发；不得在 `(phase=DELIVERY, status=COMPLETED)` 时自动执行完整复盘。
 9. Curator 无权自行提高任何角色的 MCP 权限、修改安全 Gate 或直接发布任何 Skill；首版所有长期记忆先待人工审查。
 10. 首版每完成一个 Phase，提交自动化测试、运行说明、变更清单和已知限制；禁止宣称未经执行的测试已通过。
-11. 需求编号 `REQ-001..REQ-040`、验收用例 `AC-01..AC-59` 为交付追踪基线；改动需同步维护两者和测试映射。
+11. 需求编号 `REQ-001..REQ-049`、验收用例 `AC-01..AC-59` 为交付追踪基线；改动需同步维护两者和测试映射。
 12. ReleaseAuthorization 必须由身份可信的有权真人批准，包含范围、目标、产物、有效期和次数；不可由 Agent 自行签发。
 13. 对运行中取消、合并冲突、模型回退、Schema 失败、成本超限及提示词注入，必须提供可重复的故障注入测试。
 

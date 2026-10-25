@@ -1,6 +1,20 @@
 # Langgraph-proj
 
-基于 LangGraph 的 Java 故障排查学习项目：**输入报错信息，按需查询示例日志和本地源码，生成结构化故障分析及任务分配建议。**
+基于 LangGraph 的多 Agent 研发 Loop 平台。最新需求基线为 [v1.2 规格说明书](notes/multi_agent_loop_platform_design_v1.2.md)。
+
+**Phase 3 / 0.4.0：** 新增 Frontend/Backend/DevOps 隔离 Worktree、冲突处理和合并恢复；独立发布执行器、人工范围许可、真实 HTTP 目标、G3 回滚/对账、可恢复取消、风险豁免及周期巡检子 Run。运行命令、验收对应和环境边界见 [第三阶段说明](docs/phase3-runtime.md)。生产执行默认关闭，内置实际发布验收使用专属本地静态 HTTP 目标。
+
+**2026-10-25 复核：** 修复 MCP 工具发现阶段的 Capability 过滤，未授权服务不再为获取元数据而启动；写入审批增加脱敏参数预览和项目访问校验。Phase 2 的代码、安装包及验证边界统一记录在 [Phase 2 说明](docs/phase2-runtime.md)。
+
+**2026-10-22 更新：Phase 2 本地执行层。** 已接入逐角色模型与后备链、四级配置及不可变快照、根 Run/角色预算、有限 Schema 修复、Skills 隔离导入和人工绑定、MCP 工具授权及真实 stdio/HTTP/SSE 客户端。运行命令、验收映射和边界见 [Phase 2 说明](docs/phase2-runtime.md)。当前 DeepSeek 在线预检返回 HTTP 401，尚无成功在线生成证据；生产部署和记忆发布属于后续阶段。
+
+**2026-10-21 更新：Phase 1 首批交付。** 已增加产品、前置专家、研发及安全审查子图，打通固定 Spring Boot Bug 的“候选补丁→审查→真实 HTTP 测试→失败自动返工→出口验收”流程。角色输出使用可复现脚本，测试真实执行，发布仍为显式授权后的本地模拟。详见 [Phase 1 说明](src/agentloop/PHASE1.md)。
+
+**Phase 1 后续：G2 代码安全整改。** 确定性扫描确认归属的策略项可经 Router 交研发 Leader，再执行开发、测试、审查和安全复核。工单只能凭新版本证据关闭；不明确的专家发现仍等待人工分派。运行示例与验证见 [安全整改说明](docs/phase1-security-remediation.md)。
+
+**2026-10-19 更新：Phase 0 历史基线。** 新增 `src/agentloop`，包含确定性状态机、SQLite 仓储与审计、G1 人工确认、发布许可基础校验，以及可跨进程恢复的 LangGraph 澄清子图。安装、演示和历史验证记录见 [Phase 0 说明](src/agentloop/README.md)。后续交付以以上 Phase 1/2 更新为准。
+
+下文保留 week1/week2 学习版本的说明：**输入报错信息，按需查询示例日志和本地源码，生成结构化故障分析及任务分配建议。**
 
 **当前阶段：week2 的 LangGraph 双 Agent 流程已实现，具备离线验证代码；真实模型端到端效果尚未在本次核查中验证。** 程序通过命令行输出结果，尚未接入真实日志平台、人员系统或工单系统，也不会自动修改源码。
 
