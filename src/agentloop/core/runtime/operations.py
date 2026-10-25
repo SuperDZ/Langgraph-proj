@@ -2,11 +2,11 @@
 
 from uuid import uuid4
 from datetime import timedelta, datetime
-from ..approvals import ApprovalRequestService
+from ..approvals import AccessDenied, ApprovalRequestService
 from ..contracts.enums import (ActorType, GateId, GateStatus, IssueCategory, IssueStatus,
     ReleaseAction, ReleaseStatus, RunPhase, RunStatus, RunType, Severity, TrustLevel)
 from ..contracts.models import GateEvaluationRequest, Issue, utc_now
-from ..orchestration import GateEvaluator
+from ..orchestration import GateEvaluator, TransitionRejected
 from ..routing import LoopRouter
 from .configuration import digest
 from .effects import EffectUncertain
@@ -59,10 +59,26 @@ class DeploymentCoordinator:
         run = self.store.get_run(deployment.run_id)
         if run.phase in {RunPhase.DEPLOYMENT, RunPhase.G3}:
             run = self.transitions.transition(run.run_id, target_phase=RunPhase.DEPLOYMENT_RECOVERY, expected_version=run.state_version)
+        original = next(e for e in self.store.runtime_list("effect") if e["deployment_id"] == deployment_id and e["action"] == "DEPLOY")
+        if not original.get("previous_digest"):
+            return self._recover_without_baseline(deployment_id, run)
         try:
             deployment = self.executor.rollback(deployment_id, actor_id=actor_id)
         except EffectUncertain:
             return self.store.get_run(run.run_id)
+        except (PermissionError, AccessDenied, TransitionRejected) as exc:
+            # 回滚鉴权被本地拒绝：外部没有产生任何写入，不能进入"副作用未知"。
+            # 记录拒绝原因并停在 BLOCKED，修复角色/许可后可重试 recover。
+            with self.store.transaction():
+                self.repo.audit(run.run_id, "RECOVERY_ROLLBACK_DENIED",
+                                {"deployment_id": deployment_id, "reason": str(exc)})
+                self.store.runtime_put("recovery", deployment_id,
+                                       {"safe": False, "reason": "ROLLBACK_AUTHORIZATION_DENIED"})
+            current = self.store.get_run(run.run_id)
+            if current.status is not RunStatus.BLOCKED:
+                return self.transitions.transition(run.run_id, target_status=RunStatus.BLOCKED,
+                                                   expected_version=current.state_version)
+            return current
         rollback = next(e for e in self.store.runtime_list("effect") if e["deployment_id"] == deployment_id and e["action"] == "ROLLBACK")
         try:health = self.executor.providers[deployment.target_ids[0]].health(rollback["previous_digest"])
         except Exception:health={"artifact_digest":None,"healthy":False,"evidence":"rollback target unreachable"}
@@ -85,6 +101,51 @@ class DeploymentCoordinator:
             if self.store.runtime_get("cancellation", run.run_id):
                 return current
             return self.transitions.transition(run.run_id, target_status=RunStatus.BLOCKED, expected_version=current.state_version)
+
+    def _recover_without_baseline(self, deployment_id, run):
+        """首次部署失败且无回滚基线：不盲试回滚，用健康检查定性环境后收敛。
+
+        提供方仍可报告目标当前线上摘要时：若证明目标未上线本次产物，则视为安全
+        （可整改/终止并释放租约）；否则停在 BLOCKED 等待人工对账，不进入死锁。
+        """
+        deployment = self.store.get_deployment(deployment_id)
+        provider = self.executor.providers[deployment.target_ids[0]]
+        try:health = provider.health(deployment.release_artifact_digest)
+        except Exception:health={"artifact_digest":None,"healthy":False,"evidence":"deployment target unreachable"}
+        live = health.get("artifact_digest")
+        verified_not_live = isinstance(live, str) and live != deployment.release_artifact_digest
+        with self.store.transaction():
+            evidence = self.repo.archive.put(run_id=run.run_id, kind="RECOVERY_EVIDENCE", producer="operations-expert",
+                value={"deployment_id": deployment_id, "mode": "NO_ROLLBACK_BASELINE", "health": health,
+                       "verified_not_live": verified_not_live}, trust=TrustLevel.VERIFIED_INTERNAL)
+            if not verified_not_live:
+                self.store.runtime_put("recovery", deployment_id,
+                    {"safe": False, "artifact_id": evidence.artifact_id, "reason": "NO_ROLLBACK_BASELINE_UNVERIFIED"})
+                deployment.reconcile_state = "NEEDS_MANUAL_RECONCILIATION"; self.store.put_deployment(deployment)
+                self.repo.audit(run.run_id, "RECOVERY_UNVERIFIED", {"deployment_id": deployment_id, "health": health})
+                current = self.store.get_run(run.run_id)
+                if current.status is not RunStatus.BLOCKED:
+                    return self.transitions.transition(run.run_id, target_status=RunStatus.BLOCKED,
+                                                       expected_version=current.state_version)
+                return current
+            self.store.runtime_put("recovery", deployment_id,
+                {"safe": True, "artifact_id": evidence.artifact_id, "previous_digest": live,
+                 "reason": "NO_ROLLBACK_BASELINE_VERIFIED_NOT_LIVE"})
+            deployment.reconcile_state = "SAFE_WITHOUT_BASELINE"; self.store.put_deployment(deployment)
+            release=self.store.get_release(deployment.release_id);release.status=ReleaseStatus.READY;self.store.put_release(release)
+            issue_id = "deployment-failure-" + deployment_id
+            if not any(i.issue_id == issue_id for i in self.store.list_issues(run.run_id)):
+                self.router.route(Issue(issue_id=issue_id, run_id=run.run_id, category=IssueCategory.DEPLOY_FAILURE,
+                    severity=Severity.MEDIUM, description="首次部署失败且无回滚基线；已验证目标未上线本次产物，需要证据分类整改",
+                    evidence_artifact_ids=[evidence.artifact_id]), source_event_id=evidence.artifact_id)
+            self.executor.release_lease(deployment)
+            current = self.store.get_run(run.run_id)
+            if self.store.runtime_get("cancellation", run.run_id):
+                return current
+            if current.status is not RunStatus.BLOCKED:
+                return self.transitions.transition(run.run_id, target_status=RunStatus.BLOCKED,
+                                                   expected_version=current.state_version)
+            return current
 
     def remediate(self, deployment_id, *, cause, principal_id):
         cause = IssueCategory(cause)

@@ -3,12 +3,12 @@
 from datetime import timedelta
 from uuid import uuid4
 from urllib.parse import urlparse
-from ..approvals import RBACService
+from ..approvals import AccessDenied, RBACService
 from ..contracts.enums import (ActorType, AuthorizationStatus, DeploymentStatus, EventType,
     PrincipalType, ReleaseAction, ReleaseStatus, RunPhase, RunStatus, ToolExecutionStatus)
 from ..contracts.models import Deployment, ToolExecution, utc_now
 from ..contracts.phase3 import DeploymentTarget, ExecutionPolicy, DeploymentObservation
-from ..orchestration import StateTransitionService
+from ..orchestration import StateTransitionService, TransitionRejected
 from .configuration import digest
 from .deployment_providers import validate_bundle
 
@@ -150,19 +150,29 @@ class SideEffectExecutor:
             deployment.status = DeploymentStatus.IN_PROGRESS; self.store.put_deployment(deployment)
             self.repo.audit(run_id, "SIDE_EFFECT_PREPARED", effect)
         cancelled=False
+        cancel_reason=None
         with self.store.transaction():
             current_run=self.store.get_run(run_id)
             effect=self.store.runtime_get("effect",key)
             if current_run.status in {RunStatus.CANCEL_REQUESTED,RunStatus.CANCELLING,RunStatus.CANCELLED,RunStatus.NEEDS_RECONCILIATION}:
+                cancel_reason="run_cancelling"
+            else:
+                # prepare 与 dispatch 之间复查许可/门禁/签发人：撤销在窗口内同样生效。
+                try:
+                    self._validate(run_id, actor_id, authorization_id, target_id, allow_consumed=True)
+                except (PermissionError, AccessDenied, TransitionRejected):
+                    cancel_reason="authorization_invalidated_before_dispatch"
+            if cancel_reason:
                 effect["state"]="CANCELLED";self.store.runtime_put("effect",key,effect)
                 receipt=self.store.find_tool_execution_by_key(key);receipt.status=ToolExecutionStatus.CANCELLED;receipt.settled_at=self.clock();self.store.put_tool_execution(receipt)
                 deployment.status=DeploymentStatus.FAILED;deployment.reconcile_state="CANCELLED_BEFORE_DISPATCH";self.store.put_deployment(deployment)
+                release.status=ReleaseStatus.READY;self.store.put_release(release)
                 self.release_lease(deployment)
-                self.repo.audit(run_id,"SIDE_EFFECT_CANCELLED_BEFORE_DISPATCH",{"effect_id":key})
+                self.repo.audit(run_id,"SIDE_EFFECT_CANCELLED_BEFORE_DISPATCH",{"effect_id":key,"reason":cancel_reason})
                 cancelled=True
             else:
                 effect.update(dispatched=True,state="DISPATCHING");self.store.runtime_put("effect",key,effect)
-        if cancelled:raise EffectUncertain("取消已阻断尚未发送的外部请求")
+        if cancelled:raise EffectUncertain("取消或许可失效已阻断尚未发送的外部请求")
         try:
             observation = self.providers[target_id].execute(effect["operation_id"], "DEPLOY", bundle=bundle, artifact_digest=release.artifact_digest)
         except Exception:
@@ -214,8 +224,10 @@ class SideEffectExecutor:
             receipt = self.store.find_tool_execution_by_key(effect["idempotency_key"])
             receipt.status = ToolExecutionStatus.UNKNOWN; self.store.put_tool_execution(receipt)
             deployment = self.store.get_deployment(effect["deployment_id"])
-            deployment.status, deployment.reconcile_state = DeploymentStatus.UNKNOWN, "UNKNOWN"
-            self.store.put_deployment(deployment)
+            # 已由提供方确认的终态（如 DEPLOY FAILED）是确定性证据，不得被后续传输错误改写。
+            if deployment.status not in {DeploymentStatus.SUCCEEDED, DeploymentStatus.FAILED, DeploymentStatus.ROLLED_BACK}:
+                deployment.status, deployment.reconcile_state = DeploymentStatus.UNKNOWN, "UNKNOWN"
+                self.store.put_deployment(deployment)
             self.repo.audit(effect["run_id"], "SIDE_EFFECT_UNKNOWN", {"effect_id": effect["id"], "reason": reason})
             run = self.store.get_run(effect["run_id"])
             phase = RunPhase.DEPLOYMENT_RECOVERY if run.phase in {RunPhase.DEPLOYMENT, RunPhase.G3} else run.phase
@@ -227,13 +239,54 @@ class SideEffectExecutor:
         self.rbac.require_role(principal_id, "operator", self.store.get_run(effect["run_id"]).project_id)
         if effect["state"] in {"SUCCEEDED", "FAILED", "CANCELLED"}: return self.store.get_deployment(effect["deployment_id"])
         observation = self.providers[effect["target_id"]].query(effect["operation_id"])
+        if not effect.get("dispatched", True) and observation.status == "NOT_FOUND":
+            # 凭据已落库但请求从未发送、且提供方确认操作不存在：可确定收敛为取消，
+            # 不能停留在 UNKNOWN 卡死对账与目标租约。
+            return self._settle_cancelled(effect, principal_id, reason="CANCELLED_NEVER_DISPATCHED")
         if observation.status in {"UNKNOWN", "NOT_FOUND"}: raise EffectUncertain("外部操作仍未知，不能视为未发送或重发")
         return self._settle(effect, observation)
+
+    def _settle_cancelled(self, effect, principal_id, *, reason):
+        """把从未发送的副作用结算为 CANCELLED，并在无其他未决操作时释放目标租约。"""
+        with self.store.transaction():
+            stored = self.store.runtime_get("effect", effect["id"])
+            if stored and stored["state"] in {"SUCCEEDED", "FAILED", "CANCELLED"}:
+                return self.store.get_deployment(effect["deployment_id"])
+            effect = dict(stored or effect)
+            effect["state"] = "CANCELLED"
+            self.store.runtime_put("effect", effect["id"], effect)
+            receipt = self.store.find_tool_execution_by_key(effect["idempotency_key"])
+            if receipt is not None and receipt.status not in {ToolExecutionStatus.SUCCEEDED, ToolExecutionStatus.FAILED, ToolExecutionStatus.CANCELLED}:
+                receipt.status = ToolExecutionStatus.CANCELLED; receipt.settled_at = self.clock(); self.store.put_tool_execution(receipt)
+            deployment = self.store.get_deployment(effect["deployment_id"])
+            deployment.reconcile_state = reason
+            if effect["action"] == "DEPLOY":
+                deployment.status = DeploymentStatus.FAILED
+                release = self.store.get_release(deployment.release_id)
+                release.status = ReleaseStatus.READY; self.store.put_release(release)
+            self.store.put_deployment(deployment)
+            others_pending = any(e["state"] not in {"SUCCEEDED", "FAILED", "CANCELLED"}
+                                 for e in self.store.runtime_list("effect")
+                                 if e["deployment_id"] == effect["deployment_id"] and e["id"] != effect["id"])
+            if not others_pending:
+                self.release_lease(deployment)
+            self.repo.audit(effect["run_id"], "SIDE_EFFECT_SETTLED_CANCELLED",
+                            {"effect_id": effect["id"], "reason": reason, "reconciled_by": principal_id})
+            return deployment
 
     def rollback(self, deployment_id, *, actor_id, authorization_id=None):
         deployment = self.store.get_deployment(deployment_id)
         original = next(e for e in self.store.runtime_list("effect") if e["deployment_id"] == deployment_id and e["action"] == "DEPLOY")
         key = digest({"rollback": deployment_id})
+        existing_early = self.store.runtime_get("effect", key)
+        if existing_early and existing_early["state"] == "SUCCEEDED":
+            return deployment
+        previous = original.get("previous_digest")
+        # 鉴权与回滚基线检查先于任何执行凭据落库：本地可判定的拒绝（许可过期、
+        # 角色失效、缺少基线）不得被记成"外部副作用未知"，否则会不可恢复地卡死对账。
+        auth, release, target = self._validate(deployment.run_id, actor_id, authorization_id or deployment.authorization_id,
+            deployment.target_ids[0], rollback=True, allow_consumed=authorization_id is None)
+        if not previous: raise ValueError("缺少回滚基线")
         with self.store.transaction():
             existing = self.store.runtime_get("effect", key)
             if existing:
@@ -241,7 +294,6 @@ class SideEffectExecutor:
                 if not (authorization_id and not existing.get("dispatched",True)):
                     raise EffectUncertain("回滚已有未决操作；需查询对账")
                 self.repo.audit(deployment.run_id,"UNSENT_ROLLBACK_REAUTHORIZED",{"effect_id":key,"new_authorization_id":authorization_id})
-            previous = original.get("previous_digest")
             effect = {**original, "id": key, "idempotency_key": key, "operation_id": "rollback-" + uuid4().hex,
                       "action": "ROLLBACK", "state": "PREPARED", "actor_id": actor_id,"dispatched":False,
                       "authorization_id":authorization_id or deployment.authorization_id}
@@ -249,19 +301,16 @@ class SideEffectExecutor:
             self.store.put_tool_execution(ToolExecution(invocation_id=key, run_id=deployment.run_id, task_id=deployment_id,
                 tool_name="rollback", params_hash=digest({"deployment": deployment_id, "previous": previous}),
                 idempotency_key=key, external_operation_id=effect["operation_id"]))
+        with self.store.transaction():
+            if authorization_id:
+                auth.consume();self.store.put_authorization(auth)
+            effect.update(dispatched=True,state="DISPATCHING");self.store.runtime_put("effect",key,effect)
         try:
-            auth, release, target = self._validate(deployment.run_id, actor_id, authorization_id or deployment.authorization_id,
-                deployment.target_ids[0], rollback=True, allow_consumed=authorization_id is None)
-            if not previous: raise ValueError("缺少回滚基线")
-            with self.store.transaction():
-                if authorization_id:
-                    auth.consume();self.store.put_authorization(auth)
-                effect.update(dispatched=True,state="DISPATCHING");self.store.runtime_put("effect",key,effect)
             observation = self.providers[target.target_id].execute(effect["operation_id"], "ROLLBACK", bundle=None,
                 artifact_digest=release.artifact_digest, previous_digest=previous)
         except Exception:
-            self._unknown(effect, "rollback_unconfirmed_or_not_authorized")
-            raise EffectUncertain("回滚未确认；保留对账状态") from None
+            self._unknown(effect, "rollback_transport_unknown")
+            raise EffectUncertain("回滚结果未知；已保留操作 ID，禁止重发") from None
         return self._settle(effect, observation)
 
     def release_lease(self, deployment):

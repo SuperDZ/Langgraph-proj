@@ -266,10 +266,12 @@ def test_unsent_rollback_after_expiry_can_receive_new_exact_recovery_permission(
     deployment=deploy(ops)
     ops["clock"][0]+=timedelta(hours=2)
     result=ops["coordinator"].finalize(deployment.deployment_id,actor_id="ops")
-    assert result.status is RunStatus.NEEDS_RECONCILIATION
+    # 回滚许可过期是本地可判定拒绝：不产生 UNKNOWN 凭据，停在 BLOCKED 等待新许可后重试
+    assert result.status is RunStatus.BLOCKED
     assert ops["provider"].sent==["DEPLOY"]
-    effect=next(e for e in ops["store"].runtime_list("effect") if e["action"]=="ROLLBACK")
-    assert effect["dispatched"] is False
+    assert not any(e["action"]=="ROLLBACK" for e in ops["store"].runtime_list("effect"))
+    recovery=ops["store"].runtime_get("recovery",deployment.deployment_id)
+    assert recovery["reason"]=="ROLLBACK_AUTHORIZATION_DENIED" and not recovery["safe"]
     request=ops["releases"].request(release_id=ops["release"].release_id,principal_id="owner",environment_id="staging",target_ids=["t"],
         action_scope=[ReleaseAction.ROLLBACK],now=ops["clock"][0])
     auth=ops["releases"].decide(request_id=request.authorization_request_id,principal_id="owner",decision=ApprovalDecision.APPROVE,now=ops["clock"][0])
@@ -303,6 +305,85 @@ def test_approver_revoked_after_dispatch_does_not_produce_a_g3_pass(ops):
     deployment=deploy(ops)
     principal=ops["store"].get_principal("owner");principal.status="DISABLED";ops["store"].put_principal(principal)
     result=ops["coordinator"].finalize(deployment.deployment_id,actor_id="ops")
-    assert result.status is RunStatus.NEEDS_RECONCILIATION
+    # 签发人失效导致回滚被本地拒绝：外部状态已知，不进入"副作用未知"，停在 BLOCKED
+    assert result.status is RunStatus.BLOCKED
     assert ops["store"].latest_gate_result("r","G3").status is GateStatus.REJECTED
     assert ops["provider"].sent==["DEPLOY"]
+
+
+@pytest.mark.ac("AC-54", "AC-56")
+def test_revocation_between_prepare_and_dispatch_blocks_send(ops, monkeypatch):
+    """prepare→dispatch 窗口内撤销授权：不得发出外部请求。"""
+    releases = ops["releases"]
+    original = ops["repo"].audit
+    def revoke_at_boundary(run_id, action, body):
+        result = original(run_id, action, body)
+        if action == "SIDE_EFFECT_PREPARED":
+            releases.revoke(ops["authorization"].authorization_id, "owner")
+        return result
+    monkeypatch.setattr(ops["repo"], "audit", revoke_at_boundary)
+    with pytest.raises(EffectUncertain): deploy(ops)
+    assert ops["provider"].sent == []
+    effect = ops["store"].runtime_list("effect")[0]
+    assert effect["state"] == "CANCELLED" and effect.get("dispatched") is False
+    assert ops["store"].deployments_for("r")[0].status is DeploymentStatus.FAILED
+    assert ops["store"].get_release(ops["release"].release_id).status is ReleaseStatus.READY
+    assert ops["store"].runtime_get("target_lease", "p/t")["active"] is False
+    assert not ops["store"].pending_tool_executions("r")
+
+
+@pytest.mark.ac("AC-50", "AC-57")
+def test_reconcile_of_never_dispatched_effect_settles_cancelled_and_frees_target(ops, monkeypatch):
+    """凭据落库后进程崩溃（请求从未发送）：对账可确定收敛为取消并释放目标租约。"""
+    deployment = deploy(ops)
+    effect = next(e for e in ops["store"].runtime_list("effect"))
+    effect["state"] = "PREPARED"; effect["dispatched"] = False
+    ops["store"].runtime_put("effect", effect["id"], effect)
+    receipt = ops["store"].find_tool_execution_by_key(effect["idempotency_key"])
+    receipt.status = ToolExecutionStatus.STARTED; ops["store"].put_tool_execution(receipt)
+    monkeypatch.setattr(ops["provider"], "query",
+        lambda op: DeploymentObservation(operation_id=op, status="NOT_FOUND"))
+    result = ops["executor"].reconcile(effect["id"], principal_id="owner")
+    assert result.deployment_id == deployment.deployment_id
+    assert ops["store"].runtime_get("effect", effect["id"])["state"] == "CANCELLED"
+    assert ops["store"].find_tool_execution_by_key(effect["idempotency_key"]).status is ToolExecutionStatus.CANCELLED
+    assert ops["store"].runtime_get("target_lease", "p/t")["active"] is False
+    assert ops["store"].get_release(deployment.release_id).status is ReleaseStatus.READY
+
+
+@pytest.mark.ac("AC-50", "AC-57")
+def test_first_deploy_failure_without_baseline_verifies_target_and_unblocks(ops, monkeypatch):
+    """首次部署失败且无回滚基线：不盲试回滚，用健康检查证明目标未上线后安全收敛。"""
+    def failed_deploy(operation_id, action, *, bundle, artifact_digest, previous_digest=None):
+        return DeploymentObservation(operation_id=operation_id, status="FAILED",
+                                     artifact_digest=None, previous_digest=None)
+    monkeypatch.setattr(ops["provider"], "execute", failed_deploy)
+    deployment = deploy(ops)
+    assert deployment.status is DeploymentStatus.FAILED
+    result = ops["coordinator"].finalize(deployment.deployment_id, actor_id="ops")
+    assert (result.phase, result.status) == (RunPhase.DEPLOYMENT_RECOVERY, RunStatus.BLOCKED)
+    recovery = ops["store"].runtime_get("recovery", deployment.deployment_id)
+    assert recovery["safe"] is True and recovery["previous_digest"] == "baseline"
+    assert ops["store"].get_release(deployment.release_id).status is ReleaseStatus.READY
+    assert ops["store"].runtime_get("target_lease", "p/t")["active"] is False
+    ops["coordinator"].remediate(deployment.deployment_id, cause="ENV_DEFECT", principal_id="owner")
+    assert ops["store"].get_run("r").status is RunStatus.WAITING_APPROVAL
+
+
+@pytest.mark.ac("AC-50")
+def test_unverifiable_first_deploy_failure_waits_for_manual_reconciliation(ops, monkeypatch):
+    """提供方报告失败但目标实际在线上产物：无法证明安全，停在 BLOCKED 等待人工。"""
+    def failed_deploy(operation_id, action, *, bundle, artifact_digest, previous_digest=None):
+        return DeploymentObservation(operation_id=operation_id, status="FAILED",
+                                     artifact_digest=None, previous_digest=None)
+    monkeypatch.setattr(ops["provider"], "execute", failed_deploy)
+    live = bundle_digest(ops["bundle"])
+    monkeypatch.setattr(ops["provider"], "health",
+        lambda expected: {"artifact_digest": live, "healthy": False, "evidence": "FAULT INJECTION FIXTURE ONLY"})
+    deployment = deploy(ops)
+    result = ops["coordinator"].finalize(deployment.deployment_id, actor_id="ops")
+    assert (result.phase, result.status) == (RunPhase.DEPLOYMENT_RECOVERY, RunStatus.BLOCKED)
+    recovery = ops["store"].runtime_get("recovery", deployment.deployment_id)
+    assert recovery["safe"] is False and recovery["reason"] == "NO_ROLLBACK_BASELINE_UNVERIFIED"
+    with pytest.raises(Exception):
+        ops["coordinator"].remediate(deployment.deployment_id, cause="ENV_DEFECT", principal_id="owner")
