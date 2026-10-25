@@ -26,6 +26,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from agentloop.examples.demo import build_demo          # noqa: E402
 from agentloop.core.contracts.enums import RunStatus    # noqa: E402
+from agentloop.core.orchestration import SQLiteStore    # noqa: E402
 
 DEFAULT_TASK = "修复 /hello 的缺失、空串和空白参数错误，保留合法参数行为。"
 RUN_ID_RE = re.compile(r"^[A-Za-z0-9_-]{1,80}$")
@@ -48,14 +49,23 @@ class Workbench:
         self.job = {"busy": False, "run_id": None, "kind": None, "error": None}
         self.java_home, self.maven = java_home, maven
         self._state_cache = {}
+        self._store = None
 
     # ---------------- 工作流装配 ----------------
 
-    def _wf(self, run_id):
+    def _run_exists(self, run_id):
+        """用独立只读连接检查 Run 是否已创建，避免为不存在的 Run 装配工作流。"""
+        if self._store is None:
+            self._store = SQLiteStore(self.data_dir / "runs" / "state.db")
+        return self._store.find_run(run_id) is not None
+
+    def _wf(self, run_id, *, require_confirmation=False, security_example=False):
         wf = self.workflows.get(run_id)
         if wf is None:
             wf = build_demo(data_dir=self.data_dir / "runs", run_id=run_id,
-                            java_home=self.java_home, maven=self.maven)
+                            java_home=self.java_home, maven=self.maven,
+                            require_confirmation=require_confirmation,
+                            security_example=security_example)
             self.workflows[run_id] = wf
         return wf
 
@@ -83,9 +93,16 @@ class Workbench:
 
     def start(self, run_id, task, require_confirmation=False, security_example=False):
         def fn():
-            wf = self._wf(run_id)
+            # 启动参数必须在首次装配时生效（run 存在后配置由 CONFIG_SNAPSHOT 固化）。
+            cached = self.workflows.get(run_id)
+            if cached is not None and not self._run_exists(run_id):
+                same = (bool(cached.config.require_confirmation) == bool(require_confirmation)
+                        and (cached.config.role_profiles.get("backend") == "scripted-security-demo") == bool(security_example))
+                if not same:
+                    raise ValueError("该 run_id 已按不同启动参数装配，请更换 run_id 或沿用原参数")
+            wf = self._wf(run_id, require_confirmation=require_confirmation,
+                          security_example=security_example)
             self.tasks[run_id] = task or DEFAULT_TASK
-            wf.config.require_confirmation = bool(require_confirmation)
             wf.start(run_id, self.tasks[run_id])
         self.dispatch(run_id, "start", fn)
 
@@ -94,13 +111,15 @@ class Workbench:
             self._wf(run_id).confirm_g1(run_id, "demo-owner")
         self.dispatch(run_id, "confirm_g1", fn)
 
-    def authorize(self, run_id):
+    def authorize(self, run_id, decision="APPROVE"):
         def fn():
-            self._wf(run_id).authorize_simulation(run_id, "demo-owner")
+            self._wf(run_id).authorize_simulation(run_id, "demo-owner", decision=decision)
         self.dispatch(run_id, "authorize", fn)
 
     def resume(self, run_id):
         def fn():
+            if not self._run_exists(run_id):
+                raise ValueError("Run 不存在：" + run_id)
             wf = self._wf(run_id)
             run = wf.store.get_run(run_id)
             if run.status is RunStatus.BLOCKED:
@@ -116,11 +135,15 @@ class Workbench:
         return {
             "confirm_g1": phase == "G1" and status == "WAITING_APPROVAL",
             "authorize": phase == "RELEASE_AUTHORIZATION" and status == "WAITING_APPROVAL",
+            "reject_authorization": phase == "RELEASE_AUTHORIZATION" and status == "WAITING_APPROVAL",
             "resume": status == "BLOCKED",
         }
 
     def state(self, run_id):
         try:
+            if not self._run_exists(run_id):
+                return {"exists": False, "job": self._job_snapshot(), "actions": {},
+                        "boundary": "", "events": [], "artifacts": []}
             wf = self._wf(run_id)
             summary = wf.summary(run_id)
             events = [e.model_dump(mode="json") for e in wf.store.events_for(run_id)]
@@ -142,6 +165,8 @@ class Workbench:
                     "boundary": "", "events": [], "artifacts": []}
 
     def export(self, run_id):
+        if not self._run_exists(run_id):
+            raise ValueError("Run 不存在：" + run_id)
         wf = self._wf(run_id)
         artifacts = wf.store.artifacts_for(run_id)
         return {"summary": wf.summary(run_id), "evidence_boundary": BOUNDARY,
@@ -236,7 +261,11 @@ class Handler(BaseHTTPRequestHandler):
                 self.bench.confirm_g1(run_id)
                 self._json({"ok": True, "dispatched": "confirm_g1"})
             elif url.path == "/api/authorize":
-                self.bench.authorize(run_id)
+                decision = str(body.get("decision") or "APPROVE").upper()
+                if decision not in ("APPROVE", "REJECT"):
+                    self._json({"error": "decision 只能是 APPROVE 或 REJECT"}, 400)
+                    return
+                self.bench.authorize(run_id, decision)
                 self._json({"ok": True, "dispatched": "authorize"})
             elif url.path == "/api/resume":
                 self.bench.resume(run_id)
@@ -269,6 +298,8 @@ def main():
         for wf in Handler.bench.workflows.values():
             wf.close()
             wf.store.close()
+        if Handler.bench._store is not None:
+            Handler.bench._store.close()
         server.server_close()
 
 

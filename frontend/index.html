@@ -609,10 +609,12 @@ footer .colophon { display: flex; flex-wrap: wrap; gap: 6px 26px;
     <label style="flex:1 1 240px">任务
       <input type="text" id="in-task" spellcheck="false" style="flex:1;min-width:160px"
         value="修复 /hello 的缺失、空串和空白参数错误，保留合法参数行为。"></label>
+    <label class="chk"><input type="checkbox" id="in-g1" checked> G1 人工确认</label>
     <label class="chk"><input type="checkbox" id="in-sec"> 安全整改示例</label>
     <button class="btn primary" id="btn-start">▶ 启动运行</button>
     <button class="btn act hidden" id="btn-g1">✋ G1 人工确认</button>
     <button class="btn act hidden" id="btn-auth">🔑 授权模拟发布</button>
+    <button class="btn danger hidden" id="btn-reject">✕ 拒绝发布</button>
     <button class="btn danger hidden" id="btn-resume">↻ 恢复运行</button>
     <button class="btn hidden" id="btn-export">⬇ 导出证据</button>
     <div class="cmd-status">
@@ -1060,6 +1062,7 @@ function applyServerState(data, runId) {
   $("#btn-start").textContent = data.exists ? "▶ 再次启动 / 继续" : "▶ 启动运行";
   $("#btn-g1").classList.toggle("hidden", !(a.confirm_g1 && !busy));
   $("#btn-auth").classList.toggle("hidden", !(a.authorize && !busy));
+  $("#btn-reject").classList.toggle("hidden", !(a.reject_authorization && !busy));
   $("#btn-resume").classList.toggle("hidden", !(a.resume && !busy));
   $("#btn-export").classList.toggle("hidden", !data.exists);
 }
@@ -1081,11 +1084,16 @@ async function api(path, body) {
 $("#btn-start").addEventListener("click", () =>
   api("/api/start", { run_id: $("#in-run").value.trim() || "wb-1",
     task: $("#in-task").value.trim() || undefined,
+    require_confirmation: $("#in-g1").checked,
     security_example: $("#in-sec").checked }));
 $("#btn-g1").addEventListener("click", () =>
   api("/api/confirm_g1", { run_id: $("#in-run").value.trim() }));
 $("#btn-auth").addEventListener("click", () =>
-  api("/api/authorize", { run_id: $("#in-run").value.trim() }));
+  api("/api/authorize", { run_id: $("#in-run").value.trim(), decision: "APPROVE" }));
+$("#btn-reject").addEventListener("click", () => {
+  if (confirm("拒绝本次模拟发布？Run 将进入 BLOCKED。"))
+    api("/api/authorize", { run_id: $("#in-run").value.trim(), decision: "REJECT" });
+});
 $("#btn-resume").addEventListener("click", () =>
   api("/api/resume", { run_id: $("#in-run").value.trim() }));
 $("#btn-export").addEventListener("click", async () => {
