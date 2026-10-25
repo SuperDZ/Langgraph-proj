@@ -27,3 +27,10 @@ dist/
 .workbuddy/
 .DS_Store
 Thumbs.db
+
+# Local AgentLoop state, checkpoints and demo identities
+.agentloop/
+**/target/
+
+# Local security-scan history and hook state
+.mimosa/

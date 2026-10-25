@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agentloop-platform"
+version = "0.4.0"
+description = "Controlled multi-agent development, isolated worktrees, authorized deployment and recoverable operations"
+requires-python = ">=3.11"
+dependencies = [
+  "pydantic==2.14.1",
+  "langgraph==1.2.16",
+  "langgraph-checkpoint-sqlite==3.1.2",
+  "PyYAML==6.0.3",
+  "jsonschema==4.26.0",
+]
+
+[project.optional-dependencies]
+test = ["pytest==9.1.1"]
+
+[project.scripts]
+agentloop = "agentloop.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["agentloop*"]
+exclude = ["agentloop.tests*"]
+
+[tool.setuptools.package-data]
+agentloop = ["examples/phase1-config.json", "examples/spring-bug/pom.xml", "examples/spring-bug/.gitignore",
+  "examples/spring-bug/src/main/java/example/*.java", "examples/spring-bug/src/test/java/example/*.java"]
