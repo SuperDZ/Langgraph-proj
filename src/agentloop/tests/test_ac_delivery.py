@@ -403,6 +403,143 @@ def test_invalid_delivery_evidence_rejects_g2_instead_of_crashing(factory, damag
     assert "DELIVERY_EVIDENCE_UNREADABLE_OR_INVALID" in result.blocker_issue_ids
 
 
+class ArchitectureReworkAdapter(SpyAdapter):
+    def __init__(self, *, decision="FIXED", revise=True, confirm=True):
+        super().__init__()
+        self.decision, self.revise, self.confirm = decision, revise, confirm
+
+    def invoke(self, role, context, schema):
+        output = super().invoke(role, context, schema)
+        if role == "architecture-expert" and self.revise and context["attempt"] > 1:
+            output["summary"] += "；校验在事务内执行，重复请求沿用首次处理结果"
+        if role == "expert-leader":
+            if context["attempt"] == 1:
+                output.update(accepted=False,
+                              reasons=["缺少数据库事务边界设计", "没有说明接口幂等性处理"])
+            elif self.confirm:
+                explanation = ("在修订方案中补齐事务和幂等性设计" if self.decision == "FIXED"
+                               else "经复核，本次需求只涉及参数校验，事务和幂等性不在范围内")
+                output["resolutions"] = [
+                    {"issue_id": issue_id, "decision": self.decision, "explanation": explanation}
+                    for issue_id in context["unresolved_issues"]
+                ]
+        return output
+
+
+@pytest.mark.parametrize("decision,revise", [("FIXED", True), ("WITHDRAWN", False)])
+def test_architecture_rejection_feeds_back_to_next_round_and_resolves_issue(factory, decision, revise):
+    adapter = ArchitectureReworkAdapter(decision=decision, revise=revise)
+    workflow = factory(adapter=adapter)
+    result = workflow.start("r", "fix bug")
+    assert result["phase"] == "RELEASE_AUTHORIZATION"
+
+    arch_calls = [context for role, context in adapter.calls if role == "architecture-expert"]
+    assert len(arch_calls) == 2
+    assert arch_calls[0]["previous_rejected_design"] is None
+    assert arch_calls[0]["review_feedback_history"] == []
+    assert arch_calls[1]["previous_rejected_design"] is not None
+    feedback = arch_calls[1]["review_feedback_history"]
+    assert len(feedback) == 1
+    assert feedback[0]["reasons"] == ["缺少数据库事务边界设计", "没有说明接口幂等性处理"]
+    assert feedback[0]["round"] == 1
+
+    defects = [i for i in workflow.store.list_issues("r") if i.category.value == "ARCH_DEFECT"]
+    assert len(defects) == 1
+    assert defects[0].routed_leader.value == "expert-leader"
+    assert defects[0].status.value == "RESOLVED"
+    reviews = [context for role, context in adapter.calls if role == "expert-leader"]
+    pending = reviews[1]["unresolved_issues"]
+    assert set(pending) == {defects[0].issue_id}
+    assert pending[defects[0].issue_id]["rejected_digest"] == reviews[0]["input_digest"]
+    assert reviews[1]["review_feedback_history"] == feedback
+    assert (reviews[1]["input_digest"] != reviews[0]["input_digest"]) is revise
+    resolution = workflow.archive.read(defects[0].evidence_artifact_ids[-1], run_id="r")["output"]
+    assert resolution["resolutions"][0]["decision"] == decision
+    assert workflow.store.count_events_of_type(EventType.ISSUE_RESOLVED) == 1
+    assert workflow.store.latest_gate_result("r", "G1").status is GateStatus.PASSED
+
+
+@pytest.mark.parametrize("revise,confirm", [(True, False), (False, True)])
+def test_architecture_reapproval_requires_valid_resolution(factory, revise, confirm):
+    workflow = factory(adapter=ArchitectureReworkAdapter(revise=revise, confirm=confirm))
+    result = workflow.start("r", "fix bug")
+    assert result["status"] == "BLOCKED"
+    assert workflow.store.latest_gate_result("r", "G1") is None
+    defects = [i for i in workflow.store.list_issues("r") if i.category.value == "ARCH_DEFECT"]
+    assert len(defects) == 1
+    assert defects[0].status.value == "ROUTED"
+    assert workflow.store.count_events_of_type(EventType.ISSUE_RESOLVED) == 0
+
+
+def test_architecture_resolution_event_failure_rolls_back_and_replays(factory, monkeypatch):
+    workflow = factory(adapter=ArchitectureReworkAdapter())
+    append_event = workflow.store.append_event
+
+    def fail_resolution_event(**kwargs):
+        if kwargs["event_type"] is EventType.ISSUE_RESOLVED:
+            raise OSError("simulated audit write failure")
+        return append_event(**kwargs)
+
+    with monkeypatch.context() as patch:
+        patch.setattr(workflow.store, "append_event", fail_resolution_event)
+        result = workflow.start("r", "fix bug")
+
+    assert result["status"] == "BLOCKED"
+    assert workflow.store.latest_gate_result("r", "G1") is None
+    defect, = [i for i in workflow.store.list_issues("r") if i.category.value == "ARCH_DEFECT"]
+    assert defect.status.value == "ROUTED"
+    assert len(defect.evidence_artifact_ids) == 1
+    assert workflow.store.count_events_of_type(EventType.ISSUE_RESOLVED) == 0
+
+    run = workflow.store.get_run("r")
+    workflow.transitions.transition("r", target_status=RunStatus.RUNNING, expected_version=run.state_version)
+    resumed = workflow.start("r", "fix bug")
+    assert resumed["phase"] == "RELEASE_AUTHORIZATION"
+    assert workflow.store.get_issue(defect.issue_id).status.value == "RESOLVED"
+    assert workflow.store.count_events_of_type(EventType.ISSUE_RESOLVED) == 1
+
+
+def test_architecture_acceptance_survives_checkpoint_write_failure(factory, monkeypatch):
+    adapter = ArchitectureReworkAdapter()
+    workflow = factory(adapter=adapter)
+    put = workflow.saver.put
+
+    def fail_after_acceptance(config, checkpoint, metadata, new_versions):
+        if workflow.store.get_run("r").phase.value == "G1":
+            raise OSError("simulated checkpoint write failure after architecture acceptance")
+        return put(config, checkpoint, metadata, new_versions)
+
+    with monkeypatch.context() as patch:
+        patch.setattr(workflow.saver, "put", fail_after_acceptance)
+        result = workflow.start("r", "fix bug")
+
+    assert (result["phase"], result["status"]) == ("G1", "BLOCKED")
+    assert workflow.store.count_events_of_type(EventType.ISSUE_RESOLVED) == 1
+    run = workflow.store.get_run("r")
+    workflow.transitions.transition("r", target_status=RunStatus.RUNNING, expected_version=run.state_version)
+    resumed = workflow.start("r", "fix bug")
+    assert resumed["phase"] == "RELEASE_AUTHORIZATION"
+    assert len([role for role, _ in adapter.calls if role == "expert-leader"]) == 2
+    assert workflow.store.count_events_of_type(EventType.ISSUE_RESOLVED) == 1
+
+
+def test_architecture_rework_is_bounded_by_department_attempts(factory):
+    class AlwaysRejectArchitecture(SpyAdapter):
+        def invoke(self, role, context, schema):
+            output = super().invoke(role, context, schema)
+            if role == "expert-leader":
+                output.update(accepted=False, reasons=["架构仍需修订"])
+            return output
+
+    adapter = AlwaysRejectArchitecture()
+    workflow = factory(adapter=adapter)
+    result = workflow.start("r", "fix bug")
+    assert result["status"] == "BLOCKED"
+    arch_calls = [context for role, context in adapter.calls if role == "architecture-expert"]
+    assert len(arch_calls) == workflow.config.max_department_attempts
+    assert workflow.store.latest_gate_result("r", "G1") is None
+
+
 @pytest.mark.ac("AC-06")
 def test_unexpected_node_exception_blocks_run_with_evidence_and_stays_resumable(factory, monkeypatch):
     """未预期异常不得留下永久 RUNNING 的僵尸 Run：必须落 BLOCKED + 证据，且可恢复。"""

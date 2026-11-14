@@ -11,7 +11,10 @@ from langgraph.errors import GraphRecursionError
 
 from ..approvals import ApprovalRequestService, compute_input_digest
 from ..approvals.releases import ReleaseService
-from ..contracts.delivery import ArchitectureDesign, EngineeringPlan, PatchProposal, ProductSpec, SecurityReport, TestDiagnosis, Verdict
+from ..contracts.delivery import (
+    ArchitectureDesign, ArchitectureReReview, EngineeringPlan, PatchProposal, ProductSpec,
+    SecurityReport, TestDiagnosis, Verdict,
+)
 from ..contracts.enums import ActorType, EventType, GateId, GateStatus, HARD_BLOCKING_SEVERITIES, IssueCategory, IssueStatus, RunPhase, RunStatus, RunType, Severity, TrustLevel
 from ..contracts.models import GateEvaluationRequest, Issue
 from ..orchestration import GateEvaluator, StateTransitionService, TransitionRejected
@@ -49,6 +52,9 @@ class DeliveryState(TypedDict, total=False):
     release_id: str
     deployment_id: str
     previous_failure: str
+    architecture_already_accepted: bool
+    architecture_review_history: list[dict]
+    architecture_issue_ids: list[str]
 
 
 class WorkflowBlocked(RuntimeError):
@@ -121,8 +127,8 @@ class DeliveryWorkflow:
     def _body(self, state, artifact_id):
         return self.archive.read(artifact_id, run_id=state["run_id"])
 
-    def _verdict(self, state, role, digest, context):
-        verdict, artifact = self._call(state, role, Verdict, {**context, "input_digest": digest})
+    def _verdict(self, state, role, digest, context, *, schema=Verdict):
+        verdict, artifact = self._call(state, role, schema, {**context, "input_digest": digest})
         if verdict.input_digest != digest:
             raise WorkflowBlocked(f"{role} 的验收结论未绑定当前版本")
         return verdict, artifact
@@ -176,6 +182,16 @@ class DeliveryWorkflow:
         graph = StateGraph(DeliveryState)
 
         def audit(state):
+            run = self.store.get_run(state["run_id"])
+            if run.phase is RunPhase.G1 and run.baseline_versions.get("spec") == state["spec_digest"]:
+                # The store can commit G1 before LangGraph checkpoints the subgraph output.
+                digest = run.baseline_versions.get("architecture")
+                artifact = next((item for item in self.store.artifacts_for(run.run_id)
+                                 if item.type == "ARCHITECTURE" and item.sha256 == digest), None)
+                if artifact is None or self._body(state, artifact.artifact_id)["spec_digest"] != state["spec_digest"]:
+                    raise WorkflowBlocked("已验收架构产物缺失或未绑定当前需求")
+                return {"front_accepted": True, "architecture_already_accepted": True,
+                        "architecture_id": artifact.artifact_id, "architecture_digest": digest}
             verdict, artifact = self._verdict(state, "product-expert", state["spec_digest"],
                 {"spec": self._body(state, state["spec_id"]), "attempt": state["product_round"]})
             if not verdict.accepted:
@@ -183,15 +199,29 @@ class DeliveryWorkflow:
                 self._move(state["run_id"], RunPhase.PRODUCT)
             else:
                 self._move(state["run_id"], RunPhase.ARCHITECTURE)
-            return {"front_accepted": verdict.accepted, "previous_failure": "; ".join(verdict.reasons)}
+            return {"front_accepted": verdict.accepted, "architecture_already_accepted": False,
+                    "previous_failure": "; ".join(verdict.reasons)}
 
         def architecture(state):
             round_no = state.get("architecture_round", 0) + 1
             if round_no > self.config.max_department_attempts:
                 raise WorkflowBlocked("架构返工达到上限")
+            history = state.get("architecture_review_history", [])
+            previous_design = (
+                self._body(state, state["architecture_id"])
+                if state.get("architecture_id")
+                else None
+            )
             design, _ = self._call(state, "architecture-expert", ArchitectureDesign,
                 {"spec_digest": state["spec_digest"], "spec": self._body(state, state["spec_id"]),
-                 "editable_paths": sorted(self.workspace.editable_paths), "attempt": round_no})
+                 "editable_paths": sorted(self.workspace.editable_paths), "attempt": round_no,
+                 "previous_rejected_design": previous_design,
+                 "review_feedback_history": history,
+                 "revision_instruction": (
+                     "根据历史评审意见逐项修订架构方案。"
+                     "不得遗漏尚未解决的问题；如无法采纳某条意见，说明原因。"
+                     "不得改变需求版本或扩大允许修改范围。"
+                 )})
             if design.spec_digest != state["spec_digest"] or not set(design.editable_paths).issubset(self.workspace.editable_paths):
                 raise WorkflowBlocked("架构版本不匹配或扩大修改范围")
             artifact = self.archive.put(run_id=state["run_id"], kind="ARCHITECTURE", producer="architecture-expert",
@@ -199,19 +229,68 @@ class DeliveryWorkflow:
             return {"architecture_id": artifact.artifact_id, "architecture_digest": artifact.sha256, "architecture_round": round_no}
 
         def accept(state):
-            verdict, _ = self._verdict(state, "expert-leader", state["architecture_digest"],
-                {"architecture": self._body(state, state["architecture_id"]), "attempt": state["architecture_round"]})
-            if verdict.accepted:
-                self._bind(state["run_id"], "architecture", state["architecture_digest"])
-                self._event(state, EventType.DEPARTMENT_ACCEPTED, "expert-leader", state["architecture_digest"], {"mode": "FRONT"})
-                self._move(state["run_id"], RunPhase.G1)
-            return {"front_accepted": verdict.accepted}
+            history = state.get("architecture_review_history", [])
+            issue_ids = state.get("architecture_issue_ids", [])
+            pending = self._pending_architecture_issues(state)
+            context = {"architecture": self._body(state, state["architecture_id"]),
+                       "attempt": state["architecture_round"]}
+            if pending:
+                context.update(
+                    review_feedback_history=history,
+                    unresolved_issues=pending,
+                    review_instruction=(
+                        "对每个未关闭工单返回一条 resolutions 记录。"
+                        "已修复填写 FIXED 并说明方案改动；撤销原判填写 WITHDRAWN 并说明理由。"
+                        "仍未解决时应拒绝方案。"
+                    ),
+                )
+            verdict, review_artifact = self._verdict(state, "expert-leader", state["architecture_digest"],
+                context, schema=ArchitectureReReview if pending else Verdict)
+            resolutions = verdict.resolutions if pending else []
+            confirmed = {item.issue_id: item for item in resolutions}
+            valid_confirmation = (
+                len(confirmed) == len(resolutions)
+                and confirmed.keys() == pending.keys()
+                and all(item.explanation.strip() and (
+                    item.decision == "WITHDRAWN"
+                    or state["architecture_digest"] != pending[item.issue_id]["rejected_digest"]
+                ) for item in resolutions)
+            )
+            if verdict.accepted and valid_confirmation:
+                with self.store.transaction():
+                    self._bind(state["run_id"], "architecture", state["architecture_digest"])
+                    self._event(state, EventType.DEPARTMENT_ACCEPTED, "expert-leader",
+                                state["architecture_digest"], {"mode": "FRONT"})
+                    self._resolve_architecture_issues(state, resolutions, review_artifact.artifact_id)
+                    self._move(state["run_id"], RunPhase.G1)
+                return {"front_accepted": True}
+            reasons = verdict.reasons if not verdict.accepted else ["复审未有效确认全部历史架构工单"]
+            feedback = {
+                "round": state["architecture_round"],
+                "architecture_digest": state["architecture_digest"],
+                "architecture_artifact_id": state["architecture_id"],
+                "review_artifact_id": review_artifact.artifact_id,
+                "reasons": reasons,
+            }
+            with self.store.transaction():
+                payload = {"attempt": state["architecture_round"], "reason": "; ".join(reasons),
+                           "target": "architecture-expert"}
+                if not verdict.accepted:
+                    issue_id = self._issue(state, IssueCategory.ARCH_DEFECT, Severity.MEDIUM,
+                                           review_artifact.artifact_id, payload["reason"])
+                    issue_ids = [*issue_ids, issue_id]
+                    feedback["issue_id"] = payload["issue_id"] = issue_id
+                self._event(state, EventType.LOCAL_REWORK, "orchestrator",
+                            f"architecture:{state['architecture_round']}:{review_artifact.artifact_id}", payload)
+            return {"front_accepted": False, "architecture_review_history": [*history, feedback],
+                    "architecture_issue_ids": issue_ids}
 
         graph.add_node("product_audit", audit)
         graph.add_node("architecture", architecture)
         graph.add_node("expert_acceptance", accept)
         graph.add_edge(START, "product_audit")
-        graph.add_conditional_edges("product_audit", lambda s: "architecture" if s["front_accepted"] else END)
+        graph.add_conditional_edges("product_audit",
+            lambda s: "architecture" if s["front_accepted"] and not s["architecture_already_accepted"] else END)
         graph.add_edge("architecture", "expert_acceptance")
         graph.add_conditional_edges("expert_acceptance", lambda s: END if s["front_accepted"] else "architecture")
         return graph.compile()
@@ -362,6 +441,32 @@ class DeliveryWorkflow:
             category=category, severity=severity, description=description or category.value, evidence_artifact_ids=[evidence_id])
         if not any(i.issue_id == issue.issue_id for i in self.store.list_issues(state["run_id"])):
             self.router.route(issue, source_event_id=evidence_id)
+        return issue.issue_id
+
+    def _pending_architecture_issues(self, state):
+        pending = {}
+        for issue_id in state.get("architecture_issue_ids", []):
+            issue = self.store.get_issue(issue_id)
+            if issue.status is IssueStatus.RESOLVED:
+                continue
+            review_id = issue.evidence_artifact_ids[0]
+            pending[issue_id] = {
+                "rejected_digest": self._body(state, review_id)["output"]["input_digest"],
+                "review_artifact_id": review_id,
+                "description": issue.description,
+            }
+        return pending
+
+    def _resolve_architecture_issues(self, state, resolutions, review_artifact_id):
+        for resolution in resolutions:
+            issue_id = resolution.issue_id
+            issue = self.store.get_issue(issue_id)
+            issue.status = IssueStatus.RESOLVED
+            issue.evidence_artifact_ids.append(review_artifact_id)
+            self.store.put_issue(issue)
+            self._event(state, EventType.ISSUE_RESOLVED, "orchestrator", f"architecture:{issue_id}",
+                        {"issue_id": issue_id, "architecture_digest": state["architecture_digest"],
+                         "review_artifact_id": review_artifact_id, "decision": resolution.decision})
 
     def _security_graph(self):
         graph = StateGraph(DeliveryState)
