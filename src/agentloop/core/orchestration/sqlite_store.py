@@ -8,6 +8,7 @@ from contextlib import contextmanager
 from pathlib import Path
 
 from ..contracts import models
+from ..contracts import knowledge
 from .store import InMemoryStore
 
 
@@ -90,6 +91,8 @@ class SQLiteStore(InMemoryStore):
             "authorization_requests": models.ReleaseAuthorizationRequest,
             "authorizations": models.ReleaseAuthorization, "deployments": models.Deployment,
             "principals": models.Principal, "bindings": models.RoleBinding,
+            "memory_proposals": knowledge.MemoryProposal, "memories": knowledge.MemoryRecord,
+            "evolution_proposals": knowledge.EvolutionProposal,
         }
         for kind, model in entities.items():
             setattr(self, "_" + kind, RecordMap(self.connection, kind, model))

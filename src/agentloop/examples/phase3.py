@@ -14,7 +14,7 @@ from ..core.runtime.configuration import digest
 def prepare_fixture(data_dir):
     fixture=Path(data_dir)/"phase3-fixture"
     if not fixture.exists():
-        shutil.copytree(Path(__file__).parent/"spring-bug",fixture)
+        shutil.copytree(Path(__file__).parent/"spring-bug",fixture,ignore=shutil.ignore_patterns("target", ".git"))
         (fixture/"web").mkdir(); (fixture/"deploy").mkdir()
         (fixture/"web/index.html").write_text("<!doctype html><title>AgentLoop baseline</title>AgentLoop baseline",encoding="utf-8")
         (fixture/"deploy/service.json").write_text('{"service":"baseline"}',encoding="utf-8")

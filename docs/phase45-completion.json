@@ -1,0 +1,143 @@
+{
+  "version": "0.5.0",
+  "status": "PHASE4_GOVERNANCE_AND_PHASE5_LOCAL_CONSOLE_ACCEPTED",
+  "full_suite": {
+    "passed": 495,
+    "skipped": 3,
+    "source": "phase45-validation.json",
+    "java_requested": false
+  },
+  "final_related_regression": {
+    "passed": 68,
+    "source": "phase45-final-regression.xml",
+    "overlaps_full_suite": true
+  },
+  "react_build": "PASSED",
+  "tauri_check": "PASSED",
+  "tauri_build": "PASSED",
+  "desktop_smoke": "PROCESS_ALIVE_AFTER_5_SECONDS_WITH_MAIN_WINDOW",
+  "wheel": {
+    "independent_import": true,
+    "source_parity_modules": 55,
+    "sha256": "a025d26c950b6836999d6c22b5c6086099820a80920f64171075c5f0d9a1c7e5"
+  },
+  "browser_delivery": {
+    "run_id": "phase45-browser",
+    "phase": "DELIVERY",
+    "status": "COMPLETED",
+    "gates": [
+      {
+        "gate": "G1",
+        "status": "PASSED"
+      },
+      {
+        "gate": "G2",
+        "status": "PASSED"
+      },
+      {
+        "gate": "G3",
+        "status": "PASSED"
+      }
+    ],
+    "retrospectives": [
+      {
+        "parent_run_id": "phase45-browser",
+        "retrospective_run_id": "retro-512a90d531a96110506e",
+        "mode": "FULL_DELIVERY",
+        "delivered_version": "090ecb75a998e267797b6f05ab923a3c163f1b2a",
+        "version_key": "phase45-browser:FULL_DELIVERY:090ecb75a998e267797b6f05ab923a3c163f1b2a",
+        "report_artifact_id": "d12a9bd1e0e3818d060a348fc67d62579a3dd0df8484bf99a290a0180eb4e772",
+        "evidence_artifact_id": "7159e15d6b351884dc5866346508a27e8fbfb3d48c3f09f96058b6d0e83f67d7",
+        "proposals": [
+          {
+            "proposal_id": "memprop-13ee5b24249d47ecb3d6effd63cc93ac",
+            "kind": "MEMORY",
+            "accepted": true
+          },
+          {
+            "proposal_id": "memprop-0fbc039ac2774bd4b6fa78b1d441842f",
+            "kind": "MEMORY",
+            "accepted": true
+          },
+          {
+            "proposal_id": "evo-201b2b59b8ae4ecc99776dea13934ce7",
+            "kind": "EVOLUTION"
+          }
+        ]
+      }
+    ],
+    "active_memory_count": 1,
+    "pending_proposals": 1,
+    "worker_mode": "SCRIPTED",
+    "testing": "ACTUAL_LOCAL_MAVEN_SPRING",
+    "deployment": "OWNED_LOCAL_STATIC_HTTP"
+  },
+  "scope_limits": [
+    "No customer production acceptance",
+    "No successful live-model quality acceptance in this turn",
+    "Desktop client requires separately running local Python backend",
+    "No signed installer or bundled JDK/Maven",
+    "Full AC coverage and independent human security review remain outstanding"
+  ],
+  "source_sha256": {
+    "src/agentloop/deployment_agent.py": "20eb903dc8f634d53cf6353c7053b728f3cfc36252732a64d09aa240d1abec3a",
+    "src/agentloop/phase3_cli.py": "9dde1180a7732eb6c4f2a3c2aacea2248d82bcbb3abe044d0d46bed64b6d916d",
+    "src/agentloop/phase4_cli.py": "0977e2ffaed8f1c717789ae0d56b1c97af86c0dc8fe7db365178220c8fe00502",
+    "src/agentloop/runtime_cli.py": "591ab01368e2a943c4aee2a04329ed46b324f5f3ef1b31e3ab061759f64b4b9f",
+    "src/agentloop/verify.py": "7a9fe3e05b2b1bd57e3634f5398a3c35db0e2d78a500398cb33ac57c2638986b",
+    "src/agentloop/__init__.py": "b7a6a3a18c7f6905db87c4ba9cd2e2a06a8cf95011874d05c433e83cad26f569",
+    "src/agentloop/__main__.py": "cecbd23b804277e764cc36f4a27447dd79af83f0cc95e6b87243b773e1b705a0",
+    "src/agentloop/core/__init__.py": "ffe8a1b25913e0649d8449962fe5d84aee26fe024845829e9591c951e169b9e5",
+    "src/agentloop/examples/demo.py": "87353b22a16566ffca405568fbc109ecc6290a4ad9d3609019bb4ac8d9944f25",
+    "src/agentloop/examples/phase3.py": "916973896c8dfff57464cf43ca4c80b9329e6040cf507f33d4ab8f966f0bf3e4",
+    "src/agentloop/examples/scripted.py": "fc77d1d15e1d0b85e1cd69a1b962e9bca17c67eb5c74953f3e4c73b22f0e1c23",
+    "src/agentloop/examples/__init__.py": "40b0f68f821b660496cd08ce1eb239887eb5953fbf71a55a38e5f74cbfb104fd",
+    "src/agentloop/knowledge/archive.py": "c8a7f6d7b7f148c6470c57688ba01f051ed07e2745a9671a0b3f880ba3846d99",
+    "src/agentloop/knowledge/memory.py": "ce529306613febb0e0bb47bd079f3facbf1a14cea3aea588a4987dab860a6c3d",
+    "src/agentloop/knowledge/retrospective.py": "f36405fbbc93ca0c2b2a3bebebb9e36d297ca2f054bfd62f3863d3495abbd272",
+    "src/agentloop/knowledge/__init__.py": "b57c97b6ce6c7db63d3116605ce3d53c663b0627a6499a615fa8d9ec3c856364",
+    "src/agentloop/core/approvals/approval_requests.py": "db3a24e48cc3210f1512d4fb7dc943a75f13f4df7c024856e2be6858a0a99762",
+    "src/agentloop/core/approvals/rbac.py": "33299955ccbd53afdaa9869739c053f716eb59a4b45b9fed25bf831e26a696d6",
+    "src/agentloop/core/approvals/releases.py": "581a60cee232c4208120b149c7d9730e41173199178841487f01af27123843ba",
+    "src/agentloop/core/approvals/waivers.py": "1e64ca06dcadfc2d35d5540c4ae16ffb14113a54467f01bc35f3919475eacbfd",
+    "src/agentloop/core/approvals/__init__.py": "21f0b6ff92dc23d4b51e256db6e7a7da4589016ac71e45c6b6e30f6551429c15",
+    "src/agentloop/core/contracts/delivery.py": "1f339856d972a633fca8d32cdb7f2ae50b4a826635ef61e9d926ceb25c1286cc",
+    "src/agentloop/core/contracts/enums.py": "acea459d31a6f3d1896682e735effe4008aeffb9451c2cf18fbcbccdad1373f8",
+    "src/agentloop/core/contracts/knowledge.py": "8102ee7e7f748ccca992c2f569cf5347a7b6e2f2209846bec54e0db12f9b5868",
+    "src/agentloop/core/contracts/models.py": "e7d76194cfcb3bf84fc07f1f58012cb6e3f428f04e5a53b010ac0e5e36c0d860",
+    "src/agentloop/core/contracts/phase2.py": "f4cad11065396857cd5c2cd91204606ff7601bfeb7438e87c10126f74f239736",
+    "src/agentloop/core/contracts/phase3.py": "9df70e51baefab42583ef25d6f4ca704e3dce876c090b334f8d547075a924c45",
+    "src/agentloop/core/contracts/transitions.py": "f2495438c93b8ea5df2332be86799fc84ff0f402f4c90f5d6c19489e51f607bd",
+    "src/agentloop/core/contracts/__init__.py": "43ea32a79fd95f2292efc6e6f6008511bab357e65398ecf0a4c8ad4dadca7c59",
+    "src/agentloop/core/department_graphs/delivery.py": "a3b907035ba626cfc7a632f9120aa9cc477167863380b598543556f35c6309e9",
+    "src/agentloop/core/department_graphs/__init__.py": "44ff70ccc0aadb6a880ecc4e61c8b9cceedb22f221e7c3664b6b48b8d353ef45",
+    "src/agentloop/core/orchestration/clarifications.py": "48b27b166eceff35b3a607c37e473ff1fbdeea3a3ff9cdd6f659cddfb6dcdfd5",
+    "src/agentloop/core/orchestration/gate_evaluator.py": "f405624da62f713b10359cb9c7b9bb0398abc07e772b4cbfe0e0b0beeebd6d5b",
+    "src/agentloop/core/orchestration/intake_graph.py": "50aa09fc18b1e2282131221bea14ed24c5aca9cf3f75fe9daef1594a51c952bb",
+    "src/agentloop/core/orchestration/sqlite_store.py": "35d0ea4131d17649b5d62ab1baa3d708b5dfe19b0db42a7d0cdbe616546cbdc1",
+    "src/agentloop/core/orchestration/state_transition.py": "c974b923b87bf29c20c311cd0def83a2dd1a067ba59867b80f4121ffb3d862a8",
+    "src/agentloop/core/orchestration/store.py": "d3f5c5374f63f67e6d2160723d1a1e48dae8eb84f91f2498b95246cb98bd945f",
+    "src/agentloop/core/orchestration/__init__.py": "6a6dded4f4544c643518177f398be0cd33de94c3a2ec8a0d50860306af8dbbdb",
+    "src/agentloop/core/routing/loop_router.py": "06e169cab7f53fe9a37eeaf237dc64f1bc27550eb7f6c95da25cd4ab5618bdfa",
+    "src/agentloop/core/routing/__init__.py": "23b8f0a7a73bd47b4e3a2b505715c08cad93aef4cdb55302c554e2ffa332123c",
+    "src/agentloop/core/runtime/budget.py": "6092401bd317421aaa0aa8d28399c89646ba75e86fc6bfa16757b82135602d73",
+    "src/agentloop/core/runtime/configuration.py": "3727f5999b1a1dfd3cb742ee28b429b7017fa43d4df08f860cf64a258d9d072a",
+    "src/agentloop/core/runtime/deployment_providers.py": "3c13b71e7e030eb22832d32e7f17faf3b840dff4379f6b073135e90de9927cd0",
+    "src/agentloop/core/runtime/effects.py": "6b6b058a447ba4bf221b3a1e1cf415b5e8acc338bc23b05e2461f40a9eaf7e02",
+    "src/agentloop/core/runtime/mcp.py": "15b216e7e9f55562ad09952880d440615c8e153f74e52138d8417513a6862269",
+    "src/agentloop/core/runtime/models.py": "e58fc39192fd812ebdd51822104b81dc2cb0538e99c68cb73bbf6a1900bc5b42",
+    "src/agentloop/core/runtime/operations.py": "c8fced42b117fad0be8e09756d2f50d06bcfa1be5bc78d45a921b2d6b3d8ba2d",
+    "src/agentloop/core/runtime/parallel.py": "6e0701863f3359816c046634bf7ba12341c856e5e99a3ab9ab602f0cfa54e151",
+    "src/agentloop/core/runtime/security.py": "a08c9f11f56e288d7b39ea58ea207d59914733e7bef6f239a65692696fde6ea9",
+    "src/agentloop/core/runtime/simulation.py": "088b471fcf1f3fbcb12a6c3f37d7fdfd8655fe5e12be2654575c1eb8e74d2ef6",
+    "src/agentloop/core/runtime/skills.py": "99ce209e247ed31013b9b0cef09ae711c1b977290617b1a6165f78f846e90943",
+    "src/agentloop/core/runtime/testing.py": "d0ef20c65b75fad13257be03e42cda4f7a7b1638d4fbabbeeb988f4e9eb05b08",
+    "src/agentloop/core/runtime/workers.py": "d015c5895906324438a3fc172b02304613e8c09d57c8ad61bec9c55f671346cc",
+    "src/agentloop/core/runtime/workspace.py": "363f531c118302f0e000e2efb98478f1db2cd9c245eca57614d8fe6bfe5eba24",
+    "src/agentloop/core/runtime/__init__.py": "424606250d5a12651a8c57d3fd4c531b38a616ec7f89276fbaaab9103452df64",
+    "frontend/server.py": "6853fbd993578468395f486689bbfd2f871119edf5937a1953441e8ec496b84e",
+    "frontend/platform_api.py": "c90780a38499f20fe0b55d5d6098627376f20e4bd1dda289c4a4ac2a74cd7126",
+    "frontend/console/src/main.jsx": "c8aef31d22e574d3bf8b4f23c6c232eb26c17ed4150eb05e4fca214ca691b757",
+    "frontend/console/src/style.css": "29ff276975e3986e78dc02ced161d2839e10a9df15b5efe68b221ded68f794dc"
+  }
+}

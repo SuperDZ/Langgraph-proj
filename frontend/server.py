@@ -8,7 +8,7 @@ BLOCKED 恢复、证据导出）暴露为 HTTP API，供前端工作台页面调
 
     python frontend/server.py \
         --java-home .agentloop/toolchains/jdk-21.0.12.1+1 \
-        --maven "E:/CodeEnv/Java/Maven/binary/apache-maven-3.9.16/bin/mvn.cmd"
+        --maven "C:/path/to/maven/bin/mvn.cmd"
 """
 
 import argparse
@@ -17,6 +17,7 @@ import re
 import shutil
 import sys
 import threading
+import secrets
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import urlparse, parse_qs
@@ -50,6 +51,9 @@ class Workbench:
         self.java_home, self.maven = java_home, maven
         self._state_cache = {}
         self._store = None
+        self.phase3_runs = set()
+        from credentials import CredentialVault
+        self.credentials = CredentialVault(self.data_dir / "credentials.dpapi")
 
     # ---------------- 工作流装配 ----------------
 
@@ -62,10 +66,16 @@ class Workbench:
     def _wf(self, run_id, *, require_confirmation=False, security_example=False):
         wf = self.workflows.get(run_id)
         if wf is None:
+            self._run_exists(run_id)
+            mode = self._store.runtime_get("workflow_mode", run_id) if self._store else None
+            phase3 = run_id in self.phase3_runs or bool(mode and mode.get("mode") == "phase3")
+            from agentloop.core.contracts.phase2 import RuntimeConfig
+            draft = self._store.runtime_get("console_run_config", run_id)
             wf = build_demo(data_dir=self.data_dir / "runs", run_id=run_id,
                             java_home=self.java_home, maven=self.maven,
                             require_confirmation=require_confirmation,
-                            security_example=security_example)
+                            security_example=security_example, phase3=phase3,
+                            runtime_config=RuntimeConfig.model_validate(draft) if draft else None)
             self.workflows[run_id] = wf
         return wf
 
@@ -180,6 +190,16 @@ class Handler(BaseHTTPRequestHandler):
     bench: Workbench = None
     static_dir: Path = None
     server_version = "AgentLoopWorkbench/0.1"
+    csrf_token = secrets.token_urlsafe(32)
+
+    def _local_request(self, write=False):
+        expected = f"127.0.0.1:{self.server.server_port}"
+        if self.headers.get("Host") != expected:
+            self._json({"error": "invalid local host"}, 403); return False
+        if write and (self.headers.get("Origin") not in (None, f"http://{expected}")
+                      or self.headers.get("X-AgentLoop-CSRF") != self.csrf_token):
+            self._json({"error": "invalid origin or session token"}, 403); return False
+        return True
 
     # ---------------- 基础输出 ----------------
 
@@ -197,7 +217,7 @@ class Handler(BaseHTTPRequestHandler):
 
     def _static(self, rel):
         target = (self.static_dir / rel).resolve()
-        if not str(target).startswith(str(self.static_dir.resolve())) or not target.is_file():
+        if not target.is_relative_to(self.static_dir.resolve()) or not target.is_file():
             self._json({"error": "not found"}, 404)
             return
         kinds = {".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8",
@@ -217,10 +237,34 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):                                     # noqa: N802
         url = urlparse(self.path)
-        if url.path in ("/", "/index.html"):
+        if url.path.startswith('/api/') and not self._local_request(): return
+        if url.path == "/api/platform":
+            if not self._local_request(): return
+            try:
+                from platform_api import Platform
+                run_id = (parse_qs(url.query).get("run_id") or [None])[0]
+                self._json({**Platform(self.bench).read(run_id), "csrf": self.csrf_token, "job": self.bench._job_snapshot()})
+            except Exception as exc:
+                self._json({"error": str(exc)}, 400)
+            return
+        if url.path in ("/", "/index.html", "/console"):
+            self.send_response(302)
+            self.send_header("Location", "/console/" + ("?" + url.query if url.query else ""))
+            self.send_header("Content-Length", "0")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers()
+            return
+        if url.path.startswith("/console/"):
+            rel = url.path[len("/console/"):] or "index.html"
+            if ".." in Path(rel).parts:
+                self._json({"error":"invalid path"},400); return
+            self._static("console/dist/" + rel); return
+        if url.path in ("/workbench", "/workbench/"):
             self._static("index.html")
+        elif url.path in ("/scenes.css", "/workbench.css", "/workbench.js"):
+            self._static(url.path.lstrip("/"))
         elif url.path == "/api/hello":
-            self._json({"ok": True, "service": "agentloop-workbench"})
+            self._json({"ok": True, "service": "agentloop-workbench", "csrf": self.csrf_token})
         elif url.path == "/api/state":
             run_id = (parse_qs(url.query).get("run_id") or [""])[0]
             if not RUN_ID_RE.fullmatch(run_id):
@@ -242,16 +286,39 @@ class Handler(BaseHTTPRequestHandler):
     def do_POST(self):                                    # noqa: N802
         url = urlparse(self.path)
         length = int(self.headers.get("Content-Length") or 0)
+        if length < 0 or length > 1_000_000:
+            self._json({"error":"request too large"},413);return
+        if url.path.startswith("/api/") and not self._local_request(write=True): return
         try:
             body = json.loads(self.rfile.read(length) or b"{}")
         except json.JSONDecodeError:
             self._json({"error": "请求体不是合法 JSON"}, 400)
             return
+        if not isinstance(body, dict):
+            self._json({"error":"请求体必须为 JSON 对象"},400);return
         run_id = str(body.get("run_id") or "")
         if not RUN_ID_RE.fullmatch(run_id):
             self._json({"error": "run_id 只能包含字母、数字、下划线和连字符"}, 400)
             return
         try:
+            if url.path.startswith("/api/platform/"):
+                from platform_api import Platform
+                action = url.path.rsplit("/",1)[-1]
+                if action == "start":
+                    if self.bench._run_exists(run_id): raise ValueError("请选择新的运行标识")
+                    self.bench.phase3_runs.add(run_id)
+                    if body.get("use_models") is True:
+                        config = self.bench._store.runtime_get("console_config", "draft") or Platform(self.bench).default_config()
+                        from agent_settings import select_run_models
+                        config, _ = select_run_models(config, body.get("role_models", {}))
+                        self.bench._store.runtime_put("console_run_config",run_id,config)
+                    self.bench.start(run_id,str(body.get("task") or DEFAULT_TASK),require_confirmation=True)
+                    self._json({"dispatched":"start"});return
+                if action == "release":
+                    from platform_api import release_command
+                    self.bench.dispatch(run_id,"release",lambda:release_command(self.bench,body))
+                    self._json({"dispatched":"release"});return
+                self._json(Platform(self.bench).act(action,body));return
             if url.path == "/api/start":
                 self.bench.start(run_id, str(body.get("task") or DEFAULT_TASK),
                                  require_confirmation=bool(body.get("require_confirmation")),
@@ -289,7 +356,7 @@ def main():
     Handler.bench = Workbench(args.data_dir, java_home=args.java_home, maven=args.maven)
     Handler.static_dir = ROOT / "frontend"
     server = ThreadingHTTPServer(("127.0.0.1", args.port), Handler)
-    print(f"工作台服务已启动: http://127.0.0.1:{args.port}/  (Ctrl+C 停止)", flush=True)
+    print(f"控制台已启动: http://127.0.0.1:{args.port}/console/  (Ctrl+C 停止)", flush=True)
     try:
         server.serve_forever()
     except KeyboardInterrupt:

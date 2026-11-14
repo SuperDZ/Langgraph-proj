@@ -106,6 +106,10 @@ ROLE_DEFINITIONS: dict[str, set[str]] = {
         "cap.risk_waiver.approve",
         "cap.memory.review",
     },
+    "memory_reviewer": {
+        "cap.repo.read",
+        "cap.memory.review",
+    },
     "operator": {"cap.repo.read", "cap.deploy.staging"},
     "viewer": {"cap.repo.read"},
 }

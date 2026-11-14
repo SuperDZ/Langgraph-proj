@@ -1,0 +1,32 @@
+{
+  "scope": "Per-agent model forms and unified local credentials",
+  "automated_tests": {
+    "passed": 10,
+    "source": "model-settings-tests.xml"
+  },
+  "frontend_build": "PASSED",
+  "browser_checks": [
+    "13 role cards open independent forms",
+    "saved output-token limit reread as 3072",
+    "sibling role stays at original 2048",
+    "thinking mode disables temperature",
+    "invalid network host rejected inside modal",
+    "restore inheritance succeeds; test override removed",
+    "model templates include default timeout/retry settings",
+    "desktop 1280px and phone 390px show no horizontal overflow",
+    "unified API Key navigation and status render",
+    "no browser console warnings or errors observed"
+  ],
+  "credentials": "Real current-user DPAPI encryption, rotation, restart load, removal and HTTP non-disclosure tested using synthetic credentials only",
+  "provider_generation_performed": false,
+  "real_credentials_modified": false,
+  "source_sha256": {
+    "frontend/credentials.py": "0a672e770a14ba49c815c555b0b7259bae157185d3a111a84b0581dd161ab469",
+    "frontend/agent_settings.py": "7797c705d76c6137fb42522311be3bc6dec2e75f62e77fcde0d0b8484296884b",
+    "frontend/platform_api.py": "f2ecbcf37ccfa3ac472cadd6bf67e27bcbaa017c964d29668ba4b15570ab464a",
+    "frontend/server.py": "14c8063b0decb83567c0759eae09060e91456e3bf50abfd5ff4d97b48e0ff49d",
+    "frontend/console/src/ModelSettings.jsx": "af6892acb5be8d91cd232351e9234ec538da537de8cd8809101618c3fbb17b31",
+    "frontend/console/src/model-settings.css": "7662a603b1e411dc9d471b2dba0e5c02a1213805de102e34ffdb61da707ed48e",
+    "frontend/console/src/main.jsx": "9c7936e38c197af2798176e18738f0498a8ed4792833d8e7665d0e5b6a9799cc"
+  }
+}

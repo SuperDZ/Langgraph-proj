@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "agentloop-platform"
-version = "0.4.0"
+version = "0.5.0"
 description = "Controlled multi-agent development, isolated worktrees, authorized deployment and recoverable operations"
 requires-python = ">=3.11"
 dependencies = [
@@ -13,6 +13,7 @@ dependencies = [
   "langgraph-checkpoint-sqlite==3.1.2",
   "PyYAML==6.0.3",
   "jsonschema==4.26.0",
+  "cryptography==50.0.2; sys_platform == 'linux'",
 ]
 
 [project.optional-dependencies]

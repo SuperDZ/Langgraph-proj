@@ -87,7 +87,7 @@ def test_independent_executor_requires_capability_and_exact_authorization(ops):
     assert result.status is RunStatus.COMPLETED
 
 
-@pytest.mark.ac("AC-54", "AC-56", "AC-57")
+@pytest.mark.ac("AC-31", "AC-54", "AC-56", "AC-57")
 @pytest.mark.parametrize("failure", ["expired", "target", "artifact", "revoked", "approver"])
 def test_invalid_authorizations_never_send_external_requests(ops, failure):
     auth = ops["authorization"]
@@ -176,7 +176,8 @@ def test_termination_requires_safe_rollback_evidence(ops):
     assert ops["coordinator"].terminate(deployment.deployment_id,principal_id="owner").status is RunStatus.FAILED
 
 
-@pytest.mark.ac("AC-17", "AC-29")
+@pytest.mark.ac("AC-26", "AC-35")
+@pytest.mark.requirements("REQ-017", "REQ-038")
 def test_periodic_maintenance_child_and_incident_leave_parent_unchanged(ops):
     deployment=deploy(ops); ops["coordinator"].finalize(deployment.deployment_id,actor_id="ops")
     parent=ops["store"].get_run("r")
@@ -184,9 +185,17 @@ def test_periodic_maintenance_child_and_incident_leave_parent_unchanged(ops):
     maintenance.schedule("r","t",principal_id="owner",interval_seconds=10)
     children=maintenance.tick()
     assert len(children)==1 and children[0].status is RunStatus.COMPLETED
+    assert children[0].run_type is RunType.MAINTENANCE
+    assert children[0].parent_run_id == parent.run_id
+    assert children[0].root_run_id == parent.root_run_id
     assert maintenance.tick()==[]
     ops["clock"][0]+=timedelta(seconds=11); ops["provider"].unhealthy=True
-    assert maintenance.tick()[0].status is RunStatus.BLOCKED
+    failed = maintenance.tick()[0]
+    assert failed.status is RunStatus.BLOCKED
+    incident = ops["store"].get_run("incident-" + failed.run_id)
+    assert incident.run_type is RunType.INCIDENT
+    assert incident.parent_run_id == failed.run_id
+    assert incident.root_run_id == parent.root_run_id
     assert ops["store"].get_run("r")==parent
 
 

@@ -1,0 +1,80 @@
+<Slide style={{ width: '1280px', height: '720px', padding: 60, background: '#FFFFFF' }}>
+  <Box style={{ height: '100%', flexDirection: 'column', gap: 18 }}>
+    <Box style={{ flexDirection: 'column', gap: 16 }}>
+      <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#1E293B', lineHeight: 1.2 }}>
+        Phase 2–3：真实执行层与受控发布
+      </Text>
+      <Box style={{ width: '100%', height: 1, background: '#E5E7EB' }} />
+    </Box>
+    <Box style={{ height: 218, flexDirection: 'row', gap: 22, background: '#F8FAFC', borderRadius: 12, overflow: 'hidden' }}>
+      <Box style={{ width: 196, background: '#2563EB', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: 8, padding: 16 }}>
+        <Text style={{ fontSize: 30, fontWeight: 'bold', color: '#FFFFFF', lineHeight: 1.2 }}>0.3.0</Text>
+        <Text style={{ fontSize: 19, fontWeight: 'bold', color: '#FFFFFF', lineHeight: 1.3 }}>Phase 2</Text>
+        <Text style={{ fontSize: 13, color: '#BFDBFE', lineHeight: 1.4, textAlign: 'center' }}>模型 / Skills / MCP
+          <br />
+          与异常弹性</Text>
+      </Box>
+      <Box style={{ flex: 1, flexDirection: 'column', gap: 10, paddingTop: 18, paddingBottom: 14, paddingRight: 20 }}>
+        <Box style={{ flexDirection: 'row', gap: 12 }}>
+          <Box style={{ width: 6, height: 6, borderRadius: 3, background: '#2563EB', marginTop: 8 }} />
+          <Text style={{ fontSize: 16.5, color: '#1E293B', lineHeight: 1.5 }}>
+            <span style={{ fontWeight: 'bold' }}>四级配置与不可变快照</span>：平台→部门→Agent→任务，工具/秘密/Capability 求交、deny 优先；恢复不换配置
+          </Text>
+        </Box>
+        <Box style={{ flexDirection: 'row', gap: 12 }}>
+          <Box style={{ width: 6, height: 6, borderRadius: 3, background: '#2563EB', marginTop: 8 }} />
+          <Text style={{ fontSize: 16.5, color: '#1E293B', lineHeight: 1.5 }}>
+            <span style={{ fontWeight: 'bold' }}>预算与后备模型链</span>：Token/成本预占结算、预算审批；仅超时/限流/不可用重试，严格 Schema 两次修复
+          </Text>
+        </Box>
+        <Box style={{ flexDirection: 'row', gap: 12 }}>
+          <Box style={{ width: 6, height: 6, borderRadius: 3, background: '#2563EB', marginTop: 8 }} />
+          <Text style={{ fontSize: 16.5, color: '#1E293B', lineHeight: 1.5 }}>
+            <span style={{ fontWeight: 'bold' }}>Skills / MCP 真实接入</span>：隔离导入+人工绑定+包哈希锁定；MCP stdio/HTTP/SSE 客户端与逐次写审批
+          </Text>
+        </Box>
+        <Box style={{ flex: 1 }} />
+        <Text style={{ fontSize: 15, color: '#64748B', lineHeight: 1.4 }}>
+          全量 <span style={{ color: '#F59E0B', fontWeight: 'bold' }}>383 passed</span>（80 专项 + 2 真实 Java 集成）· DeepSeek 在线预检 401，未采信在线质量
+        </Text>
+      </Box>
+    </Box>
+    <Box style={{ height: 218, flexDirection: 'row', gap: 22, background: '#F8FAFC', borderRadius: 12, overflow: 'hidden' }}>
+      <Box style={{ width: 196, background: '#06B6D4', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: 8, padding: 16 }}>
+        <Text style={{ fontSize: 30, fontWeight: 'bold', color: '#FFFFFF', lineHeight: 1.2 }}>0.4.0</Text>
+        <Text style={{ fontSize: 19, fontWeight: 'bold', color: '#FFFFFF', lineHeight: 1.3 }}>Phase 3</Text>
+        <Text style={{ fontSize: 13, color: '#CFFAFE', lineHeight: 1.4, textAlign: 'center' }}>多角色研发
+          <br />
+          与受控发布</Text>
+      </Box>
+      <Box style={{ flex: 1, flexDirection: 'column', gap: 10, paddingTop: 18, paddingBottom: 14, paddingRight: 20 }}>
+        <Box style={{ flexDirection: 'row', gap: 12 }}>
+          <Box style={{ width: 6, height: 6, borderRadius: 3, background: '#06B6D4', marginTop: 8 }} />
+          <Text style={{ fontSize: 16.5, color: '#1E293B', lineHeight: 1.5 }}>
+            <span style={{ fontWeight: 'bold' }}>三 Worktree 并行研发</span>：前端/后端/DevOps 隔离修改，冲突生成工单，Git/SQLite 中断可恢复
+          </Text>
+        </Box>
+        <Box style={{ flexDirection: 'row', gap: 12 }}>
+          <Box style={{ width: 6, height: 6, borderRadius: 3, background: '#06B6D4', marginTop: 8 }} />
+          <Text style={{ fontSize: 16.5, color: '#1E293B', lineHeight: 1.5 }}>
+            <span style={{ fontWeight: 'bold' }}>不可变发布包 + 独立执行器</span>：绑定源 Commit，人工范围许可；Backend/Frontend/DevOps 永远拿不到部署能力
+          </Text>
+        </Box>
+        <Box style={{ flexDirection: 'row', gap: 12 }}>
+          <Box style={{ width: 6, height: 6, borderRadius: 3, background: '#06B6D4', marginTop: 8 }} />
+          <Text style={{ fontSize: 16.5, color: '#1E293B', lineHeight: 1.5 }}>
+            <span style={{ fontWeight: 'bold' }}>G3 失败必经恢复</span>：回滚与对账 → BLOCKED / NEEDS_RECONCILIATION；取消、巡检产生独立子 Run
+          </Text>
+        </Box>
+        <Box style={{ flex: 1 }} />
+        <Text style={{ fontSize: 15, color: '#64748B', lineHeight: 1.4 }}>
+          全量 <span style={{ color: '#F59E0B', fontWeight: 'bold' }}>457 passed</span>（74 三阶段用例 + 3 真实 Java 集成）· 权限取四级交集，deny 优先
+        </Text>
+      </Box>
+    </Box>
+    <Box style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+      <Text style={{ fontSize: 14, color: '#64748B' }}>AgentLoop · 多 Agent 研发 Loop 平台</Text>
+      <Text style={{ fontSize: 14, color: '#64748B' }}>08</Text>
+    </Box>
+  </Box>
+</Slide>

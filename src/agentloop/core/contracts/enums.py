@@ -298,12 +298,76 @@ class EventType(str, Enum):
     ISSUE_RESOLVED = "ISSUE_RESOLVED"
     BASELINE_CHANGED = "BASELINE_CHANGED"
     RUNTIME_AUDIT = "RUNTIME_AUDIT"
+    RETROSPECTIVE_REQUESTED = "RETROSPECTIVE_REQUESTED"
+    RETROSPECTIVE_COMPLETED = "RETROSPECTIVE_COMPLETED"
+    MEMORY_PROPOSAL_SUBMITTED = "MEMORY_PROPOSAL_SUBMITTED"
+    MEMORY_PROPOSAL_DECIDED = "MEMORY_PROPOSAL_DECIDED"
+    MEMORY_REVOKED = "MEMORY_REVOKED"
+    EVOLUTION_PROPOSAL_SUBMITTED = "EVOLUTION_PROPOSAL_SUBMITTED"
+    EVOLUTION_PROPOSAL_DECIDED = "EVOLUTION_PROPOSAL_DECIDED"
 
 
 class ActorType(str, Enum):
     HUMAN = "HUMAN"
     AGENT = "AGENT"
     SYSTEM = "SYSTEM"
+
+
+class MemoryScopeType(str, Enum):
+    """长期记忆的命名空间类型（规范 §6.2）。"""
+
+    AGENT = "AGENT"
+    DEPARTMENT = "DEPARTMENT"
+    PROJECT = "PROJECT"
+    SHARED = "SHARED"
+
+
+class MemoryMaturity(str, Enum):
+    """经验成熟度，描述内容质量；与审批状态正交（规范 §6.6）。"""
+
+    OBSERVED = "OBSERVED"
+    CANDIDATE = "CANDIDATE"
+    VALIDATED = "VALIDATED"
+    PUBLISHED = "PUBLISHED"
+    DEPRECATED = "DEPRECATED"
+
+
+class ProposalStatus(str, Enum):
+    """提案审批状态。Curator 只能产生 PENDING_HUMAN_REVIEW。"""
+
+    PENDING_HUMAN_REVIEW = "PENDING_HUMAN_REVIEW"
+    APPROVED = "APPROVED"
+    REJECTED = "REJECTED"
+    REVOKED = "REVOKED"
+
+
+class MemoryStatus(str, Enum):
+    """正式记忆的可检索状态。撤销/废弃立即停止检索。"""
+
+    ACTIVE = "ACTIVE"
+    DEPRECATED = "DEPRECATED"
+    REVOKED = "REVOKED"
+
+
+class EvolutionKind(str, Enum):
+    """演进提案类别：Skill / 提示词 / 配置，独立于长期记忆治理。"""
+
+    SKILL = "SKILL"
+    PROMPT = "PROMPT"
+    CONFIG = "CONFIG"
+
+
+class RetrospectiveMode(str, Enum):
+    FULL_DELIVERY = "FULL_DELIVERY"
+    ANOMALY = "ANOMALY"
+
+
+#: 不可信内容中出现即拒绝进入记忆提案的治理指令模式（规范 §6.4 防记忆投毒）。
+GOVERNANCE_INJECTION_PATTERNS: tuple[str, ...] = (
+    "ignore previous", "忽略上级", "忽略之前", "跳过门禁", "skip gate", "skip g2",
+    "提升权限", "提权", "elevate privilege", "grant permission", "启用工具", "enable tool",
+    "leak secret", "泄露密钥", "approve memory", "批准记忆", "ignore rules above",
+)
 
 
 TERMINAL_RUN_STATUSES: frozenset[RunStatus] = frozenset(

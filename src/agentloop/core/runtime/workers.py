@@ -40,6 +40,18 @@ class WorkerRuntime:
         stopped = {RunStatus.CANCEL_REQUESTED, RunStatus.CANCELLING, RunStatus.CANCELLED, RunStatus.FAILED, RunStatus.NEEDS_RECONCILIATION}
         if self.store.get_run(run_id).status in stopped:
             raise ValueError("Run 已停止接收新的 Worker 请求")
+        from ..approvals.rbac import RBACService, AccessDenied
+        from ...knowledge.memory import MemoryGovernanceService
+        try:
+            project = self.store.get_run(run_id).project_id
+            memories = MemoryGovernanceService(self.store, RBACService(self.store)).search(
+                principal_id=role, project_id=project)
+        except AccessDenied:
+            memories = []
+        if memories:
+            context = {**context, "untrusted_approved_memory": [
+                {"memory_id": m.memory_id, "version": m.version, "content": m.content,
+                 "source_artifact_ids": m.source_artifact_ids} for m in memories]}
         profile = self.profiles[role]
         key = hashlib.sha256(canonical({"profile": profile, "role": role, "context": context,
                                        "schema": schema.model_json_schema()}).encode()).hexdigest()

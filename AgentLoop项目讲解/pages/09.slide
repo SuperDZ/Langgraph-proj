@@ -1,0 +1,71 @@
+<Slide style={{ width: '1280px', height: '720px', padding: 60, background: '#FFFFFF' }}>
+  <Box style={{ height: '100%', flexDirection: 'column', gap: 16 }}>
+    <Box style={{ flexDirection: 'column', gap: 16 }}>
+      <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#1E293B', lineHeight: 1.2 }}>
+        Phase 4/5：治理闭环与管理控制台
+      </Text>
+      <Box style={{ width: '100%', height: 1, background: '#E5E7EB' }} />
+    </Box>
+    <Box style={{ height: 388, flexDirection: 'row', gap: 28 }}>
+      <Box style={{ width: 500, background: '#F8FAFC', borderRadius: 12, alignItems: 'center', justifyContent: 'center' }}>
+        <svg width={480} height={372} viewBox='0 0 480 372'>
+          <circle cx='240' cy='186' r='118' fill='none' stroke='#E5E7EB' strokeWidth='2' strokeDasharray='6 5' />
+          <rect x='168' y='16' width='144' height='44' rx='10' fill='#2563EB' />
+          <text x='240' y='36' textAnchor='middle' fill='#FFFFFF' fontSize='13' fontWeight='bold'>复盘触发</text>
+          <text x='240' y='52' textAnchor='middle' fill='#BFDBFE' fontSize='10.5'>仅真人显式触发</text>
+          <rect x='330' y='108' width='134' height='44' rx='10' fill='#06B6D4' />
+          <text x='397' y='128' textAnchor='middle' fill='#FFFFFF' fontSize='13' fontWeight='bold'>候选记忆</text>
+          <text x='397' y='144' textAnchor='middle' fill='#CFFAFE' fontSize='10.5'>RETROSPECTIVE 子 Run</text>
+          <rect x='316' y='248' width='148' height='44' rx='10' fill='#F59E0B' />
+          <text x='390' y='268' textAnchor='middle' fill='#FFFFFF' fontSize='13' fontWeight='bold'>人工审批</text>
+          <text x='390' y='284' textAnchor='middle' fill='#FDE68A' fontSize='10.5'>唯一晋升通道</text>
+          <rect x='156' y='300' width='156' height='44' rx='10' fill='#2563EB' />
+          <text x='234' y='320' textAnchor='middle' fill='#FFFFFF' fontSize='13' fontWeight='bold'>正式记忆 ACTIVE</text>
+          <text x='234' y='336' textAnchor='middle' fill='#BFDBFE' fontSize='10.5'>项目 / Agent 隔离</text>
+          <rect x='16' y='108' width='134' height='44' rx='10' fill='#06B6D4' />
+          <text x='83' y='128' textAnchor='middle' fill='#FFFFFF' fontSize='13' fontWeight='bold'>Skill 演进</text>
+          <text x='83' y='144' textAnchor='middle' fill='#CFFAFE' fontSize='10.5'>提案+包哈希+验证</text>
+          <line x1='288' y1='60' x2='345' y2='112' stroke='#94A3B8' strokeWidth='1.5' />
+          <line x1='420' y1='152' x2='408' y2='244' stroke='#94A3B8' strokeWidth='1.5' />
+          <line x1='330' y1='292' x2='288' y2='316' stroke='#94A3B8' strokeWidth='1.5' />
+          <line x1='180' y1='292' x2='120' y2='164' stroke='#94A3B8' strokeWidth='1.5' />
+          <line x1='150' y1='120' x2='192' y2='66' stroke='#94A3B8' strokeWidth='1.5' />
+          <text x='240' y='178' textAnchor='middle' fill='#2563EB' fontSize='17' fontWeight='bold'>经验治理闭环</text>
+          <text x='240' y='202' textAnchor='middle' fill='#64748B' fontSize='11.5'>冻结原始产物与事件 · 可撤销 / 可回滚</text>
+          <text x='240' y='222' textAnchor='middle' fill='#64748B' fontSize='11.5'>记忆不等于 Skill，不自动拥有执行权限</text>
+        </svg>
+      </Box>
+      <Box style={{ flex: 1, flexDirection: 'column', gap: 14, justifyContent: 'center' }}>
+        <Box style={{ background: '#EFF6FF', borderRadius: 10, padding: 18, flexDirection: 'column', gap: 6 }}>
+          <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#1E293B', lineHeight: 1.3 }}>复盘与记忆治理</Text>
+          <Text style={{ fontSize: 15.5, color: '#64748B', lineHeight: 1.55 }}>
+            RETROSPECTIVE 独立子 Run，父交付状态不变；冻结全部原始产物正文/哈希/事件；记忆先待审，支持撤销、版本替换与审计回滚
+          </Text>
+        </Box>
+        <Box style={{ background: '#EFF6FF', borderRadius: 10, padding: 18, flexDirection: 'column', gap: 6 }}>
+          <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#1E293B', lineHeight: 1.3 }}>管理控制台</Text>
+          <Text style={{ fontSize: 15.5, color: '#64748B', lineHeight: 1.55 }}>
+            React 六个管理页（运行 / 门禁发布 / 复盘记忆 / 角色模型 / Skills·MCP / 预算审计）+ Tauri Windows 客户端；Host / Origin / CSRF 校验
+          </Text>
+        </Box>
+        <Box style={{ background: '#EFF6FF', borderRadius: 10, padding: 18, flexDirection: 'column', gap: 6 }}>
+          <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#1E293B', lineHeight: 1.3 }}>演进不自动提权</Text>
+          <Text style={{ fontSize: 15.5, color: '#64748B', lineHeight: 1.55 }}>
+            Skill 发布须匹配已批准提案 + 精确包哈希 + SKILL_VERIFICATION 证据；当前运行有效配置保持不可变
+          </Text>
+        </Box>
+      </Box>
+    </Box>
+    <Box style={{ height: 52, borderRadius: 10, background: '#F1F5F9', flexDirection: 'row', alignItems: 'center', gap: 16, paddingLeft: 22, paddingRight: 22 }}>
+      <Text style={{ fontSize: 14.5, color: '#1E293B', lineHeight: 1.4 }}>
+        浏览器实测链路：G1 确认 → 三角色研发 → Maven/Spring 测试 → 发布许可 → 本地 HTTP 发布 → G3 → 复盘 → 记忆批准
+      </Text>
+      <Box style={{ flex: 1 }} />
+      <Text style={{ fontSize: 17, fontWeight: 'bold', color: '#F59E0B' }}>495 passed</Text>
+    </Box>
+    <Box style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+      <Text style={{ fontSize: 14, color: '#64748B' }}>AgentLoop · 多 Agent 研发 Loop 平台</Text>
+      <Text style={{ fontSize: 14, color: '#64748B' }}>09</Text>
+    </Box>
+  </Box>
+</Slide>

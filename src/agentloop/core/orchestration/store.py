@@ -10,6 +10,7 @@ from uuid import uuid4
 from collections.abc import Iterable
 
 from ..contracts.enums import ActorType, EventType, GateStatus
+from ..contracts.knowledge import EvolutionProposal, MemoryProposal, MemoryRecord
 from ..contracts.models import (
     ApprovalRequest,
     Artifact,
@@ -71,6 +72,9 @@ class InMemoryStore:
         self._deployments = {}
         self._principals = {}
         self._bindings = {}
+        self._memory_proposals: dict[str, MemoryProposal] = {}
+        self._memories: dict[str, MemoryRecord] = {}
+        self._evolution_proposals: dict[str, EvolutionProposal] = {}
         self._runtime_records = {}
 
     def runtime_get(self, namespace, key):
@@ -290,6 +294,59 @@ class InMemoryStore:
         with self._lock:
             return [a for a in self._artifacts.values() if a.run_id == run_id]
 
+    # ---------------- Phase 4 知识库 ----------------
+
+    def put_memory_proposal(self, proposal: MemoryProposal) -> None:
+        with self._lock:
+            self._memory_proposals[proposal.proposal_id] = proposal.model_copy(deep=True)
+
+    def get_memory_proposal(self, proposal_id: str) -> MemoryProposal:
+        with self._lock:
+            if proposal_id not in self._memory_proposals:
+                raise KeyError(f"memory_proposal {proposal_id} 不存在")
+            return self._memory_proposals[proposal_id].model_copy(deep=True)
+
+    @detached
+    def memory_proposals_for(self, run_id: str | None = None) -> list[MemoryProposal]:
+        with self._lock:
+            proposals = list(self._memory_proposals.values())
+            if run_id is not None:
+                proposals = [p for p in proposals if p.run_id == run_id]
+            return proposals
+
+    def put_memory(self, record: MemoryRecord) -> None:
+        with self._lock:
+            self._memories[record.memory_id] = record.model_copy(deep=True)
+
+    def get_memory(self, memory_id: str) -> MemoryRecord:
+        with self._lock:
+            if memory_id not in self._memories:
+                raise KeyError(f"memory {memory_id} 不存在")
+            return self._memories[memory_id].model_copy(deep=True)
+
+    @detached
+    def memories(self) -> list[MemoryRecord]:
+        with self._lock:
+            return list(self._memories.values())
+
+    def put_evolution_proposal(self, proposal: EvolutionProposal) -> None:
+        with self._lock:
+            self._evolution_proposals[proposal.proposal_id] = proposal.model_copy(deep=True)
+
+    def get_evolution_proposal(self, proposal_id: str) -> EvolutionProposal:
+        with self._lock:
+            if proposal_id not in self._evolution_proposals:
+                raise KeyError(f"evolution_proposal {proposal_id} 不存在")
+            return self._evolution_proposals[proposal_id].model_copy(deep=True)
+
+    @detached
+    def evolution_proposals_for(self, run_id: str | None = None) -> list[EvolutionProposal]:
+        with self._lock:
+            proposals = list(self._evolution_proposals.values())
+            if run_id is not None:
+                proposals = [p for p in proposals if p.run_id == run_id]
+            return proposals
+
     # ---------------- Clarification ----------------
 
     def put_clarification(self, request: ClarificationRequest) -> None:
@@ -444,6 +501,16 @@ class InMemoryStore:
             if authorization_id not in self._authorizations:
                 raise KeyError(f"authorization {authorization_id} 不存在")
             return self._authorizations[authorization_id].model_copy(deep=True)
+
+    def authorization_requests_for(self, run_id: str):
+        with self._lock:
+            release_ids = {r.release_id for r in self.releases_for(run_id)}
+            return [r.model_copy(deep=True) for r in self._authorization_requests.values() if r.release_id in release_ids]
+
+    def authorizations_for(self, run_id: str):
+        with self._lock:
+            release_ids = {r.release_id for r in self.releases_for(run_id)}
+            return [r.model_copy(deep=True) for r in self._authorizations.values() if r.release_id in release_ids]
 
     def lock(self) -> threading.RLock:
         """供需要跨多次存储操作保持原子的服务使用。"""

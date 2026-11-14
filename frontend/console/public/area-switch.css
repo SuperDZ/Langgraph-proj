@@ -1,0 +1,44 @@
+.area-switch {
+  display: inline-flex;
+  align-items: stretch;
+  gap: 2px;
+  flex: none;
+  margin: 0;
+  padding: 3px;
+  border: 1px solid var(--line-soft);
+  border-radius: 9px;
+  background: var(--bg-raised);
+}
+
+.area-switch a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 60px;
+  min-height: 30px;
+  padding: 0 10px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.25;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.area-switch a:hover {
+  background: var(--surface-2);
+  color: var(--text, var(--ink));
+}
+
+.area-switch a[aria-current="page"] {
+  border-color: #344942;
+  background: #25332f;
+  color: var(--accent-strong);
+}
+
+.area-switch a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}

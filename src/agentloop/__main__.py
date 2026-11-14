@@ -15,6 +15,18 @@ from .core.orchestration.intake_graph import IntakeGraph
 
 def main():
     import sys
+    if len(sys.argv)>1 and sys.argv[1].startswith("phase4-"):
+        from .phase4_cli import main as phase4_main
+        from .core.approvals.rbac import AccessDenied
+        from .core.orchestration import TransitionRejected
+        from pydantic import ValidationError
+        try:
+            return phase4_main(sys.argv[1:])
+        except ValidationError as exc:
+            print(json.dumps({"error":"CONFIG_VALIDATION_FAILED","paths":[list(e["loc"]) for e in exc.errors(include_input=False)]}))
+            raise SystemExit(2) from None
+        except (ValueError,PermissionError,KeyError,AccessDenied,TransitionRejected) as exc:
+            print(json.dumps({"error":str(exc)},ensure_ascii=True));raise SystemExit(2) from None
     if len(sys.argv)>1 and sys.argv[1].startswith("phase3-"):
         from .phase3_cli import main as phase3_main
         from .core.approvals.rbac import AccessDenied

@@ -1,5 +1,7 @@
 # Langgraph-proj
 
+**Phase 4 / 5 · 0.5.0：** 新增原始证据复盘、人工记忆审批/撤销/回滚、可信证据约束的 Skill 演进发布，以及 React 管理控制台和 Tauri Windows 客户端。已实测本地发布到 G3、手动复盘和记忆批准。启动与验收边界见 [第四、第五阶段说明](docs/phase45-runtime.md)。
+
 基于 LangGraph 的多 Agent 研发 Loop 平台。最新需求基线为 [v1.2 规格说明书](notes/multi_agent_loop_platform_design_v1.2.md)。
 
 **Phase 3 / 0.4.0：** 新增 Frontend/Backend/DevOps 隔离 Worktree、冲突处理和合并恢复；独立发布执行器、人工范围许可、真实 HTTP 目标、G3 回滚/对账、可恢复取消、风险豁免及周期巡检子 Run。运行命令、验收对应和环境边界见 [第三阶段说明](docs/phase3-runtime.md)。生产执行默认关闭，内置实际发布验收使用专属本地静态 HTTP 目标。
@@ -14,8 +16,82 @@
 
 **2026-10-19 更新：Phase 0 历史基线。** 新增 `src/agentloop`，包含确定性状态机、SQLite 仓储与审计、G1 人工确认、发布许可基础校验，以及可跨进程恢复的 LangGraph 澄清子图。安装、演示和历史验证记录见 [Phase 0 说明](src/agentloop/README.md)。后续交付以以上 Phase 1/2 更新为准。
 
-下文保留 week1/week2 学习版本的说明：**输入报错信息，按需查询示例日志和本地源码，生成结构化故障分析及任务分配建议。**
+---
 
+## 当前主实现：AgentLoop 平台（`src/agentloop`，Phase 0–5，v0.5.0）
+
+下文「快速开始」「目录结构」「week1 → week2 复盘」等章节属于 **week1/week2 学习版本**；主实现的安装与运行方式如下，各阶段的能力边界以 `docs/phase*-runtime.md` 与 `docs/phase*-validation.json` 为准。
+
+### 能力概览
+
+| 阶段 | 交付内容 | 关键边界 |
+| --- | --- | --- |
+| Phase 0 | 确定性状态机、SQLite 仓储与审计、G1 人工确认 | 状态可跨进程恢复 |
+| Phase 1–2 | 研发与安全审查子图、真实本地测试、逐角色模型与后备链 | 测试真实执行，发布需显式授权 |
+| Phase 3 | 隔离 Worktree、发布执行器、人工范围许可、真实 HTTP 目标、G3 回滚对账 | 生产执行默认关闭 |
+| Phase 4 | 原始证据复盘、长期记忆审批/撤销/回滚、可信证据约束的 Skill 演进 | 复盘仅由真人显式触发 |
+| Phase 5 | React 管理控制台（本机回环 + CSRF）与 Tauri Windows 客户端 | 仅访问本机服务，无 shell/文件系统命令 |
+
+### 目录结构
+
+```
+src/agentloop/                # 平台主实现
+├── core/                     # 契约、编排（SQLite）、审批 RBAC、运行时
+│   ├── contracts/            # 数据契约与枚举
+│   ├── orchestration/        # 状态存储、状态图与迁移
+│   ├── approvals/            # 人工许可与角色绑定
+│   └── runtime/              # 角色执行、预算与并发
+├── knowledge/                # 长期记忆治理、原始证据复盘
+├── examples/                 # 可复现脚本角色（离线验证用）
+├── phase4_cli.py             # 复盘与记忆治理命令行入口
+└── tests/                    # 单元与集成回归
+frontend/                     # 本地交付工作台 + React 管理控制台
+├── server.py                 # 本机 HTTP 服务（回环监听、Host/Origin/CSRF 校验）
+├── platform_api.py           # 交付运行、门禁、复盘、模型设置接口
+├── agent_settings.py         # 逐角色模型参数与配置快照隔离
+├── credentials.py            # Windows DPAPI / Linux Fernet 加密凭据库
+├── workbench.js / *.css      # 旧事件回放工作台
+└── console/                  # React 控制台 + Tauri 桌面客户端
+docs/                         # 阶段说明、实测验证记录与测试报告
+```
+
+### 快速开始
+
+```powershell
+# 1. 安装（仓库根目录，Python 3.11+）
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -e ".[test]"
+
+# 2. 配置密钥：复制模板后填入 DEEPSEEK_API_KEY
+Copy-Item .env.example .env
+
+# 3. 启动服务（控制台在 /console/，回放工作台在 /workbench）
+.\.venv\Scripts\python.exe frontend/server.py --port 8439 --data-dir .agentloop/phase45-v2
+
+# 4. 复盘与长期记忆治理 CLI
+.\.venv\Scripts\python.exe -m agentloop phase4-retrospect --run-id <run-id>
+```
+
+React 控制台首次检出需在 `frontend/console` 执行 `npm ci` 与 `npm run build`；Tauri 客户端构建与实测边界见 [Phase 4 / 5 说明](docs/phase45-runtime.md)，逐角色模型与凭据设置见 [模型设置说明](docs/model-settings.md)。
+
+### 本地状态与敏感文件
+
+以下路径已在 `.gitignore` 中排除，**不要提交**：
+
+| 路径 | 内容 |
+| --- | --- |
+| `.env` | `DEEPSEEK_API_KEY` 等本地配置；模板见 `.env.example` |
+| `.agentloop/` | SQLite 状态库、加密凭据、交付产物与本机工具链 |
+| `*.dpapi`、`credentials.fernet`、`credential-vault.key` | 加密凭据文件和 Linux 凭据加密密钥 |
+| `frontend/console/node_modules/`、`dist/`、`**/target/` | 前端依赖、构建产物与 Rust/Maven 编译缓存 |
+| `output/` | 浏览器校验截图等可再生产物 |
+| `.slidep/` | 幻灯片工具本机状态（含绝对路径） |
+
+模型使用 `env:..._API_KEY` 引用凭据。控制台保存的 API Key 经服务端加密后写入平台凭据文件。SQLite、审计记录和 HTTP 响应均不含 API Key 明文。
+
+---
+
+下文保留 week1/week2 学习版本的说明：**输入报错信息，按需查询示例日志和本地源码，生成结构化故障分析及任务分配建议。**
 **当前阶段：week2 的 LangGraph 双 Agent 流程已实现，具备离线验证代码；真实模型端到端效果尚未在本次核查中验证。** 程序通过命令行输出结果，尚未接入真实日志平台、人员系统或工单系统，也不会自动修改源码。
 
 进度核查日期：2026-10-18。下述状态以当前工作区代码与本次验证为依据，不代表线上部署状态。
@@ -41,7 +117,7 @@
 - 结构化输出靠手写 JSON Schema + 解析前清理 markdown 代码块
 - 模型调用使用 OpenAI SDK 的 `responses.create`，客户端指向 DeepSeek；week2 测试不覆盖该历史版本，其在线兼容性未在本次验证
 
-### week2：LangGraph 重构（当前主实现）
+### week2：LangGraph 重构（学习版本主实现）
 
 - **外层图**：`workflow.py` 固定业务顺序 `START → log_reviewer → team_leader → END`
 - **内层图**：`agent_runner.py` 用条件边实现 Agent Loop

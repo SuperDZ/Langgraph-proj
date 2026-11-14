@@ -1,0 +1,56 @@
+<Slide style={{ width: '1280px', height: '720px', padding: 60, background: '#FFFFFF' }}>
+  <Box style={{ height: '100%', flexDirection: 'column', gap: 18 }}>
+    <Box style={{ flexDirection: 'column', gap: 16 }}>
+      <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#1E293B', lineHeight: 1.2 }}>
+        验证体系与证据链
+      </Text>
+      <Box style={{ width: '100%', height: 1, background: '#E5E7EB' }} />
+    </Box>
+    <Box style={{ height: 388, flexDirection: 'row', gap: 40 }}>
+      <Box style={{ width: 400, flexDirection: 'column', justifyContent: 'center', gap: 14 }}>
+        <Text style={{ fontSize: 150, fontWeight: 'bold', color: '#2563EB', lineHeight: 1 }}>
+          495
+        </Text>
+        <Box style={{ flexDirection: 'row', gap: 16, alignItems: 'center' }}>
+          <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#1E293B' }}>passed</Text>
+          <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#06B6D4' }}>0 failed</Text>
+          <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#64748B' }}>3 skipped</Text>
+        </Box>
+        <Box style={{ width: 88, height: 4, borderRadius: 2, background: '#F59E0B' }} />
+        <Text style={{ fontSize: 15.5, color: '#64748B', lineHeight: 1.6 }}>
+          0.5.0 全量回归口径：含既有阶段、week2 回归与 Phase 4/5 治理用例；3 项 Java 专用集成未在该命令启用
+        </Text>
+      </Box>
+      <Box style={{ flex: 1, flexDirection: 'column', gap: 12, justifyContent: 'center' }}>
+        <Box style={{ height: 84, background: '#F8FAFC', borderRadius: 10, padding: 16, flexDirection: 'column', gap: 4 }}>
+          <Text style={{ fontSize: 18.5, fontWeight: 'bold', color: '#1E293B', lineHeight: 1.3 }}>
+            <span style={{ color: '#F59E0B' }}>383 → 457 → 495</span>：同一套回归随阶段扩容
+          </Text>
+          <Text style={{ fontSize: 14.5, color: '#64748B', lineHeight: 1.45 }}>不是三次独立测试集，各阶段数字不重复相加</Text>
+        </Box>
+        <Box style={{ height: 84, background: '#F8FAFC', borderRadius: 10, padding: 16, flexDirection: 'column', gap: 4 }}>
+          <Text style={{ fontSize: 18.5, fontWeight: 'bold', color: '#1E293B', lineHeight: 1.3 }}>真实 Java 21 / Maven / Spring HTTP 集成</Text>
+          <Text style={{ fontSize: 14.5, color: '#64748B', lineHeight: 1.45 }}>必须显式启用；报告逐用例记录是否实际执行，跳过不算通过</Text>
+        </Box>
+        <Box style={{ height: 84, background: '#F8FAFC', borderRadius: 10, padding: 16, flexDirection: 'column', gap: 4 }}>
+          <Text style={{ fontSize: 18.5, fontWeight: 'bold', color: '#1E293B', lineHeight: 1.3 }}>REQ-001–049 / AC 追踪报告</Text>
+          <Text style={{ fontSize: 14.5, color: '#64748B', lineHeight: 1.45 }}>关联用例 ≠ 全部需求交付；证据形态 = validation.json + JUnit XML + 单 Run 导出</Text>
+        </Box>
+        <Box style={{ height: 84, background: '#F8FAFC', borderRadius: 10, padding: 16, flexDirection: 'column', gap: 4 }}>
+          <Text style={{ fontSize: 18.5, fontWeight: 'bold', color: '#1E293B', lineHeight: 1.3 }}>安装包逐字节一致</Text>
+          <Text style={{ fontSize: 14.5, color: '#64748B', lineHeight: 1.45 }}>42 / 51 个 Python 模块与源码一致，pip check 与差异格式检查通过</Text>
+        </Box>
+      </Box>
+    </Box>
+    <Box style={{ height: 56, borderRadius: 10, background: '#EFF6FF', flexDirection: 'row', alignItems: 'center', gap: 18, paddingLeft: 24, paddingRight: 24 }}>
+      <Box style={{ width: 6, height: 28, borderRadius: 3, background: '#F59E0B' }} />
+      <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#1E293B', lineHeight: 1.4 }}>
+        「证据可回溯」是产品能力，不是文档习惯
+      </Text>
+    </Box>
+    <Box style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+      <Text style={{ fontSize: 14, color: '#64748B' }}>AgentLoop · 多 Agent 研发 Loop 平台</Text>
+      <Text style={{ fontSize: 14, color: '#64748B' }}>11</Text>
+    </Box>
+  </Box>
+</Slide>

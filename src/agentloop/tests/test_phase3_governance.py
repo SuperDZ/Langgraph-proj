@@ -12,7 +12,7 @@ from agentloop.deployment_agent import create_agent_server
 pytestmark=pytest.mark.requirements("REQ-013","REQ-014","REQ-015","REQ-033","REQ-041","REQ-043","REQ-044","REQ-045","REQ-048")
 
 
-@pytest.mark.ac("AC-52")
+@pytest.mark.ac("AC-41", "AC-52")
 @pytest.mark.parametrize("severity",[Severity.LOW,Severity.MEDIUM,Severity.HIGH,Severity.CRITICAL])
 def test_risk_waiver_approval_revoke_and_hard_risks_never_active(ops,severity):
     artifact=ops["repo"].audit("r","TEST_ISSUE_EVIDENCE",{"severity":severity.value})

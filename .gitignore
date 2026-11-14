@@ -29,8 +29,41 @@ dist/
 Thumbs.db
 
 # Local AgentLoop state, checkpoints and demo identities
+# Includes SQLite state stores and workbench/credentials.dpapi (encrypted keys)
 .agentloop/
-**/target/
 
 # Local security-scan history and hook state
 .mimosa/
+
+# Node / Vite frontend dependencies and build output
+node_modules/
+frontend/console/dist/
+
+# Rust / Tauri and Maven build output
+**/target/
+
+# Credential stores and local encryption keys
+*.dpapi
+credentials.fernet
+credential-vault.key
+agent.secret
+
+# Local slidep presentation-tool state (absolute paths, PIDs, local server URL)
+.slidep/
+
+# Local screenshots and browser-validation artifacts (regenerable)
+output/
+/.cache/
+/.playwright-cli/
+/pytest-of-*/
+
+# Local deployment handoff and Windows file recovery artifacts
+/docs/HANDOFF.md
+/docs/model-settings-tests.xml
+/docs/phase45-final-regression.xml
+/docs/phase45-focused-tests.xml
+/.aclinfo.txt
+/.recovered_content.txt
+/.recovered_writes.txt
+/.swc-test.txt
+*.acl-backup.*
