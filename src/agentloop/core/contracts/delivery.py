@@ -25,6 +25,16 @@ class Verdict(StrictModel):
     reasons: list[str] = Field(default_factory=list)
 
 
+class ArchitectureIssueResolution(StrictModel):
+    issue_id: str
+    decision: Literal["FIXED", "WITHDRAWN"]
+    explanation: str = Field(min_length=1)
+
+
+class ArchitectureReReview(Verdict):
+    resolutions: list[ArchitectureIssueResolution] = Field(default_factory=list)
+
+
 class ArchitectureDesign(StrictModel):
     spec_digest: str
     summary: str
